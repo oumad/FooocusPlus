@@ -21,8 +21,8 @@ try:
     remote.fetch()
 
     origin_name = 'main'
-    main_name = 'SimpleSDXL'
-    dev_name = 'SimpleSDXL_dev'
+    main_name = 'FooocusPlus'
+    dev_name = 'FooocusPlus_dev'
     local_branch_ref = f'refs/heads/{branch_name}'
     if '--dev' in (sys.argv):
         if branch_name != dev_name:
