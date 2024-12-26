@@ -1,0 +1,7 @@
+[
+    {
+        "name": "Pony Real",
+        "prompt": "score_9, score_8_up, score_7_up, rating_safe, realistic, {prompt}",
+        "negative_prompt": "score_6, score_5, score_4, ugly, deformed"
+    }
+]
