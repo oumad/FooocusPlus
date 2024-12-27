@@ -20,7 +20,7 @@ try:
 
     remote.fetch()
 
-    origin_name = 'main'
+    origin_name = 'FooocusPlus'
     main_name = 'FooocusPlus'
     dev_name = 'FooocusPlus_dev'
     local_branch_ref = f'refs/heads/{branch_name}'
