@@ -10,6 +10,7 @@ import shared
 import fooocus_version
 import comfy.comfy_version as comfy_version
 import enhanced.version as version
+import fooocusplus_version as fooocusplus_version
 
 from pathlib import Path
 from build_launcher import build_launcher, is_win32_standalone_build, python_embeded_path
@@ -35,11 +36,14 @@ def check_base_environment():
     #import fooocus_version
     #import comfy.comfy_version as comfy_version
     #import enhanced.version as version
+    #import fooocusplus_version as fooocusplus_version
 
     print(f"Python {sys.version}")
     print(f"Fooocus version: {fooocus_version.version}")
     print(f"Comfy version: {comfy_version.version}")
-    print(f'{version.get_branch()} version: {version.get_simplesdxl_ver()}')
+    print(f"SimpleSDXL2 version: {version.get_simplesdxl_ver()}")
+    print(f"FooocusPlus version: {fooocusplus_version.version}")
+    print(f"")
 
     base_pkg = "simpleai_base"
     ver_required = "0.3.21"
