@@ -41,7 +41,7 @@ try:
     elif '--main' in (sys.argv):
         if branch_name != origin_name:
             branch_name = origin_name
-            print(f'Ready to checkout Fooocus')
+            print(f'Ready to checkout FooocusPlus')
             local_branch_ref = f'refs/heads/{branch_name}'
             if local_branch_ref not in list(repo.references):
                 remote_reference = f'refs/remotes/{remote_name}/{branch_name}'
@@ -69,17 +69,17 @@ try:
     merge_result, _ = repo.merge_analysis(remote_commit.id)
 
     if merge_result & pygit2.GIT_MERGE_ANALYSIS_UP_TO_DATE:
-        print(f'{branch_name if branch_name!="FooocusPlus" else "Fooocus"}: Already up-to-date, {str(local_commit.id)[:7]}')
+        print(f'{branch_name if branch_name!="FooocusPlus" else "FooocusPlus"}: Already up-to-date, {str(local_commit.id)[:7]}')
     elif merge_result & pygit2.GIT_MERGE_ANALYSIS_FASTFORWARD:
         local_branch.set_target(remote_commit.id)
         repo.head.set_target(remote_commit.id)
         repo.checkout_tree(repo.get(remote_commit.id))
         repo.reset(local_branch.target, pygit2.GIT_RESET_HARD)
-        print(f'{branch_name if branch_name!="FooocusPlus" else "Fooocus"}: Fast-forward merge, {str(local_commit.id)[:7]} <- {str(remote_commit.id)[:7]}')
+        print(f'{branch_name if branch_name!="FooocusPlus" else "FooocusPlus"}: Fast-forward merge, {str(local_commit.id)[:7]} <- {str(remote_commit.id)[:7]}')
     elif merge_result & pygit2.GIT_MERGE_ANALYSIS_NORMAL:
-        print(f'{branch_name if branch_name!="FooocusPlus" else "Fooocus"}: Update failed - Did you modify any file? {str(local_commit.id)[:7]} <- {str(remote_commit.id)[:7]}')
+        print(f'{branch_name if branch_name!="FooocusPlus" else "FooocusPlus"}: Update failed - Did you modify any file? {str(local_commit.id)[:7]} <- {str(remote_commit.id)[:7]}')
 except Exception as e:
-    print(f'{branch_name if branch_name!="FooocusPlus" else "Fooocus"}: Update failed.')
+    print(f'{branch_name if branch_name!="FooocusPlus" else "FooocusPlus"}: Update failed.')
     print(str(e))
 
 
