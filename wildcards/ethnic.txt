@@ -1,0 +1,366 @@
+Abkhazian
+Aboriginal Australian
+Acehnese
+Adivasi
+Afghan
+African
+Afrikaner
+Afro-American
+Afro-Asian
+Afro-Caribbean
+Afro-European
+Afro-Hispanic
+Afro-Kittian
+Afro-Nevisian
+Ainu
+Albanian
+Aluet Unangan indigenous
+Algonquian
+Algerian
+Amerasian
+American
+Amish
+Andorran
+Angolan
+Anishinaabe
+Antiguan
+Apache indigenous
+Arab
+Argentine
+Armenian
+Aruban
+Azorean
+Assamese
+Ashkenazi Jewish
+Asian
+Asian American
+Assamese
+Assyrian
+Australian
+Austrian
+Avar
+Azerbaijani
+Aztec
+Bahamian
+Bahraini
+Balinese
+Balochi
+Bangladeshi
+Barbadian
+Barbudan
+Barotse
+Bashkir
+Basque
+Baster ethnicity
+Batswana
+Bedouin
+Belarusian
+Belgian
+Belizean
+Beninese
+Berber
+Bermudian
+Bhutanese
+Biafran
+Biracial
+Bolivian
+Bosnian
+Bouyei
+Brazilian
+Breton
+British
+Bruneian
+Bulgarian
+Burkinabe
+Burmese
+Burundian
+Cajun
+Cambodian
+Cameroonian
+Canadian
+Canarian
+Cantonese
+Cape Verdean
+Catalan
+Caymanian
+Central African
+Chadian
+Chagossian
+Cham
+Chamorro
+Chechen
+Cherokee
+Cheyenne indigenous
+Chicano
+Chilean
+Chinese
+Chuvash
+Colombian
+Comoran
+Congolese
+Cook Islander
+Corsican
+Costa Rican
+Cree indigenous
+Creole
+Croatian
+Cuban
+Curaçaoan
+Cypriot
+Czech
+Danish
+Dargin
+Dene indigenous
+Djibouti
+Dominican
+Dong
+Doukhobor
+Dravidian
+Dutch
+Ecuadorean
+Egyptian
+Emirati
+English
+Equatorial Guinean
+Eritrean
+Estonian
+Ethiopian
+Eurasian
+European
+Faroese
+Fijian
+Filipino
+Finnish
+French
+French Canadian
+French Guianese
+Gabonese
+Galician
+Gambian
+German
+Ghanaian
+Gibraltarian
+Goan
+Greek
+Greenlandic
+Grenadian
+Guatemalan
+Guadeloupean
+Guamanian
+Guinea-Bissauan
+Guinean
+Gujarati
+Guyanese
+Haida indigenous
+Haitian
+Haratin
+Herzegovinian
+Hispanic
+Hmong
+Honduran
+Hui
+Hungarian
+Icelandic
+Ikelan
+Indian
+Indigenous Alaskan
+Indigenous American
+Indo-Kittian
+Indo-Nevisian
+Indonesian
+Iranian
+Iraqi
+Irish
+Israeli
+Inuit ethnicity
+Italian
+Ivorian
+Jamaican
+Japanese
+Jarawa
+Jordanian
+Jumma ethnicity
+Kabyle
+Kannadigas
+Kartvelian
+Kashmiri
+Kazakhstani
+Kenyan
+Khmer
+Khuzestani
+Kosovar
+Kurdish
+Kuwaiti
+Kyrgyz
+Lakota
+Laotian
+Latvian
+Lebanese
+Lezgin
+Liberian
+Libyan
+Liechtensteiner
+Lithuanian
+Luxembourger
+Macedonian
+Madeiran
+Malagasy
+Malawian
+Malayali
+Malaysian
+Maldivian
+Malian
+Maltese
+Manchu
+Māori
+Marathi
+Marshallese
+Martinican
+Mauritanian
+Mauritian
+Mayan
+Melanesian
+Mesoamerican
+Mestizo
+Métis indigenous
+Mexican
+Miao
+Micronesian
+Mizrahi Jewish
+Moldovan
+Moluccan
+Monegasque
+Mongolian
+Montenegrin
+Moroccan
+Motswana
+Mozambican
+Multi-ethnic
+Naga ethnicity
+Namibian
+Native Hawaiian
+Nauruan
+Navajo
+Nepalese
+New Zealander
+Nicaraguan
+Nigerian
+Nigerien
+Niuean
+Nootka indigenous
+North American
+North Korean
+Northern Irish
+Norwegian
+Nubian Egyptian
+Odia
+Ogaden
+Ogoni
+Omani
+Oromo
+Pakistani
+Palauan
+Palestinian
+Panamanian
+Papuan
+Paraguayan
+Parsi
+Pashtun
+Patagonian
+Peruvian
+Polish
+Polynesian
+Portuguesa
+Puerto Rican
+Punjabi
+Qatari
+Romani
+Romanian
+Russian
+Rwandan
+Ryukyuan
+Sahrawi
+Saint Lucian
+Saint Martiner
+Salish indigenous
+Salvadoran
+Samaritan
+Sámi
+Sammarinese
+Samoan
+Sao Tomean
+Saudi
+Savoyard
+Scottish
+Senegalese
+Serbian
+Seychellois
+Sephardic Jewish
+Sicilian
+Sierra Leonean
+Sikkimese
+Sindhi
+Singaporean
+Sinhalese
+Sioux
+Slovakian
+Slovenian
+Solomon Islander
+Somali
+Somalilander
+Sotho
+South African
+South American
+South Korean
+South Sudanese
+Spanish
+Sri Lankan
+Sudanese
+Suluan
+Surinamese
+Swazi
+Swedish
+Swiss
+Syrian
+Tahitian
+Taiwanese
+Tajik
+Tamil
+Tanzanian
+Tatar
+Telugu
+Thai
+Tibetan
+Timorese
+Tobagonian
+Togolese
+Tokelauan
+Tongan
+Trinidadian
+Tshimshian indigenous
+Tujia
+Tuluva
+Tunisian
+Turkish
+Turkmen
+Tuvaluan
+Ugandan
+Ukrainian
+Uruguayan
+Uyghur
+Uzbekistani
+Vanuatuan
+Venezuelan
+Vietnamese
+Virgin Islander
+Welsh
+Yao
+Yemenite
+Yemenite Jewish
+Yi ethnicity
+Yoruba
+Zambesian
+Zambian
+Zanzibari
+Zhuang
+Zimbabwean
