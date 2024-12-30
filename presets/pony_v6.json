@@ -1,7 +1,7 @@
 { 
     "default_model": "ponyDiffusionV6XL.safetensors",
     "default_refiner": "None",
-    "default_refiner_switch": 0.5,
+    "default_refiner_switch": 0.6,
     "default_vae": "ponyDiffusionV6XL_vae.safetensors",
     "default_loras": [
         [
@@ -40,7 +40,7 @@
     "default_styles": [
         "Fooocus Pony"
     ],
-    "default_aspect_ratio": "896*1152",
+    "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": -1,
     "default_inpaint_engine_version": "None",
     "checkpoint_downloads": {

@@ -3,7 +3,6 @@
         "backend_engine": "Comfy",
         "disvisible": ["backend_selection", "performance_selection"],
         "disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "loras", "refiner_model"],
-        "available_aspect_ratios_selection": "Common",
         "backend_params": {
                 "task_method": "seamlesstiled",
                 "tiling": "enable",
@@ -13,7 +12,7 @@
         },
     "default_model": "juggernautXL_juggXIByRundiffusion.safetensors",
     "default_refiner": "None",
-    "default_refiner_switch": 0.5,
+    "default_refiner_switch": 0.6,
     "default_loras": [
         [
             "None",
@@ -50,15 +49,14 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 30,
     "checkpoint_downloads": {
-        "juggernautXL_juggXIByRundiffusion.safetensors": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/ckpt/juggernautXL_juggXIByRundiffusion.safetensors"
+        "juggernautXL_juggXIByRundiffusion.safetensors": "https://civitai.com/api/download/models/782002?type=Model&format=SafeTensor&size=full&fp=fp16"
     },
     "embeddings_downloads": {},
     "lora_downloads": {
     },
     "previous_default_models": [
-	"juggernaut-X-RunDiffusion-NSFW.safetensors",
-	"juggernautXL_v9Rundiffusionphoto2.safetensors",
-	"juggernautXL_v8Rundiffusion.safetensors",
+         "juggernautXL_v9Rundiffusionphoto2.safetensors",
+         "juggernautXL_v8Rundiffusion.safetensors",
         "juggernautXL_version8Rundiffusion.safetensors",
         "juggernautXL_version7Rundiffusion.safetensors",
         "juggernautXL_v7Rundiffusion.safetensors",

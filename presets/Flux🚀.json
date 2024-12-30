@@ -3,14 +3,13 @@
 	"backend_engine": "Flux",
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
 	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model" ],
-	"available_aspect_ratios_selection": "Flux",
-	"backend_params": {
+            "backend_params": {
             "task_method": "flux_base2_gguf"
             }
     	},
     "default_model": "flux-hyp8-Q5_K_M.gguf",
     "default_refiner": "None",
-    "default_refiner_switch": 0.5,
+    "default_refiner_switch": 0.6,
     "default_loras": [
         [
             "None",
@@ -39,7 +38,7 @@
     "default_scheduler": "simple",
     "default_performance": "Speed",
     "default_styles": [],
-    "default_aspect_ratio": "1280*720",
+    "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 12,
     "checkpoint_downloads": {
         "flux-hyp8-Q5_K_M.gguf": "https://huggingface.co/mhnakif/flux-hyp8-gguf-k/resolve/main/flux-hyp8-Q5_K_M.gguf"
@@ -47,6 +46,6 @@
     "embeddings_downloads": {},
     "lora_downloads": {},
     "vae_downloads": {
-        "ae.safetensors": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/ae.safetensors"
+        "ae.safetensors": "https://huggingface.co/lovis93/testllm/resolve/ed9cf1af7465cebca4649157f118e331cf2a084f/ae.safetensors?download=true"
     }
 }

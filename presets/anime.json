@@ -1,7 +1,7 @@
 { 
     "default_model": "animaPencilXL_v500.safetensors",
     "default_refiner": "None",
-    "default_refiner_switch": 0.5,
+    "default_refiner_switch": 0.6,
     "default_loras": [
         [
             true,
@@ -41,7 +41,7 @@
         "Fooocus Semi Realistic",
         "Fooocus Masterpiece"
     ],
-    "default_aspect_ratio": "896*1152",
+    "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": -1,
     "checkpoint_downloads": {
         "animaPencilXL_v500.safetensors": "https://huggingface.co/mashb1t/fav_models/resolve/main/fav/animaPencilXL_v500.safetensors"

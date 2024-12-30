@@ -3,7 +3,6 @@
 	"backend_engine": "SD3m",
 	"disvisible": ["backend_selection", "performance_selection"],
 	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "loras", "refiner_model"],
-	"available_aspect_ratios_selection": "Common",
 	"backend_params": {
 		"task_method": "sd3_base",
 		"base_model_dtype": "auto"
@@ -11,7 +10,7 @@
     	},
     "default_model": "sd3_medium_incl_clips_t5xxlfp8.safetensors",
     "default_refiner": "None",
-    "default_refiner_switch": 0.5,
+    "default_refiner_switch": 0.6,
     "default_loras": [
         [
             "None",
@@ -40,10 +39,10 @@
     "default_scheduler": "sgm_uniform",
     "default_performance": "Speed",
     "default_styles": [],
-    "default_aspect_ratio": "1152*896",
+    "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 28,
     "checkpoint_downloads": {
-        "sd3_medium_incl_clips_t5xxlfp8.safetensors": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/sd3m/sd3_medium_incl_clips_t5xxlfp8.safetensors"
+        "sd3_medium_incl_clips_t5xxlfp8.safetensors": "https://www.modelscope.cn/models/AI-ModelScope/stable-diffusion-3-medium/resolve/master/sd3_medium_incl_clips_t5xxlfp8.safetensors"
     },
     "embeddings_downloads": {},
     "lora_downloads": {} 
