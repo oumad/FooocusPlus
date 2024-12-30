@@ -532,7 +532,7 @@ available_aspect_ratios = get_config_item_or_set_default(
 )
 default_aspect_ratio = get_config_item_or_set_default(
     key='default_aspect_ratio',
-    default_value='1152*896' if '1152*896' in available_aspect_ratios else '1024*1024',
+    default_value='1024*1024',
     validator=lambda x: x in available_aspect_ratios,
     expected_type=str
 )
@@ -644,7 +644,7 @@ default_overwrite_upscale = get_config_item_or_set_default(
 example_inpaint_prompts = get_config_item_or_set_default(
     key='example_inpaint_prompts',
     default_value=[
-        'highly detailed face', 'detailed girl face', 'detailed man face', 'detailed hand', 'beautiful eyes'
+        'highly detailed face', 'detailed woman's face', 'detailed man's face', 'detailed hand', 'beautiful eyes'
     ],
     validator=lambda x: isinstance(x, list) and all(isinstance(v, str) for v in x),
     expected_type=list
