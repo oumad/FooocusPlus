@@ -644,7 +644,7 @@ default_overwrite_upscale = get_config_item_or_set_default(
 example_inpaint_prompts = get_config_item_or_set_default(
     key='example_inpaint_prompts',
     default_value=[
-        'highly detailed face', 'detailed woman's face', 'detailed man's face', 'detailed hand', 'beautiful eyes'
+        "highly detailed face", "detailed woman's face", "detailed man's face", "detailed hand", "beautiful eyes"
     ],
     validator=lambda x: isinstance(x, list) and all(isinstance(v, str) for v in x),
     expected_type=list
@@ -652,7 +652,7 @@ example_inpaint_prompts = get_config_item_or_set_default(
 example_enhance_detection_prompts = get_config_item_or_set_default(
     key='example_enhance_detection_prompts',
     default_value=[
-        'face', 'eye', 'mouth', 'hair', 'hand', 'body'
+        "face", "eye", "mouth", "hair", "hand", "body"
     ],
     validator=lambda x: isinstance(x, list) and all(isinstance(v, str) for v in x),
     expected_type=list
