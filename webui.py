@@ -33,7 +33,7 @@ import enhanced.version as version
 import enhanced.wildcards as wildcards
 import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
-from enhanced.simpleai import comfyd 
+from enhanced.simpleai import comfyd
 
 def get_task(*args):
     args = list(args)
@@ -146,7 +146,7 @@ def inpaint_mode_change(mode, inpaint_engine_version):
             gr.Dataset.update(visible=False, samples=modules.config.example_inpaint_prompts),
             True, inpaint_engine_version, 1.0, 0.0
         ]
-    
+
     return [
         gr.update(visible=False, value=''), gr.update(visible=True),
         gr.Dataset.update(visible=False, samples=modules.config.example_inpaint_prompts),
@@ -179,10 +179,11 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
+import fooocusplus_version as fooocusplus_version
 title = f'{version.branch} {fooocusplus_version.version}'
 
-if isinstance(args_manager.args.preset, str):
-    title += ' ' + args_manager.args.preset
+#if isinstance(args_manager.args.preset, str):
+#    title += ' ' + args_manager.args.preset
 
 shared.gradio_root = gr.Blocks(
     title=title,
@@ -299,7 +300,7 @@ with shared.gradio_root:
                     wildcards_array_show =lambda x: [gr.update(visible=True)] * 2 + [gr.Dataset.update(visible=True, samples=wildcards.get_wildcards_samples()), gr.Dataset.update(visible=True, samples=wildcards.get_words_of_wildcard_samples(x))]
                     wildcards_array_hidden = [gr.update(visible=False)] * 2 + [gr.Dataset.update(visible=False, samples=wildcards.get_wildcards_samples()), gr.Dataset.update(visible=False, samples=wildcards.get_words_of_wildcard_samples())]
                     wildcards_array_hold = [gr.update()] * 4
-            
+
             with gr.Row(elem_classes='advanced_check_row'):
                 input_image_checkbox = gr.Checkbox(label='Input Image', value=modules.config.default_image_prompt_checkbox, container=False, elem_classes='min_check')
                 prompt_panel_checkbox = gr.Checkbox(label='Prompt Panel', value=False, container=False, elem_classes='min_check')
@@ -310,7 +311,7 @@ with shared.gradio_root:
                 prompt_regen_button = gr.Button(value='ReGenerate', size='sm', visible=True)
                 prompt_delete_button = gr.Button(value='DeleteImage', size='sm', visible=True)
                 prompt_info_button.click(toolbox.toggle_prompt_info, inputs=state_topbar, outputs=[prompt_info_box, state_topbar], show_progress=False)
-            
+
             with gr.Row(visible=modules.config.default_image_prompt_checkbox) as image_input_panel:
                 with gr.Tabs(selected=modules.config.default_selected_image_input_tab_id):
                     with gr.Tab(label='Image Prompt', id='ip_tab') as ip_tab:
@@ -374,7 +375,7 @@ with shared.gradio_root:
                                                             minimum=-1, maximum=1.0, step=0.001, value=-1,
                                                             info='Set as negative number to disable. For developer debugging.')
                         gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/390" target="_blank">\U0001F4D4 Documentation</a>')
-                    
+
                     with gr.Tab(label='Inpaint or Outpaint', id='inpaint_tab') as inpaint_tab:
                         with gr.Row():
                             mixing_image_prompt_and_inpaint = gr.Checkbox(label='Mixing Image Prompt and Inpaint', value=False, container=False)
@@ -432,7 +433,7 @@ with shared.gradio_root:
                                                                   'Only used in inpaint, not used in outpaint. '
                                                                   '(Outpaint always use 1.0)')
                         gr.HTML('* Powered by Fooocus Inpaint Engine <a href="https://github.com/lllyasviel/Fooocus/discussions/414" target="_blank">\U0001F4D4 Documentation</a>')
-                        
+
                         def generate_mask(image, mask_model, cloth_category, dino_prompt_text, sam_model, box_threshold, text_threshold, sam_max_detections, dino_erode_or_dilate, dino_debug, params_extra):
                             from extras.inpaint_mask import generate_mask_from_image
 
@@ -520,7 +521,7 @@ with shared.gradio_root:
                                         enhance_inpaint_update_ctrls = []
                                         for index in range(modules.config.default_enhance_tabs):
                                             with gr.Tab(label=f'Region#{index + 1}') as enhance_tab_item:
-                                                enhance_enabled = gr.Checkbox(label='Enable', value=False if index not in [0,1] else True, 
+                                                enhance_enabled = gr.Checkbox(label='Enable', value=False if index not in [0,1] else True,
                                                         elem_classes='min_check', container=False)
 
                                                 enhance_mask_dino_prompt_text = gr.Textbox(label='Detection prompt',
@@ -672,11 +673,11 @@ with shared.gradio_root:
                                                  value=modules.config.default_performance)
                     image_number = gr.Slider(label='Image Number', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
                     with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
-                        aspect_ratios_selection = gr.Textbox(value='', visible=False) 
+                        aspect_ratios_selection = gr.Textbox(value='', visible=False)
                         aspect_ratios_selections = []
                         for template in flags.aspect_ratios_templates:
                             aspect_ratios_selections.append(gr.Radio(label='aspect ratios', choices=flags.available_aspect_ratios_list[template], value=flags.default_aspect_ratios[template], visible= template=='SDXL', info='Vertical(9:16), Portrait(4:5), Photo(4:3), Landscape(3:2), Widescreen(16:9), Cinematic(21:9)', elem_classes='aspect_ratios'))
-                        
+
                         for aspect_ratios_select in aspect_ratios_selections:
                             aspect_ratios_select.change(lambda x: x, inputs=aspect_ratios_select, outputs=aspect_ratios_selection, queue=False, show_progress=False).then(lambda x: None, inputs=aspect_ratios_select, queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}')
                         overwrite_width = gr.Slider(label='Forced Overwrite of Generating Width',
@@ -694,7 +695,7 @@ with shared.gradio_root:
                     output_format = gr.Radio(label='Output Format',
                                          choices=flags.OutputFormat.list(),
                                          value=modules.config.default_output_format)
-                       
+
                     negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type prompt here.",
                                              info='Describing what you do not want to see.', lines=2,
                                              elem_id='negative_prompt',
@@ -728,7 +729,7 @@ with shared.gradio_root:
 
                 history_link = gr.HTML()
                 shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
-                
+
                 with gr.Tabs():
                     with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
                         with gr.Row():
@@ -1034,7 +1035,7 @@ with shared.gradio_root:
                     backfill_prompt = gr.Checkbox(label='Backfill prompt while switching images', value=modules.config.default_backfill_prompt, interactive=True, info='Extract and backfill prompt and negative prompt while switching historical gallery images.')
                     translation_methods = gr.Radio(label='Translation methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third.')
                     mobile_url = gr.Checkbox(label=f'http://{args_manager.args.listen}:{args_manager.args.port}{args_manager.args.webroot}/', value=True, info='Mobile phone access address within the LAN. If you want WAN access, consulting QQ group: 938075852.', interactive=False)
-                    
+
                     def sync_params_backend(key, v, params):
                         params.update({key:v})
                         return params
@@ -1062,14 +1063,14 @@ with shared.gradio_root:
                     result = [gr.update(choices=flags.Performance.list()), gr.update()]
                     result += [gr.update(interactive=True)] * 18
                 return result
-            
+
             uov_tab.select(lambda: 'uov', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             inpaint_tab.select(lambda: 'inpaint', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             ip_tab.select(lambda: 'ip', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             layer_tab.select(lambda: 'layer', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             enhance_tab.select(lambda: 'enhance', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
-            
-            input_image_checkbox.change(lambda x: [gr.update(visible=x), gr.update(choices=flags.Performance.list()), 
+
+            input_image_checkbox.change(lambda x: [gr.update(visible=x), gr.update(choices=flags.Performance.list()),
                 gr.update()] + [gr.update(interactive=True)]*18, inputs=input_image_checkbox,
                 outputs=[image_input_panel] + layout_image_tab, queue=False, show_progress=False, _js=switch_js)
             prompt_panel_checkbox.change(lambda x: gr.update(visible=x, open=x if x else True), inputs=prompt_panel_checkbox, outputs=prompt_wildcards, queue=False, show_progress=False, _js=switch_js).then(lambda x,y: wildcards_array_show(y['wildcard_in_wildcards']) if x else wildcards_array_hidden, inputs=[prompt_panel_checkbox, state_topbar], outputs=wildcards_array, queue=False, show_progress=False)
@@ -1079,7 +1080,7 @@ with shared.gradio_root:
             import enhanced.superprompter
             super_prompter.click(lambda x, y, z: enhanced.superprompter.answer(input_text=translator.convert(f'{y}{x}', z), seed=image_seed), inputs=[prompt, super_prompter_prompt, translation_methods], outputs=prompt, queue=False, show_progress=True)
             ehps = [backfill_prompt, translation_methods, comfyd_active_checkbox]
-            
+
             def update_state_topbar(name, value, state):
                 state.update({name: value})
                 return state
@@ -1155,7 +1156,7 @@ with shared.gradio_root:
                                          scheduler_name, adaptive_cfg, refiner_swap_method, negative_prompt, disable_intermediate_results
                                      ], queue=False, show_progress=False)
 
-        
+
         def reset_aspect_ratios(aspect_ratios):
             if len(aspect_ratios.split(','))>1:
                 template = aspect_ratios.split(',')[1]
@@ -1191,7 +1192,7 @@ with shared.gradio_root:
         # load configured default_inpaint_method
         # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
         shared.gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
-                inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts, 
+                inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts,
                 inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field
             ], show_progress=False, queue=False)
 
@@ -1237,7 +1238,7 @@ with shared.gradio_root:
             ctrls += [save_metadata_to_images, metadata_scheme]
 
         ctrls += ip_ctrls
-        
+
         ctrls += [debugging_dino, dino_erode_or_dilate, debugging_enhance_masks_checkbox,
                   enhance_input_image, enhance_checkbox, enhance_uov_method, enhance_uov_processing_order,
                   enhance_uov_prompt_type]
@@ -1266,7 +1267,7 @@ with shared.gradio_root:
             return [json.dumps(loaded_json), gr.update(visible=False), gr.update(visible=True), gr.update()]
 
         prompt.input(parse_meta, inputs=[prompt, state_is_generating, state_topbar, prompt_panel_checkbox], outputs=[prompt, generate_button, load_parameter_button, prompt_panel_checkbox], queue=False, show_progress=False)
-        
+
         translator_button.click(lambda x, y: translator.convert(x, y), inputs=[prompt, translation_methods], outputs=prompt, queue=False, show_progress=True)
 
         load_parameter_button.click(modules.meta_parser.load_parameter_button_click, inputs=[prompt, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=False)
@@ -1368,7 +1369,7 @@ with shared.gradio_root:
     params_note_delete_button.click(toolbox.delete_image, inputs=state_topbar, outputs=[gallery, gallery_index, params_note_delete_button, params_note_box, state_topbar], show_progress=False) \
             .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
             .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}')
-    
+
     prompt_regen_button.click(toolbox.toggle_note_box_regen, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_regen_button, params_note_box, state_topbar], show_progress=False)
     params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
 
@@ -1377,12 +1378,12 @@ with shared.gradio_root:
         .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
         .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
 
-    
+
 
     reset_layout_params = nav_bars + reset_preset_layout + reset_preset_func + load_data_outputs
     reset_preset_inputs = [prompt, negative_prompt, state_topbar, state_is_generating, inpaint_mode, comfyd_active_checkbox]
 
-    
+
     binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
 
     for i in range(shared.BUTTON_NUM):
