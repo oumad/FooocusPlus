@@ -182,8 +182,8 @@ reload_javascript()
 import fooocusplus_version as fooocusplus_version
 title = f'{version.branch} {fooocusplus_version.version}'
 
-#if isinstance(args_manager.args.preset, str):
-#    title += ' ' + args_manager.args.preset
+if isinstance(args_manager.args.preset, str):
+    title += ' ' + args_manager.args.preset
 
 shared.gradio_root = gr.Blocks(
     title=title,
@@ -661,7 +661,7 @@ with shared.gradio_root:
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
-                preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
+              # preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 if not args_manager.args.disable_preset_selection:
                     preset_selection = gr.Dropdown(label='Preset',
                                                    choices=modules.config.available_presets,
