@@ -112,11 +112,13 @@ comfy_sampler_list = COMFY_SAMPLER_NAMES = COMFY_KSAMPLER_NAMES + ["ddim", "uni_
 aspect_ratios_templates = ['SDXL', 'HyDiT', 'Common', 'Flux']
 default_aspect_ratio = ['1152*896', '1024*1024', '1280*768', '1280*720']
 available_aspect_ratios = [
-    ['704*1408', '704*1344', '768*1344', '768*1280', '832*1216', '832*1152',
-    '896*1152', '896*1088', '960*1088', '960*1024', '1024*1024', '1024*960',
-    '1088*960', '1088*896', '1152*896', '1152*832', '1216*832', '1280*768',
-    '1344*768', '1344*704', '1408*704', '1472*704', '1536*640', '1600*640',
-    '1664*576', '1728*576'],
+    ['704*1408', '704*1344', '756*1344', '768*1344', '768*1280',
+    '832*1248', '832*1216', '832*1152', '864*1152', '896*1152',
+    '896*1088', '960*1088', '960*1024', '1024*1024', '1024*960',
+    '1088*960', '1088*896', '1152*896', '1152*864', '1152*832',
+    '1216*832', '1248*832', '1280*768', '1344*768', '1344*756',
+    '1344*704', '1408*704', '1472*704', '1536*640', '1600*640',
+    '1664*576', '1728*576', '2048*512'],
 
     ['768*1280', '960*1280', '1024*1024',
     '1280*768', '1280*960', '1280*1280',],
@@ -205,7 +207,7 @@ default_class_params = {
     'Kolors': {
         'disvisible': ["backend_selection", "performance_selection"],
         'disinteractive': ["input_image_checkbox", "enhance_checkbox", "performance_selection", "base_model", "overwrite_step", "refiner_model"],
-        'available_aspect_ratios_selection': 'Common',
+        'available_aspect_ratios_selection': 'SDXL',
         'available_sampler_name': comfy_sampler_list,
         'available_scheduler_name': comfy_scheduler_list,
         'backend_params': {
@@ -216,7 +218,7 @@ default_class_params = {
     'Kolors+': {
         'disvisible': ["backend_selection", "performance_selection"],
         'disinteractive': ["input_image_checkbox", "enhance_checkbox", "performance_selection", "base_model", "overwrite_step", "refiner_model"],
-        'available_aspect_ratios_selection': 'Common',
+        'available_aspect_ratios_selection': 'SDXL',
         'available_sampler_name': comfy_sampler_list,
         'available_scheduler_name': comfy_scheduler_list,
         'backend_params': {
@@ -227,7 +229,7 @@ default_class_params = {
     'SD3m': {
         'disvisible': ["backend_selection", "performance_selection"],
         'disinteractive': ["input_image_checkbox", "enhance_checkbox", "performance_selection", "loras", "refiner_model"],
-        'available_aspect_ratios_selection': 'Common',
+        'available_aspect_ratios_selection': 'SDXL',
         'available_sampler_name': comfy_sampler_list,
         'available_scheduler_name': comfy_scheduler_list,
         'backend_params': {
@@ -237,7 +239,7 @@ default_class_params = {
     'HyDiT': {
         'disvisible': ["backend_selection", "performance_selection"],
         'disinteractive': ["input_image_checkbox", "enhance_checkbox", "performance_selection", "base_model", "loras", "refiner_model", "scheduler_name"],
-        'available_aspect_ratios_selection': 'HyDiT',
+        'available_aspect_ratios_selection': 'SDXL',
         'available_sampler_name': ["ddpm", "ddim", "dpmms"],
         'backend_params': {
             "task_method": "hydit_base",
@@ -246,7 +248,7 @@ default_class_params = {
     'HyDiT+': {
         'disvisible': ["backend_selection", "performance_selection"],
         'disinteractive': ["input_image_checkbox", "enhance_checkbox", "performance_selection", "base_model", "loras", "refiner_model", "scheduler_name"],
-        'available_aspect_ratios_selection': 'HyDiT',
+        'available_aspect_ratios_selection': 'SDXL',
         'available_sampler_name': comfy_sampler_list,
         'available_scheduler_name': comfy_scheduler_list,
         'backend_params': {
@@ -256,7 +258,7 @@ default_class_params = {
     'Flux': {
         'disvisible': ["backend_selection", "performance_selection"],
         'disinteractive': ["input_image_checkbox", "enhance_checkbox", "performance_selection", "loras-4", "refiner_model"],
-        'available_aspect_ratios_selection': 'Flux',
+        'available_aspect_ratios_selection': 'SDXL',
         'available_sampler_name': comfy_sampler_list,
         'available_scheduler_name': comfy_scheduler_list,
         'backend_params': {
@@ -278,7 +280,7 @@ class MetadataScheme(Enum):
 
 metadata_scheme = [
     (f'{MetadataScheme.SIMPLE.value}', MetadataScheme.SIMPLE.value),
-    #(f'{MetadataScheme.FOOOCUS.value}', MetadataScheme.FOOOCUS.value),
+    (f'{MetadataScheme.FOOOCUS.value}', MetadataScheme.FOOOCUS.value),
     (f'{MetadataScheme.A1111.value}', MetadataScheme.A1111.value),
 ]
 
