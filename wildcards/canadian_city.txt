@@ -1,0 +1,20 @@
+Calgary, Alberta
+Charlottetown, Prince Edward Island
+Edmonton, Alberta
+Fredericton, New Brunswick
+Halifax, Nova Scotia
+City of Iqaluit, Nunavut
+Moncton, New Brunswick
+Mississauga, Ontario
+Montreal, Quebec
+Ottawa, Canada
+Quebec City, Quebec
+Regina, Saskatchewan
+Saskatoon, Saskatchewan
+City of St John's, Newfoundland and Labrador
+Toronto, Ontario
+Vancouver, British Columbia
+Victoria, British Columbia
+City of Whitehorse, Yukon
+Winnipeg, Manitoba
+City of Yellowknife, Northwest Territories

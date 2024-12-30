@@ -1,0 +1,60 @@
+bacon
+beef
+calamari
+carp filet
+catfish
+chicken nuggets
+chops
+clam
+cod
+compote
+crab legs
+croquettes
+curry
+cutlets
+eel
+enchilada
+escalope
+escargot
+flounder
+fricassee
+fried eggs
+fried chicken
+grouper
+ham
+haddock
+halibut
+herrings
+kebabs
+laab
+liver
+mackerel filet
+meatballs
+meatloaf
+mutton
+omelette
+oysters
+perch
+pork
+poultry
+prawns
+stir fry
+roast chicken
+roast duck
+roast goose
+roast lamb
+roast partridge
+roast turkey
+ribs
+salmon
+sashimi
+sausages
+scallops
+shrimp
+sole
+steak
+stew
+sushi
+tuna
+venison
+wings

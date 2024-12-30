@@ -179,7 +179,7 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
-title = f'{version.branch} {version.simplesdxl_ver} derived from Fooocus {fooocus_version.version}'
+title = f'{version.branch} {fooocusplus_version.version}'
 
 if isinstance(args_manager.args.preset, str):
     title += ' ' + args_manager.args.preset
@@ -681,8 +681,8 @@ with shared.gradio_root:
                             aspect_ratios_select.change(lambda x: x, inputs=aspect_ratios_select, outputs=aspect_ratios_selection, queue=False, show_progress=False).then(lambda x: None, inputs=aspect_ratios_select, queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}')
                         overwrite_width = gr.Slider(label='Forced Overwrite of Generating Width',
                                                     minimum=-1, maximum=2048, step=1, value=-1,
-                                                    info='Set as -1 to disable. For developer debugging. '
-                                                         'Results will be worse for non-standard numbers that SDXL is not trained on.')
+                                                    info='Set as -1 to disable.'
+                                                         'Results may be worse for non-standard dimensions that SDXL is not trained on.')
                         overwrite_height = gr.Slider(label='Forced Overwrite of Generating Height',
                                                      minimum=-1, maximum=2048, step=1, value=-1)
                         def overwrite_aspect_ratios(width, height):

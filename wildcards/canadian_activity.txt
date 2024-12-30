@@ -1,0 +1,20 @@
+a __canadian__ __child__ and a __canadian__ __child__ (plays:1.2)
+a __canadian__ __child__ and a __canadian__ __child__ (runs:1.2)
+a __canadian__ __child__ and a __canadian__ __child__ (walks:1.2)
+a __canadian__ __child__ (sits reading a book:1.2)
+a __canadian__ __child__ (uses a mobile:1.2)
+a __canadian__ teenager and a __canadian__ teenager (dances:1.2), looking at each other
+a __canadian__ teenager and a __canadian__ teenager (runs:1.2)
+a __canadian__ teenager and a __canadian__ teenager (walks:1.2)
+a __canadian__ teenager (sits reading a book:1.2)
+a __canadian__ teenager (uses a mobile:1.2)
+a __canadian__ __adult__ and a __canadian__ __adult__ (walks:1.2)
+a __canadian__ man and a __canadian__ woman (dances:1.2), looking at each other
+a __canadian__ man and a __canadian__ woman (embraces:1.2), looking at each other
+a __canadian__ man and a __canadian__ woman (hikes:1.2)
+a __canadian__ man and a __canadian__ woman (strolls:1.2)
+a __canadian__ __adult__ (paints a picture:1.2)
+a __canadian__ __adult__ (takes a photograph:1.2)
+a __canadian__ __adult__ (sits reading a book:1.2)
+a __canadian__ __adult__ (uses a mobile:1.2)
+a __canadian__ __adult__ (swaggers:1.2)
