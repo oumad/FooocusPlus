@@ -660,13 +660,17 @@ with shared.gradio_root:
             current_tab = gr.Textbox(value=modules.config.default_selected_image_input_tab_id.split('_')[0], visible=False)
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
-            with gr.Tab(label='Setting', elem_id="scrollable-box"):
+            with gr.Tab(label='Settings', elem_id="scrollable-box"):
                 preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 if not args_manager.args.disable_preset_selection:
-                    preset_selection = gr.Radio(label='Preset',
-                                                choices=modules.config.available_presets,
-                                                value=args_manager.args.preset if args_manager.args.preset else "initial",
-                                                visible=False, interactive=True)
+                    preset_selection = gr.Dropdown(label='Preset',
+                                                   choices=modules.config.available_presets,
+                                                   value=args_manager.args.preset if args_manager.args.preset else "initial",
+                                                   interactive=True)                    
+                    #preset_selection = gr.Radio(label='Preset',
+                     #                           choices=modules.config.available_presets,
+                     #                           value=args_manager.args.preset if args_manager.args.preset else "initial",
+                     #                           visible=False, interactive=True)
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                                  choices=flags.Performance.list(),
@@ -863,10 +867,10 @@ with shared.gradio_root:
                                       value=modules.config.default_sample_sharpness,
                                       info='Higher value means image and texture are sharper.')
                 gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/117" target="_blank">\U0001F4D4 Documentation</a>')
-                dev_mode = gr.Checkbox(label='Developer Debug Mode', value=modules.config.default_developer_debug_mode_checkbox, container=False)
+                dev_mode = gr.Checkbox(label='Expert Mode', value=modules.config.default_developer_debug_mode_checkbox, container=False)
 
                 with gr.Column(visible=modules.config.default_developer_debug_mode_checkbox) as dev_tools:
-                    with gr.Tab(label='Debug Tools'):
+                    with gr.Tab(label='Expert Tools'):
                         sampler_name = gr.Dropdown(label='Sampler', choices=flags.sampler_list,
                                                    value=modules.config.default_sampler)
                         scheduler_name = gr.Dropdown(label='Scheduler', choices=flags.scheduler_list,
