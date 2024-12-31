@@ -712,39 +712,39 @@ with shared.gradio_root:
                                     pass
                                 return random.randint(constants.MIN_SEED, constants.MAX_SEED)
 
-                    seed_random.change(random_checked, inputs=[seed_random], outputs=[image_seed],
-                                       queue=False, show_progress=False)
+                        seed_random.change(random_checked, inputs=[seed_random], outputs=[image_seed],
+                                           queue=False, show_progress=False)
 
-                    def update_history_link():
-                        if args_manager.args.disable_image_log:
-                            return gr.update(value='')
+                        def update_history_link():
+                            if args_manager.args.disable_image_log:
+                                return gr.update(value='')
 
-                        return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
+                            return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
 
-                history_link = gr.HTML()
-                shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
+                    history_link = gr.HTML()
+                    shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
 
-                with gr.Tabs():
-                    with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
-                        with gr.Row():
-                            with gr.Column():
-                                describe_input_image = grh.Image(label='Image to be described', source='upload', type='numpy', show_label=True)
-                            with gr.Column():
-                                describe_methods = gr.CheckboxGroup(
-                                    label='Content Type',
-                                    choices=flags.describe_types,
-                                    value=modules.config.default_describe_content_type)
-                                describe_apply_styles = gr.Checkbox(label='Apply Styles', value=modules.config.default_describe_apply_prompts_checkbox)
-                                describe_btn = gr.Button(value='Describe this Image into Prompt')
-                                describe_image_size = gr.Textbox(label='Original Size / Recommended Size', elem_id='describe_image_size', visible=False)
-                                gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/1363" target="_blank">\U0001F4D4 Documentation</a>')
+                    with gr.Tabs():
+                        with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
+                            with gr.Row():
+                                with gr.Column():
+                                    describe_input_image = grh.Image(label='Image to be described', source='upload', type='numpy', show_label=True)
+                                with gr.Column():
+                                    describe_methods = gr.CheckboxGroup(
+                                        label='Content Type',
+                                        choices=flags.describe_types,
+                                        value=modules.config.default_describe_content_type)
+                                    describe_apply_styles = gr.Checkbox(label='Apply Styles', value=modules.config.default_describe_apply_prompts_checkbox)
+                                    describe_btn = gr.Button(value='Describe this Image into Prompt')
+                                    describe_image_size = gr.Textbox(label='Original Size / Recommended Size', elem_id='describe_image_size', visible=False)
+                                    gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/1363" target="_blank">\U0001F4D4 Documentation</a>')
 
-                                def trigger_show_image_properties(image):
-                                    image_size = modules.util.get_image_size_info(image, modules.flags.available_aspect_ratios[0])
-                                    return gr.update(value=image_size, visible=True)
+                                    def trigger_show_image_properties(image):
+                                        image_size = modules.util.get_image_size_info(image, modules.flags.available_aspect_ratios[0])
+                                        return gr.update(value=image_size, visible=True)
 
-                                describe_input_image.upload(trigger_show_image_properties, inputs=describe_input_image,
-                                                            outputs=describe_image_size, show_progress=False, queue=False)
+                                    describe_input_image.upload(trigger_show_image_properties, inputs=describe_input_image,
+                                                                outputs=describe_image_size, show_progress=False, queue=False)
 
                     with gr.Tab(label='Metadata', id='metadata_tab', visible=True) as metadata_tab:
                         with gr.Column():
