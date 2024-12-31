@@ -1377,13 +1377,13 @@ with shared.gradio_root:
         
                         binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
                 
-                        for i in range(shared.BUTTON_NUM):
-                            bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
-                               .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
-                               .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
-                               .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
-                               .then(lambda: None, _js='()=>{refresh_style_localization();}') \
-                               .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
+                       #for i in range(shared.BUTTON_NUM):
+                       #     bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
+                       #        .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
+                       #        .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
+                       #        .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
+                       #        .then(lambda: None, _js='()=>{refresh_style_localization();}') \
+                       #        .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
         
         
                         shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
