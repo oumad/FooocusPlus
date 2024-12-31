@@ -1358,37 +1358,35 @@ with shared.gradio_root:
                                 .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
                                 .then(lambda: None, _js='()=>{refresh_style_localization();}')
         
-                    prompt_delete_button.click(toolbox.toggle_note_box_delete, inputs=state_topbar, outputs=[params_note_info, params_note_delete_button, params_note_box, state_topbar], show_progress=False)
-                    params_note_delete_button.click(toolbox.delete_image, inputs=state_topbar, outputs=[gallery, gallery_index, params_note_delete_button, params_note_box, state_topbar], show_progress=False) \
-                        .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
-                        .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}')
+                        prompt_delete_button.click(toolbox.toggle_note_box_delete, inputs=state_topbar, outputs=[params_note_info, params_note_delete_button, params_note_box, state_topbar], show_progress=False)
+                        params_note_delete_button.click(toolbox.delete_image, inputs=state_topbar, outputs=[gallery, gallery_index, params_note_delete_button, params_note_box, state_topbar], show_progress=False) \
+                            .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
+                            .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}')
         
-                    prompt_regen_button.click(toolbox.toggle_note_box_regen, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_regen_button, params_note_box, state_topbar], show_progress=False)
-                    params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
+                        prompt_regen_button.click(toolbox.toggle_note_box_regen, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_regen_button, params_note_box, state_topbar], show_progress=False)
+                        params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
         
-                    prompt_preset_button.click(toolbox.toggle_note_box_preset, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False)
-                    params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box, state_topbar] + nav_bars, show_progress=False) \
-                        .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
-                        .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
-        
-        
-        
-                    reset_layout_params = reset_preset_layout + reset_preset_func + load_data_outputs
-                    reset_preset_inputs = [prompt, negative_prompt, state_is_generating, inpaint_mode, comfyd_active_checkbox]
+                        prompt_preset_button.click(toolbox.toggle_note_box_preset, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False)
+                        params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box, state_topbar] + nav_bars, show_progress=False) \
+                            .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
+                            .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
+                  
+                        reset_layout_params = reset_preset_layout + reset_preset_func + load_data_outputs
+                        reset_preset_inputs = [prompt, negative_prompt, state_is_generating, inpaint_mode, comfyd_active_checkbox]
         
         
-                    binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
+                        binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
+                
+                        for i in range(shared.BUTTON_NUM):
+                            bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
+                               .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
+                               .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
+                               .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
+                               .then(lambda: None, _js='()=>{refresh_style_localization();}') \
+                               .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
         
-                    for i in range(shared.BUTTON_NUM):
-                        bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
-                           .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
-                           .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
-                           .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
-                           .then(lambda: None, _js='()=>{refresh_style_localization();}') \
-                           .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
         
-        
-                    shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
+                        shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
                               .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
                               .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                               .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
@@ -1400,39 +1398,39 @@ with shared.gradio_root:
                               .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
                               .then(fn=lambda: None, _js='refresh_grid_delayed')
         
-                def dump_default_english_config():
-                    from modules.localization import dump_english_config
-                    dump_english_config(grh.all_components)
+                    def dump_default_english_config():
+                        from modules.localization import dump_english_config
+                        dump_english_config(grh.all_components)
         
         
-                #dump_default_english_config()
-                import logging
-                import httpx
-                httpx_logger = logging.getLogger("httpx")
-                httpx_logger.setLevel(logging.WARNING)
+                    #dump_default_english_config()
+                    import logging
+                    import httpx
+                    httpx_logger = logging.getLogger("httpx")
+                    httpx_logger.setLevel(logging.WARNING)
         
-                import logging
-                import httpx
-                httpx_logger = logging.getLogger("httpx")
-                httpx_logger.setLevel(logging.WARNING)
-                hydit_logger = logging.getLogger("hydit")
-                hydit_logger.setLevel(logging.WARNING)
+                    import logging
+                    import httpx
+                    httpx_logger = logging.getLogger("httpx")
+                    httpx_logger.setLevel(logging.WARNING)
+                    hydit_logger = logging.getLogger("hydit")
+                    hydit_logger.setLevel(logging.WARNING)
         
-                import warnings
-                warnings.filterwarnings("ignore", category=FutureWarning)
+                    import warnings
+                    warnings.filterwarnings("ignore", category=FutureWarning)
         
         
-                if not args_manager.args.disable_comfyd:
-                    comfyd.active(True)
+                    if not args_manager.args.disable_comfyd:
+                        comfyd.active(True)
         
-                shared.gradio_root.launch(
-                    inbrowser=args_manager.args.in_browser,
-                    server_name=args_manager.args.listen,
-                    server_port=args_manager.args.port,
-                    share=args_manager.args.share,
-                    root_path=args_manager.args.webroot,
-                    auth=check_auth if (args_manager.args.share or args_manager.args.listen) and auth_enabled else None,
-                    allowed_paths=[modules.config.path_outputs],
-                    blocked_paths=[constants.AUTH_FILENAME]
-                )
+                    shared.gradio_root.launch(
+                        inbrowser=args_manager.args.in_browser,
+                        server_name=args_manager.args.listen,
+                        server_port=args_manager.args.port,
+                        share=args_manager.args.share,
+                        root_path=args_manager.args.webroot,
+                        auth=check_auth if (args_manager.args.share or args_manager.args.listen) and auth_enabled else None,
+                        allowed_paths=[modules.config.path_outputs],
+                        blocked_paths=[constants.AUTH_FILENAME]
+                    )
         
