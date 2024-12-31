@@ -697,20 +697,20 @@ with shared.gradio_root:
                         seed_random = gr.Checkbox(label='Random', value=True)
                         image_seed = gr.Textbox(label='Seed', value=0, max_lines=1, visible=False) # workaround for https://github.com/gradio-app/gradio/issues/5354
 
-                def random_checked(r):
-                    return gr.update(visible=not r)
+                    def random_checked(r):
+                        return gr.update(visible=not r)
 
-                def refresh_seed(r, seed_string):
-                    if r:
-                        return random.randint(constants.MIN_SEED, constants.MAX_SEED)
-                    else:
-                        try:
-                            seed_value = int(seed_string)
-                            if constants.MIN_SEED <= seed_value <= constants.MAX_SEED:
-                                return seed_value
-                        except ValueError:
-                            pass
-                        return random.randint(constants.MIN_SEED, constants.MAX_SEED)
+                    def refresh_seed(r, seed_string):
+                        if r:
+                            return random.randint(constants.MIN_SEED, constants.MAX_SEED)
+                        else:
+                            try:
+                                seed_value = int(seed_string)
+                                if constants.MIN_SEED <= seed_value <= constants.MAX_SEED:
+                                    return seed_value
+                            except ValueError:
+                                pass
+                            return random.randint(constants.MIN_SEED, constants.MAX_SEED)
 
                 seed_random.change(random_checked, inputs=[seed_random], outputs=[image_seed],
                                    queue=False, show_progress=False)
