@@ -190,7 +190,6 @@ shared.gradio_root = gr.Blocks(
     css=topbar.css + toolbox.css).queue()
 
 with shared.gradio_root:
-    state_topbar = gr.State({})
     params_backend = gr.State({'translation_methods': modules.config.default_translation_methods})
     currentTask = gr.State(worker.AsyncTask(args=[]))
     inpaint_engine_state = gr.State('empty')
@@ -1366,10 +1365,10 @@ with shared.gradio_root:
                         prompt_regen_button.click(toolbox.toggle_note_box_regen, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_regen_button, params_note_box, state_topbar], show_progress=False)
                         params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
         
-                        prompt_preset_button.click(toolbox.toggle_note_box_preset, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False)
-                        params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False) \
-                            .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
-                            .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
+                        prompt_preset_button.click(toolbox.toggle_note_box_preset, inputs=model_check, outputs=[params_note_info, params_note_input_name, params_note_preset_button, params_note_box], show_progress=False)
+                        params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box], show_progress=False) \
+                            .then(fn=lambda x: x, outputs=system_params, queue=False, show_progress=False) \
+                            .then(fn=lambda x: None, inputs=system_params)
                   
                         reset_layout_params = reset_preset_layout + reset_preset_func + load_data_outputs
                         reset_preset_inputs = [prompt, negative_prompt, state_is_generating, inpaint_mode, comfyd_active_checkbox]
@@ -1386,7 +1385,7 @@ with shared.gradio_root:
                        #        .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
         
         
-                        shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
+                        shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=queue=False, show_progress=False) \
                               .then([progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_selection], show_progress=False) \
                               .then(inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                               .then(fn=lambda x: x, outputs=system_params, show_progress=False) \
