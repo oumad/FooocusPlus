@@ -213,20 +213,20 @@ with shared.gradio_root:
                     params_note_delete_button = gr.Button(value='Enter', visible=False)
                     params_note_regen_button = gr.Button(value='Enter', visible=False)
                     params_note_preset_button = gr.Button(value='Enter', visible=False)
-                with gr.Group(visible=False, elem_classes='identity_note') as identity_dialog:
-                    identity_note_info = gr.Markdown(elem_classes='note_info', value=simpleai.identity_note)
-                    with gr.Tab(label='New Identity') as new_id_tab:
-                        identity_nick_input = gr.Textbox(show_label=False, placeholder="Type nickname here.", min_width=70, elem_classes='identity_input')
-                        identity_tele_input = gr.Textbox(show_label=False, placeholder="Type telephone here.", min_width=70, elem_classes='identity_input')
-                        identity_getvcode_button = gr.Button(value='Get Verification Code', visible=True)
-                        identity_vcode_input = gr.Textbox(show_label=False, placeholder="Type vcode here.", min_width=70, elem_classes='identity_input')
-                        identity_bind_button = gr.Button(value='Bind identity', min_width=150, visible=True)
-                    with gr.Tab(label='Confirm Identity') as confirm_id_tab:
-                        identity_phrase_input = gr.Textbox(show_label=False, type='password', placeholder="Type id phrases here.", min_width=150, elem_classes='identity_input')
-                        identity_confirm_button = gr.Button(value='Confirm identity', visible=True)
-                    identity_getvcode_button.click(simpleai.get_vcode, inputs=[identity_nick_input, identity_tele_input, state_topbar], outputs=state_topbar)
-                    identity_bind_button.click(simpleai.bind_identity, inputs=[identity_nick_input, identity_tele_input, identity_vcode_input, state_topbar], outputs=state_topbar)
-                    identity_confirm_button.click(simpleai.confirm_identity, inputs=[identity_phrase_input, state_topbar], outputs=state_topbar)
+               # with gr.Group(visible=False, elem_classes='identity_note') as identity_dialog:
+               #    identity_note_info = gr.Markdown(elem_classes='note_info', value=simpleai.identity_note)
+               #     with gr.Tab(label='New Identity') as new_id_tab:
+               #         identity_nick_input = gr.Textbox(show_label=False, placeholder="Type nickname here.", min_width=70, elem_classes='identity_input')
+               #         identity_tele_input = gr.Textbox(show_label=False, placeholder="Type telephone here.", min_width=70, elem_classes='identity_input')
+               #         identity_getvcode_button = gr.Button(value='Get Verification Code', visible=True)
+               #         identity_vcode_input = gr.Textbox(show_label=False, placeholder="Type vcode here.", min_width=70, elem_classes='identity_input')
+               #         identity_bind_button = gr.Button(value='Bind identity', min_width=150, visible=True)
+               #     with gr.Tab(label='Confirm Identity') as confirm_id_tab:
+               #         identity_phrase_input = gr.Textbox(show_label=False, type='password', placeholder="Type id phrases here.", min_width=150, elem_classes='identity_input')
+               #         identity_confirm_button = gr.Button(value='Confirm identity', visible=True)
+               #     identity_getvcode_button.click(simpleai.get_vcode, inputs=[identity_nick_input, identity_tele_input])
+               #     identity_bind_button.click(simpleai.bind_identity, inputs=[identity_nick_input, identity_tele_input, identity_vcode_input])
+               #     identity_confirm_button.click(simpleai.confirm_identity, inputs=[identity_phrase_input])
 
                 with gr.Accordion("Finished Images Catalog", open=False, visible=False, elem_id='finished_images_catalog') as index_radio:
                     gallery_index_stat = gr.Textbox(value='', visible=False)
