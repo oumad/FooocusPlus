@@ -1088,9 +1088,9 @@ with shared.gradio_root:
     
                         #with gr.Row():
                         #    manual_link = gr.HTML(value='<a href="https://github.com/metercai/UseCaseGuidance/blob/main/UseCaseGuidanceForSimpleSDXL.md">SimpleSDXL创意生图场景应用指南</a>')
-                    state_is_generating = gr.State(False)
+                        state_is_generating = gr.State(False)
     
-                    load_data_outputs = [advanced_checkbox, image_number, prompt, negative_prompt, style_selections,
+                        load_data_outputs = [advanced_checkbox, image_number, prompt, negative_prompt, style_selections,
                                  performance_selection, overwrite_step, overwrite_switch, aspect_ratios_selection,
                                  overwrite_width, overwrite_height, guidance_scale, sharpness, adm_scaler_positive,
                                  adm_scaler_negative, adm_scaler_end, refiner_swap_method, adaptive_cfg, clip_skip,
@@ -1099,48 +1099,48 @@ with shared.gradio_root:
                                  inpaint_mode] + enhance_inpaint_mode_ctrls + [generate_button,
                                  load_parameter_button] + freeu_ctrls + lora_ctrls
     
-                    if not args_manager.args.disable_preset_selection:
-                        def preset_selection_change(preset, is_generating, inpaint_mode):
-                            preset_content = modules.config.try_get_preset_content(preset) if preset != 'initial' else {}
-                            preset_prepared = modules.meta_parser.parse_meta_from_preset(preset_content)
+                        if not args_manager.args.disable_preset_selection:
+                            def preset_selection_change(preset, is_generating, inpaint_mode):
+                                preset_content = modules.config.try_get_preset_content(preset) if preset != 'initial' else {}
+                                preset_prepared = modules.meta_parser.parse_meta_from_preset(preset_content)
     
-                            default_model = preset_prepared.get('base_model')
-                            previous_default_models = preset_prepared.get('previous_default_models', [])
-                            checkpoint_downloads = preset_prepared.get('checkpoint_downloads', {})
-                            embeddings_downloads = preset_prepared.get('embeddings_downloads', {})
-                            lora_downloads = preset_prepared.get('lora_downloads', {})
-                            vae_downloads = preset_prepared.get('vae_downloads', {})
+                                default_model = preset_prepared.get('base_model')
+                                previous_default_models = preset_prepared.get('previous_default_models', [])
+                                checkpoint_downloads = preset_prepared.get('checkpoint_downloads', {})
+                                embeddings_downloads = preset_prepared.get('embeddings_downloads', {})
+                                lora_downloads = preset_prepared.get('lora_downloads', {})
+                                vae_downloads = preset_prepared.get('vae_downloads', {})
     
-                            preset_prepared['base_model'], preset_prepared['checkpoint_downloads'] = topbar.download_models(
-                                default_model, previous_default_models, checkpoint_downloads, embeddings_downloads, lora_downloads,
-                                vae_downloads)
+                                preset_prepared['base_model'], preset_prepared['checkpoint_downloads'] = topbar.download_models(
+                                    default_model, previous_default_models, checkpoint_downloads, embeddings_downloads, lora_downloads,
+                                    vae_downloads)
     
-                            if 'prompt' in preset_prepared and preset_prepared.get('prompt') == '':
-                                del preset_prepared['prompt']
+                                if 'prompt' in preset_prepared and preset_prepared.get('prompt') == '':
+                                    del preset_prepared['prompt']
     
-                            return modules.meta_parser.load_parameter_button_click(json.dumps(preset_prepared), is_generating, inpaint_mode)
+                                return modules.meta_parser.load_parameter_button_click(json.dumps(preset_prepared), is_generating, inpaint_mode)
     
     
-                    def inpaint_engine_state_change(inpaint_engine_version, *args):
-                        if inpaint_engine_version == 'empty':
-                            inpaint_engine_version = modules.config.default_inpaint_engine_version
+                        def inpaint_engine_state_change(inpaint_engine_version, *args):
+                            if inpaint_engine_version == 'empty':
+                                inpaint_engine_version = modules.config.default_inpaint_engine_version
     
-                        result = []
-                        for inpaint_mode in args:
-                            if inpaint_mode != modules.flags.inpaint_option_detail:
-                                result.append(gr.update(value=inpaint_engine_version))
-                            else:
-                                result.append(gr.update())
+                            result = []
+                            for inpaint_mode in args:
+                                if inpaint_mode != modules.flags.inpaint_option_detail:
+                                    result.append(gr.update(value=inpaint_engine_version))
+                                else:
+                                    result.append(gr.update())
     
-                        return result
+                            return result
     
-                    if not args_manager.args.disable_preset_selection:
-                        preset_selection.change(preset_selection_change, inputs=[preset_selection, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=True) \
-                            .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                            .then(lambda: None, _js='()=>{refresh_style_localization();}') \
-                            .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
+                        if not args_manager.args.disable_preset_selection:
+                            preset_selection.change(preset_selection_change, inputs=[preset_selection, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=True) \
+                                .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+                                .then(lambda: None, _js='()=>{refresh_style_localization();}') \
+                                .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
     
-                    performance_selection.change(lambda x: [gr.update(interactive=not flags.Performance.has_restricted_features(x))] * 11 +
+                        performance_selection.change(lambda x: [gr.update(interactive=not flags.Performance.has_restricted_features(x))] * 11 +
                                                    [gr.update(visible=not flags.Performance.has_restricted_features(x))] * 1 +
                                                    [gr.update(value=flags.Performance.has_restricted_features(x))] * 1,
                                          inputs=performance_selection,
@@ -1151,147 +1151,147 @@ with shared.gradio_root:
                                          ], queue=False, show_progress=False)
     
     
-                    def reset_aspect_ratios(aspect_ratios):
-                        if len(aspect_ratios.split(','))>1:
-                            template = aspect_ratios.split(',')[1]
-                            aspect_ratios = aspect_ratios.split(',')[0]
-                            if template=='HyDiT':
-                                results = [gr.update(visible=False), gr.update(value=aspect_ratios, visible=True)] + [gr.update(visible=False)] * 2
-                            elif template=='Common':
-                                results = [gr.update(visible=False)] * 2 + [gr.update(value=aspect_ratios, visible=True), gr.update(visible=False)]
-                            elif template=='Flux':
-                                results = [gr.update(visible=False)] * 3 + [gr.update(value=aspect_ratios, visible=True)]
+                        def reset_aspect_ratios(aspect_ratios):
+                            if len(aspect_ratios.split(','))>1:
+                                template = aspect_ratios.split(',')[1]
+                                aspect_ratios = aspect_ratios.split(',')[0]
+                                if template=='HyDiT':
+                                    results = [gr.update(visible=False), gr.update(value=aspect_ratios, visible=True)] + [gr.update(visible=False)] * 2
+                                elif template=='Common':
+                                    results = [gr.update(visible=False)] * 2 + [gr.update(value=aspect_ratios, visible=True), gr.update(visible=False)]
+                                elif template=='Flux':
+                                    results = [gr.update(visible=False)] * 3 + [gr.update(value=aspect_ratios, visible=True)]
+                                else:
+                                    results = [gr.update(value=aspect_ratios, visible=True)] + [gr.update(visible=False)] * 3
                             else:
-                                results = [gr.update(value=aspect_ratios, visible=True)] + [gr.update(visible=False)] * 3
-                        else:
-                            results = [gr.update()] * 4
-                        return results
+                                results = [gr.update()] * 4
+                            return results
     
     
-                    aspect_ratios_selection.change(reset_aspect_ratios, inputs=aspect_ratios_selection, outputs=aspect_ratios_selections, queue=False, show_progress=False).then(lambda x: None, inputs=aspect_ratios_selection, queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}')
+                        aspect_ratios_selection.change(reset_aspect_ratios, inputs=aspect_ratios_selection, outputs=aspect_ratios_selections, queue=False, show_progress=False).then(lambda x: None, inputs=aspect_ratios_selection, queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}')
     
     
-                    output_format.input(lambda x: gr.update(output_format=x), inputs=output_format)
+                        output_format.input(lambda x: gr.update(output_format=x), inputs=output_format)
     
-                    advanced_checkbox.change(lambda x: gr.update(visible=x), advanced_checkbox, advanced_column,
+                        advanced_checkbox.change(lambda x: gr.update(visible=x), advanced_checkbox, advanced_column,
                                      queue=False, show_progress=False) \
-                        .then(fn=lambda: None, _js='refresh_grid_delayed', queue=False, show_progress=False)
+                            .then(fn=lambda: None, _js='refresh_grid_delayed', queue=False, show_progress=False)
     
-                    inpaint_mode.change(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
-                        inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts,
-                        inpaint_disable_initial_latent, inpaint_engine,
-                        inpaint_strength, inpaint_respective_field
-                    ], show_progress=False, queue=False)
+                        inpaint_mode.change(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
+                            inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts,
+                            inpaint_disable_initial_latent, inpaint_engine,
+                            inpaint_strength, inpaint_respective_field
+                        ], show_progress=False, queue=False)
     
-                    # load configured default_inpaint_method
-                    # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
-                    shared.gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
+                        # load configured default_inpaint_method
+                        # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
+                        shared.gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
                            inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts,
-                        inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field
-                        ], show_progress=False, queue=False)
+                            inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field
+                            ], show_progress=False, queue=False)
     
-                    for mode, disable_initial_latent, engine, strength, respective_field in enhance_inpaint_update_ctrls:
-                        shared.gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
-                            disable_initial_latent, engine, strength, respective_field
-                        ], show_progress=False, queue=False)
+                        for mode, disable_initial_latent, engine, strength, respective_field in enhance_inpaint_update_ctrls:
+                            shared.gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
+                                disable_initial_latent, engine, strength, respective_field
+                            ], show_progress=False, queue=False)
     
-                    generate_mask_button.click(fn=generate_mask,
+                        generate_mask_button.click(fn=generate_mask,
                                        inputs=[inpaint_input_image, inpaint_mask_model, inpaint_mask_cloth_category,
                                                inpaint_mask_dino_prompt_text, inpaint_mask_sam_model,
                                                inpaint_mask_box_threshold, inpaint_mask_text_threshold,
                                                inpaint_mask_sam_max_detections, dino_erode_or_dilate, debugging_dino, params_backend],
                                        outputs=inpaint_mask_image, show_progress=True, queue=True)
     
-                    ctrls = [currentTask, generate_image_grid]
-                    ctrls += [
-                        prompt, negative_prompt, style_selections,
-                        performance_selection, aspect_ratios_selection, image_number, output_format, image_seed,
-                        read_wildcards_in_order, sharpness, guidance_scale
-                    ]
+                        ctrls = [currentTask, generate_image_grid]
+                        ctrls += [
+                            prompt, negative_prompt, style_selections,
+                            performance_selection, aspect_ratios_selection, image_number, output_format, image_seed,
+                            read_wildcards_in_order, sharpness, guidance_scale
+                        ]
         
-                    ctrls += [base_model, refiner_model, refiner_switch] + lora_ctrls
-                    ctrls += [input_image_checkbox, current_tab]
-                    ctrls += [uov_method, uov_input_image]
-                    ctrls += [outpaint_selections, inpaint_input_image, inpaint_additional_prompt, inpaint_mask_image]
-                    ctrls += [layer_method, layer_input_image, iclight_enable, iclight_source_radio]
-                    ctrls += [disable_preview, disable_intermediate_results, disable_seed_increment, black_out_nsfw]
-                    ctrls += [adm_scaler_positive, adm_scaler_negative, adm_scaler_end, adaptive_cfg, clip_skip]
-                    ctrls += [sampler_name, scheduler_name, vae_name]
-                    ctrls += [overwrite_step, overwrite_switch, overwrite_width, overwrite_height, overwrite_vary_strength]
-                    ctrls += [overwrite_upscale_strength, mixing_image_prompt_and_vary_upscale, mixing_image_prompt_and_inpaint]
-                    ctrls += [debugging_cn_preprocessor, skipping_cn_preprocessor, canny_low_threshold, canny_high_threshold]
-                    ctrls += [refiner_swap_method, controlnet_softness]
-                    ctrls += freeu_ctrls
-                    ctrls += inpaint_ctrls
-                    ctrls += [params_backend]
+                        ctrls += [base_model, refiner_model, refiner_switch] + lora_ctrls
+                        ctrls += [input_image_checkbox, current_tab]
+                        ctrls += [uov_method, uov_input_image]
+                        ctrls += [outpaint_selections, inpaint_input_image, inpaint_additional_prompt, inpaint_mask_image]
+                        ctrls += [layer_method, layer_input_image, iclight_enable, iclight_source_radio]
+                        ctrls += [disable_preview, disable_intermediate_results, disable_seed_increment, black_out_nsfw]
+                        ctrls += [adm_scaler_positive, adm_scaler_negative, adm_scaler_end, adaptive_cfg, clip_skip]
+                        ctrls += [sampler_name, scheduler_name, vae_name]
+                        ctrls += [overwrite_step, overwrite_switch, overwrite_width, overwrite_height, overwrite_vary_strength]
+                        ctrls += [overwrite_upscale_strength, mixing_image_prompt_and_vary_upscale, mixing_image_prompt_and_inpaint]
+                        ctrls += [debugging_cn_preprocessor, skipping_cn_preprocessor, canny_low_threshold, canny_high_threshold]
+                        ctrls += [refiner_swap_method, controlnet_softness]
+                        ctrls += freeu_ctrls
+                        ctrls += inpaint_ctrls
+                        ctrls += [params_backend]
         
-                    if not args_manager.args.disable_image_log:
-                        ctrls += [save_final_enhanced_image_only]
+                        if not args_manager.args.disable_image_log:
+                            ctrls += [save_final_enhanced_image_only]
         
-                    if not args_manager.args.disable_metadata:
-                        ctrls += [save_metadata_to_images, metadata_scheme]
+                        if not args_manager.args.disable_metadata:
+                            ctrls += [save_metadata_to_images, metadata_scheme]
         
-                    ctrls += ip_ctrls
+                        ctrls += ip_ctrls
         
-                    ctrls += [debugging_dino, dino_erode_or_dilate, debugging_enhance_masks_checkbox,
-                          enhance_input_image, enhance_checkbox, enhance_uov_method, enhance_uov_processing_order,
-                          enhance_uov_prompt_type]
-                    ctrls += enhance_ctrls
+                        ctrls += [debugging_dino, dino_erode_or_dilate, debugging_enhance_masks_checkbox,
+                              enhance_input_image, enhance_checkbox, enhance_uov_method, enhance_uov_processing_order,
+                              enhance_uov_prompt_type]
+                        ctrls += enhance_ctrls
         
-                    system_params = gr.JSON({}, visible=False)
-                    def parse_meta(raw_prompt_txt, is_generating, state_params, panel_status):
-                        loaded_json = None
-                        if len(raw_prompt_txt)>=1 and (raw_prompt_txt[-1]=='[' or raw_prompt_txt[-1]=='_'):
-                            return [gr.update()] * 3 + [True]
-                        try:
-                            if '{' in raw_prompt_txt:
-                                if '}' in raw_prompt_txt:
-                                    if ':' in raw_prompt_txt:
-                                        loaded_json = json.loads(raw_prompt_txt)
-                                        assert isinstance(loaded_json, dict)
-                        except:
+                        system_params = gr.JSON({}, visible=False)
+                        def parse_meta(raw_prompt_txt, is_generating, state_params, panel_status):
                             loaded_json = None
+                            if len(raw_prompt_txt)>=1 and (raw_prompt_txt[-1]=='[' or raw_prompt_txt[-1]=='_'):
+                                return [gr.update()] * 3 + [True]
+                            try:
+                                if '{' in raw_prompt_txt:
+                                    if '}' in raw_prompt_txt:
+                                        if ':' in raw_prompt_txt:
+                                            loaded_json = json.loads(raw_prompt_txt)
+                                            assert isinstance(loaded_json, dict)
+                            except:
+                                loaded_json = None
         
-                        if loaded_json is None:
-                            if is_generating:
-                                return [gr.update()] * 4
-                            else:
-                                return [gr.update(), gr.update(visible=True), gr.update(visible=False), gr.update()]
+                            if loaded_json is None:
+                                if is_generating:
+                                    return [gr.update()] * 4
+                                else:
+                                    return [gr.update(), gr.update(visible=True), gr.update(visible=False), gr.update()]
         
-                        return [json.dumps(loaded_json), gr.update(visible=False), gr.update(visible=True), gr.update()]
+                            return [json.dumps(loaded_json), gr.update(visible=False), gr.update(visible=True), gr.update()]
         
-                    prompt.input(parse_meta, inputs=[prompt, state_is_generating, prompt_panel_checkbox], outputs=[prompt, generate_button, load_parameter_button, prompt_panel_checkbox], queue=False, show_progress=False)
+                        prompt.input(parse_meta, inputs=[prompt, state_is_generating, prompt_panel_checkbox], outputs=[prompt, generate_button, load_parameter_button, prompt_panel_checkbox], queue=False, show_progress=False)
         
-                    translator_button.click(lambda x, y: translator.convert(x, y), inputs=[prompt, translation_methods], outputs=prompt, queue=False, show_progress=True)
+                        translator_button.click(lambda x, y: translator.convert(x, y), inputs=[prompt, translation_methods], outputs=prompt, queue=False, show_progress=True)
         
-                    load_parameter_button.click(modules.meta_parser.load_parameter_button_click, inputs=[prompt, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=False)
+                        load_parameter_button.click(modules.meta_parser.load_parameter_button_click, inputs=[prompt, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=False)
         
-                    def trigger_metadata_import(file, state_is_generating, state_params):
-                        parameters, metadata_scheme = modules.meta_parser.read_info_from_image(file)
-                        if parameters is None:
-                            print('Could not find metadata in the image!')
-                        return toolbox.reset_params_by_image_meta(parameters, state_params, state_is_generating, inpaint_mode)
+                        def trigger_metadata_import(file, state_is_generating, state_params):
+                            parameters, metadata_scheme = modules.meta_parser.read_info_from_image(file)
+                            if parameters is None:
+                                print('Could not find metadata in the image!')
+                            return toolbox.reset_params_by_image_meta(parameters, state_params, state_is_generating, inpaint_mode)
         
-                    reset_preset_layout = [params_backend, performance_selection, scheduler_name, sampler_name, input_image_checkbox, enhance_checkbox, base_model, refiner_model, overwrite_step, guidance_scale, negative_prompt, preset_instruction] + lora_ctrls
-                    reset_preset_func = [output_format, inpaint_advanced_masking_checkbox, mixing_image_prompt_and_vary_upscale, mixing_image_prompt_and_inpaint, backfill_prompt, translation_methods, input_image_checkbox, state_topbar]
+                        reset_preset_layout = [params_backend, performance_selection, scheduler_name, sampler_name, input_image_checkbox, enhance_checkbox, base_model, refiner_model, overwrite_step, guidance_scale, negative_prompt, preset_instruction] + lora_ctrls
+                        reset_preset_func = [output_format, inpaint_advanced_masking_checkbox, mixing_image_prompt_and_vary_upscale, mixing_image_prompt_and_inpaint, backfill_prompt, translation_methods, input_image_checkbox, state_topbar]
         
-                    metadata_import_button.click(trigger_metadata_import, inputs=[metadata_input_image, state_is_generating, state_topbar], outputs=reset_preset_layout + reset_preset_func + load_data_outputs, queue=False, show_progress=True) \
-                        .then(style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False)
+                        metadata_import_button.click(trigger_metadata_import, inputs=[metadata_input_image, state_is_generating, state_topbar], outputs=reset_preset_layout + reset_preset_func + load_data_outputs, queue=False, show_progress=True) \
+                            .then(style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False)
         
-                    model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
-                  #  protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
-                    generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
-                        .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
-                        .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
-                        .then(fn=enhanced_parameters.set_all_enhanced_parameters, inputs=ehps) \
-                        .then(fn=generate_clicked, inputs=currentTask, outputs=[progress_html, progress_window, progress_gallery, gallery]) \
-                        .then(topbar.process_after_generation, inputs=state_topbar, outputs=[generate_button, stop_button, skip_button, state_is_generating, gallery_index, index_radio] + protections, show_progress=False) \
-                        .then(fn=update_history_link, outputs=history_link) \
-                        .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
-                        .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
-                        .then(fn=lambda: None, _js='playNotification').then(fn=lambda: None, _js='refresh_grid_delayed')
+                        model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
+                      #  protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
+                        generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
+                            .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
+                            .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
+                            .then(fn=enhanced_parameters.set_all_enhanced_parameters, inputs=ehps) \
+                            .then(fn=generate_clicked, inputs=currentTask, outputs=[progress_html, progress_window, progress_gallery, gallery]) \
+                            .then(topbar.process_after_generation, inputs=state_topbar, outputs=[generate_button, stop_button, skip_button, state_is_generating, gallery_index, index_radio] + protections, show_progress=False) \
+                            .then(fn=update_history_link, outputs=history_link) \
+                            .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
+                            .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
+                            .then(fn=lambda: None, _js='playNotification').then(fn=lambda: None, _js='refresh_grid_delayed')
         
-                    reset_button.click(lambda: [worker.AsyncTask(args=[]), False, gr.update(visible=True, interactive=True)] +
+                        reset_button.click(lambda: [worker.AsyncTask(args=[]), False, gr.update(visible=True, interactive=True)] +
                                            [gr.update(visible=False)] * 6 +
                                            [gr.update(visible=True, value=[])],
                                    outputs=[currentTask, state_is_generating, generate_button,
@@ -1299,88 +1299,88 @@ with shared.gradio_root:
                                             progress_html, progress_window, progress_gallery, gallery],
                                    queue=False)
         
-                    for notification_file in ['notification.ogg', 'notification.mp3']:
-                        if os.path.exists(notification_file):
-                            gr.Audio(interactive=False, value=notification_file, elem_id='audio_notification', visible=False)
-                            break
+                        for notification_file in ['notification.ogg', 'notification.mp3']:
+                            if os.path.exists(notification_file):
+                                gr.Audio(interactive=False, value=notification_file, elem_id='audio_notification', visible=False)
+                                break
         
-                    def trigger_describe(modes, img, apply_styles):
-                        describe_prompts = []
-                        styles = set()
+                        def trigger_describe(modes, img, apply_styles):
+                            describe_prompts = []
+                            styles = set()
         
-                        if flags.describe_type_photo in modes:
-                            from extras.interrogate import default_interrogator as default_interrogator_photo
-                            describe_prompts.append(default_interrogator_photo(img))
-                            styles.update(["Fooocus V2", "Fooocus Enhance"])
+                            if flags.describe_type_photo in modes:
+                                from extras.interrogate import default_interrogator as default_interrogator_photo
+                                describe_prompts.append(default_interrogator_photo(img))
+                                styles.update(["Fooocus V2", "Fooocus Enhance"])
         
-                        if flags.describe_type_anime in modes:
-                            from extras.wd14tagger import default_interrogator as default_interrogator_anime
-                            describe_prompts.append(default_interrogator_anime(img))
-                            styles.update(["Fooocus V2", "Fooocus Semi Realistic"])
+                            if flags.describe_type_anime in modes:
+                                from extras.wd14tagger import default_interrogator as default_interrogator_anime
+                                describe_prompts.append(default_interrogator_anime(img))
+                                styles.update(["Fooocus V2", "Fooocus Semi Realistic"])
         
-                        if len(styles) == 0 or not apply_styles:
-                            styles = gr.update()
-                        else:
-                            styles = list(styles)
+                            if len(styles) == 0 or not apply_styles:
+                                styles = gr.update()
+                            else:
+                                styles = list(styles)
         
-                        if len(describe_prompts) == 0:
-                            describe_prompt = gr.update()
-                        else:
-                            describe_prompt = ', '.join(describe_prompts)
+                            if len(describe_prompts) == 0:
+                                describe_prompt = gr.update()
+                            else:
+                                describe_prompt = ', '.join(describe_prompts)
         
-                        return describe_prompt, styles
+                            return describe_prompt, styles
         
-                    describe_btn.click(trigger_describe, inputs=[describe_methods, describe_input_image, describe_apply_styles],
+                        describe_btn.click(trigger_describe, inputs=[describe_methods, describe_input_image, describe_apply_styles],
                                    outputs=[prompt, style_selections], show_progress=True, queue=True) \
-                        .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                        .then(lambda: None, _js='()=>{refresh_style_localization();}')
+                            .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+                            .then(lambda: None, _js='()=>{refresh_style_localization();}')
         
-                    if args_manager.args.enable_auto_describe_image:
-                        def trigger_auto_describe(mode, img, prompt, apply_styles):
-                            # keep prompt if not empty
-                            if prompt == '':
-                                return trigger_describe(mode, img, apply_styles)
-                            return gr.update(), gr.update()
+                        if args_manager.args.enable_auto_describe_image:
+                            def trigger_auto_describe(mode, img, prompt, apply_styles):
+                                # keep prompt if not empty
+                                if prompt == '':
+                                    return trigger_describe(mode, img, apply_styles)
+                                return gr.update(), gr.update()
         
-                        uov_input_image.upload(trigger_auto_describe, inputs=[describe_methods, uov_input_image, prompt, describe_apply_styles],
+                            uov_input_image.upload(trigger_auto_describe, inputs=[describe_methods, uov_input_image, prompt, describe_apply_styles],
                                            outputs=[prompt, style_selections], show_progress=True, queue=True) \
-                            .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                            .then(lambda: None, _js='()=>{refresh_style_localization();}')
+                                .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+                                .then(lambda: None, _js='()=>{refresh_style_localization();}')
         
-                        describe_input_image.upload(trigger_auto_describe, inputs=[describe_methods, describe_input_image, prompt, describe_apply_styles],
+                            describe_input_image.upload(trigger_auto_describe, inputs=[describe_methods, describe_input_image, prompt, describe_apply_styles],
                                            outputs=[prompt, style_selections], show_progress=True, queue=True) \
-                            .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                            .then(lambda: None, _js='()=>{refresh_style_localization();}')
+                                .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+                                .then(lambda: None, _js='()=>{refresh_style_localization();}')
         
-                        enhance_input_image.upload(lambda: gr.update(value=True), outputs=enhance_checkbox, queue=False, show_progress=False) \
-                            .then(trigger_auto_describe, inputs=[describe_methods, enhance_input_image, prompt, describe_apply_styles],
-                                  outputs=[prompt, style_selections], show_progress=True, queue=True) \
-                            .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                            .then(lambda: None, _js='()=>{refresh_style_localization();}')
+                            enhance_input_image.upload(lambda: gr.update(value=True), outputs=enhance_checkbox, queue=False, show_progress=False) \
+                                .then(trigger_auto_describe, inputs=[describe_methods, enhance_input_image, prompt, describe_apply_styles],
+                                      outputs=[prompt, style_selections], show_progress=True, queue=True) \
+                                .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+                                .then(lambda: None, _js='()=>{refresh_style_localization();}')
         
-                prompt_delete_button.click(toolbox.toggle_note_box_delete, inputs=state_topbar, outputs=[params_note_info, params_note_delete_button, params_note_box, state_topbar], show_progress=False)
-                params_note_delete_button.click(toolbox.delete_image, inputs=state_topbar, outputs=[gallery, gallery_index, params_note_delete_button, params_note_box, state_topbar], show_progress=False) \
+                    prompt_delete_button.click(toolbox.toggle_note_box_delete, inputs=state_topbar, outputs=[params_note_info, params_note_delete_button, params_note_box, state_topbar], show_progress=False)
+                    params_note_delete_button.click(toolbox.delete_image, inputs=state_topbar, outputs=[gallery, gallery_index, params_note_delete_button, params_note_box, state_topbar], show_progress=False) \
                         .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
                         .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}')
         
-                prompt_regen_button.click(toolbox.toggle_note_box_regen, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_regen_button, params_note_box, state_topbar], show_progress=False)
-                params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
+                    prompt_regen_button.click(toolbox.toggle_note_box_regen, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_regen_button, params_note_box, state_topbar], show_progress=False)
+                    params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
         
-                prompt_preset_button.click(toolbox.toggle_note_box_preset, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False)
-                params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box, state_topbar] + nav_bars, show_progress=False) \
-                    .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
-                    .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
-        
-        
-        
-                reset_layout_params = reset_preset_layout + reset_preset_func + load_data_outputs
-                reset_preset_inputs = [prompt, negative_prompt, state_is_generating, inpaint_mode, comfyd_active_checkbox]
+                    prompt_preset_button.click(toolbox.toggle_note_box_preset, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False)
+                    params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box, state_topbar] + nav_bars, show_progress=False) \
+                        .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
+                        .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
         
         
-                binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
         
-                for i in range(shared.BUTTON_NUM):
-                    bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
+                    reset_layout_params = reset_preset_layout + reset_preset_func + load_data_outputs
+                    reset_preset_inputs = [prompt, negative_prompt, state_is_generating, inpaint_mode, comfyd_active_checkbox]
+        
+        
+                    binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
+        
+                    for i in range(shared.BUTTON_NUM):
+                        bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
                            .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                            .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
                            .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
@@ -1388,7 +1388,7 @@ with shared.gradio_root:
                            .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
         
         
-                shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
+                    shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
                               .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
                               .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                               .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
@@ -1400,39 +1400,39 @@ with shared.gradio_root:
                               .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
                               .then(fn=lambda: None, _js='refresh_grid_delayed')
         
-            def dump_default_english_config():
-                from modules.localization import dump_english_config
-                dump_english_config(grh.all_components)
+                def dump_default_english_config():
+                    from modules.localization import dump_english_config
+                    dump_english_config(grh.all_components)
         
         
-            #dump_default_english_config()
-            import logging
-            import httpx
-            httpx_logger = logging.getLogger("httpx")
-            httpx_logger.setLevel(logging.WARNING)
+                #dump_default_english_config()
+                import logging
+                import httpx
+                httpx_logger = logging.getLogger("httpx")
+                httpx_logger.setLevel(logging.WARNING)
         
-            import logging
-            import httpx
-            httpx_logger = logging.getLogger("httpx")
-            httpx_logger.setLevel(logging.WARNING)
-            hydit_logger = logging.getLogger("hydit")
-            hydit_logger.setLevel(logging.WARNING)
+                import logging
+                import httpx
+                httpx_logger = logging.getLogger("httpx")
+                httpx_logger.setLevel(logging.WARNING)
+                hydit_logger = logging.getLogger("hydit")
+                hydit_logger.setLevel(logging.WARNING)
         
-            import warnings
-            warnings.filterwarnings("ignore", category=FutureWarning)
+                import warnings
+                warnings.filterwarnings("ignore", category=FutureWarning)
         
         
-            if not args_manager.args.disable_comfyd:
-                comfyd.active(True)
+                if not args_manager.args.disable_comfyd:
+                    comfyd.active(True)
         
-            shared.gradio_root.launch(
-                inbrowser=args_manager.args.in_browser,
-                server_name=args_manager.args.listen,
-                server_port=args_manager.args.port,
-                share=args_manager.args.share,
-                root_path=args_manager.args.webroot,
-                auth=check_auth if (args_manager.args.share or args_manager.args.listen) and auth_enabled else None,
-                allowed_paths=[modules.config.path_outputs],
-                blocked_paths=[constants.AUTH_FILENAME]
-            )
+                shared.gradio_root.launch(
+                    inbrowser=args_manager.args.in_browser,
+                    server_name=args_manager.args.listen,
+                    server_port=args_manager.args.port,
+                    share=args_manager.args.share,
+                    root_path=args_manager.args.webroot,
+                    auth=check_auth if (args_manager.args.share or args_manager.args.listen) and auth_enabled else None,
+                    allowed_paths=[modules.config.path_outputs],
+                    blocked_paths=[constants.AUTH_FILENAME]
+                )
         
