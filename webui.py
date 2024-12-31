@@ -1398,39 +1398,39 @@ with shared.gradio_root:
                               .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
                               .then(fn=lambda: None, _js='refresh_grid_delayed')
         
-                    def dump_default_english_config():
-                        from modules.localization import dump_english_config
-                        dump_english_config(grh.all_components)
+                        def dump_default_english_config():
+                            from modules.localization import dump_english_config
+                            dump_english_config(grh.all_components)
         
         
-                    #dump_default_english_config()
-                    import logging
-                    import httpx
-                    httpx_logger = logging.getLogger("httpx")
-                    httpx_logger.setLevel(logging.WARNING)
+                        #dump_default_english_config()
+                        import logging
+                        import httpx
+                        httpx_logger = logging.getLogger("httpx")
+                        httpx_logger.setLevel(logging.WARNING)
         
-                    import logging
-                    import httpx
-                    httpx_logger = logging.getLogger("httpx")
-                    httpx_logger.setLevel(logging.WARNING)
-                    hydit_logger = logging.getLogger("hydit")
-                    hydit_logger.setLevel(logging.WARNING)
+                        import logging
+                        import httpx
+                        httpx_logger = logging.getLogger("httpx")
+                        httpx_logger.setLevel(logging.WARNING)
+                        hydit_logger = logging.getLogger("hydit")
+                        hydit_logger.setLevel(logging.WARNING)
         
-                    import warnings
-                    warnings.filterwarnings("ignore", category=FutureWarning)
+                        import warnings
+                        warnings.filterwarnings("ignore", category=FutureWarning)
         
         
-                    if not args_manager.args.disable_comfyd:
-                        comfyd.active(True)
+                        if not args_manager.args.disable_comfyd:
+                            comfyd.active(True)
         
-                    shared.gradio_root.launch(
-                        inbrowser=args_manager.args.in_browser,
-                        server_name=args_manager.args.listen,
-                        server_port=args_manager.args.port,
-                        share=args_manager.args.share,
-                        root_path=args_manager.args.webroot,
-                        auth=check_auth if (args_manager.args.share or args_manager.args.listen) and auth_enabled else None,
-                        allowed_paths=[modules.config.path_outputs],
-                        blocked_paths=[constants.AUTH_FILENAME]
-                    )
+                        shared.gradio_root.launch(
+                            inbrowser=args_manager.args.in_browser,
+                            server_name=args_manager.args.listen,
+                            server_port=args_manager.args.port,
+                            share=args_manager.args.share,
+                            root_path=args_manager.args.webroot,
+                            auth=check_auth if (args_manager.args.share or args_manager.args.listen) and auth_enabled else None,
+                            allowed_paths=[modules.config.path_outputs],
+                            blocked_paths=[constants.AUTH_FILENAME]
+                        )
         
