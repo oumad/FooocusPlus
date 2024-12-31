@@ -661,12 +661,12 @@ with shared.gradio_root:
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
-              # preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                if not args_manager.args.disable_preset_selection:
-                    preset_selection = gr.Dropdown(label='Preset',
+                preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
+                # if not args_manager.args.disable_preset_selection:
+                preset_selection = gr.Dropdown(label='Preset',
                                                    choices=modules.config.available_presets,
                                                    value=args_manager.args.preset if args_manager.args.preset else "initial",
-                                                   interactive=True)                    
+                                                   interactive=True)
                     #preset_selection = gr.Radio(label='Preset',
                      #                           choices=modules.config.available_presets,
                      #                           value=args_manager.args.preset if args_manager.args.preset else "initial",
@@ -675,7 +675,7 @@ with shared.gradio_root:
                     performance_selection = gr.Radio(label='Performance',
                                                  choices=flags.Performance.list(),
                                                  value=modules.config.default_performance)
-                    image_number = gr.Slider(label='Image Number', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
+                    image_number = gr.Slider(label='Image Count', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
                     with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
                         aspect_ratios_selection = gr.Textbox(value='', visible=False)
                         aspect_ratios_selections = []
@@ -701,7 +701,7 @@ with shared.gradio_root:
                                          value=modules.config.default_output_format)
 
                     negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type prompt here.",
-                                             info='Describing what you do not want to see.', lines=2,
+                                             info='Describe what you do not want to see.', lines=2,
                                              elem_id='negative_prompt',
                                              value=modules.config.default_prompt_negative)
                     seed_random = gr.Checkbox(label='Random', value=True)
@@ -856,7 +856,7 @@ with shared.gradio_root:
                 #info_sync_button.click(toolbox.sync_model_info_click, inputs=models_infos, outputs=models_infos, queue=False, show_progress=False)
 
             with gr.Tab(label='Advanced', elem_id="scrollable-box"):
-                guidance_scale = gr.Slider(label='Guidance Scale', minimum=0.01, maximum=30.0, step=0.01,
+                guidance_scale = gr.Slider(label='Guidance Scale (CFG)', minimum=0.01, maximum=30.0, step=0.01,
                                            value=modules.config.default_cfg_scale,
                                            info='Higher value means style is cleaner, vivider, and more artistic.')
                 overwrite_step = gr.Slider(label='Forced Overwrite of Sampling Step',
