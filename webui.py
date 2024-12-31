@@ -721,8 +721,8 @@ with shared.gradio_root:
 
                             return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
 
-                    history_link = gr.HTML()
-                    shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
+                        history_link = gr.HTML()
+                        shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
 
                     with gr.Tabs():
                         with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
