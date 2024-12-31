@@ -182,8 +182,8 @@ reload_javascript()
 import fooocusplus_version as fooocusplus_version
 title = f'{version.branch} {fooocusplus_version.version}'
 
-if isinstance(args_manager.args.preset, str):
-    title += ' ' + args_manager.args.preset
+#if isinstance(args_manager.args.preset, str):
+#    title += ' ' + args_manager.args.preset
 
 shared.gradio_root = gr.Blocks(
     title=title,
