@@ -1279,7 +1279,7 @@ with shared.gradio_root:
                             .then(style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False)
         
                         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
-                        protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
+                        protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox]
                         generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
                             .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
                             .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
@@ -1367,7 +1367,7 @@ with shared.gradio_root:
                         params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
         
                         prompt_preset_button.click(toolbox.toggle_note_box_preset, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False)
-                        params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box, state_topbar] + nav_bars, show_progress=False) \
+                        params_note_preset_button.click(toolbox.save_preset, inputs=[params_note_input_name, params_backend] + reset_preset_func + load_data_outputs, outputs=[params_note_input_name, params_note_preset_button, params_note_box, state_topbar], show_progress=False) \
                             .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
                             .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
                   
@@ -1387,14 +1387,13 @@ with shared.gradio_root:
         
         
                         shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
-                              .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_selection], show_progress=False) \
-                              .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
-                              .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
-                              .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
-                              .then(topbar.sync_message, inputs=state_topbar, outputs=[state_topbar]) \
+                              .then([progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_selection], show_progress=False) \
+                              .then(inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
+                              .then(fn=lambda x: x, outputs=system_params, show_progress=False) \
+                              .then(fn=lambda x: {}, inputs=system_params, outputs=system_params) \
                               .then(lambda x: x, inputs=aspect_ratios_selections[0], outputs=aspect_ratios_selection, queue=False, show_progress=False) \
                               .then(lambda x: None, inputs=aspect_ratios_selections[0], queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}') \
-                              .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
+                              .then(lambda x: x['__finished_nums_pages'], utputs=gallery_index_stat, queue=False, show_progress=False) \
                               .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
                               .then(fn=lambda: None, _js='refresh_grid_delayed')
         
