@@ -6,6 +6,8 @@ root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 os.chdir(root)
 
+print(f'Loading FooocusPlus...')
+
 try:
     import pygit2
     pygit2.option(pygit2.GIT_OPT_SET_OWNER_VALIDATION, 0)
@@ -13,8 +15,8 @@ try:
     repo = pygit2.Repository(os.path.abspath(os.path.dirname(__file__)))
 
     branch_name = repo.head.shorthand
-    if branch_name=="": branch_name="FooocusPlus" 
-    
+    if branch_name=="": branch_name="FooocusPlus"
+
     remote_name = 'origin'
     remote = repo.remotes[remote_name]
 
