@@ -665,7 +665,8 @@ with shared.gradio_root:
                                                  value=modules.config.default_performance,
                                                  elem_classes=['performance_selection'])
                 image_number = gr.Slider(label='Image Count', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
-                    with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
+                
+            with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
                         aspect_ratios_selection = gr.Textbox(value='', visible=False)
                         aspect_ratios_selections = []
                         for template in flags.aspect_ratios_templates:
