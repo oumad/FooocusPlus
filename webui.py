@@ -697,29 +697,29 @@ with shared.gradio_root:
                         seed_random = gr.Checkbox(label='Random', value=True)
                         image_seed = gr.Textbox(label='Seed', value=0, max_lines=1, visible=False) # workaround for https://github.com/gradio-app/gradio/issues/5354
 
-                    def random_checked(r):
-                        return gr.update(visible=not r)
+                        def random_checked(r):
+                            return gr.update(visible=not r)
 
-                    def refresh_seed(r, seed_string):
-                        if r:
-                            return random.randint(constants.MIN_SEED, constants.MAX_SEED)
-                        else:
-                            try:
-                                seed_value = int(seed_string)
-                                if constants.MIN_SEED <= seed_value <= constants.MAX_SEED:
-                                    return seed_value
-                            except ValueError:
-                                pass
-                            return random.randint(constants.MIN_SEED, constants.MAX_SEED)
+                        def refresh_seed(r, seed_string):
+                            if r:
+                                return random.randint(constants.MIN_SEED, constants.MAX_SEED)
+                            else:
+                                try:
+                                    seed_value = int(seed_string)
+                                    if constants.MIN_SEED <= seed_value <= constants.MAX_SEED:
+                                        return seed_value
+                                except ValueError:
+                                    pass
+                                return random.randint(constants.MIN_SEED, constants.MAX_SEED)
 
-                seed_random.change(random_checked, inputs=[seed_random], outputs=[image_seed],
-                                   queue=False, show_progress=False)
+                    seed_random.change(random_checked, inputs=[seed_random], outputs=[image_seed],
+                                       queue=False, show_progress=False)
 
-                def update_history_link():
-                    if args_manager.args.disable_image_log:
-                        return gr.update(value='')
+                    def update_history_link():
+                        if args_manager.args.disable_image_log:
+                            return gr.update(value='')
 
-                    return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
+                        return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
 
                 history_link = gr.HTML()
                 shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
