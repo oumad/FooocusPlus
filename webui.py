@@ -1385,7 +1385,7 @@ with shared.gradio_root:
                        #        .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
         
         
-                        shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=queue=False, show_progress=False) \
+                        shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=show_progress=False) \
                               .then([progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_selection], show_progress=False) \
                               .then(inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                               .then(fn=lambda x: x, outputs=system_params, show_progress=False) \
