@@ -198,12 +198,6 @@ with shared.gradio_root:
         with gr.Column(scale=2):
             with gr.Group():
                 with gr.Row():
-                    bar_title = gr.Markdown('<b>Presets:</b>', visible=False, elem_id='bar_title', elem_classes='bar_title')
-                    bar_buttons = []
-                    for i in range(shared.BUTTON_NUM):
-                        bar_buttons.append(gr.Button(value='default' if i==0 else '', size='sm', visible=True, min_width=40, elem_id=f'bar{i}', elem_classes='bar_button'))
-                    #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
-                with gr.Row():
                     progress_window = grh.Image(label='Preview', show_label=False, visible=True, height=768, elem_id='preview_generating',
                                             elem_classes=['main_view'], value="enhanced/attached/welcome.png")
                     progress_gallery = gr.Gallery(label='Finished Images', show_label=True, object_fit='contain', elem_id='finished_gallery',
@@ -659,22 +653,19 @@ with shared.gradio_root:
 
             current_tab = gr.Textbox(value=modules.config.default_selected_image_input_tab_id.split('_')[0], visible=False)
 
-        with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
-            with gr.Tab(label='Settings', elem_id="scrollable-box"):
-                preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                # if not args_manager.args.disable_preset_selection:
-                preset_selection = gr.Dropdown(label='Preset',
+        with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox) as advanced_column:
+            with gr.Tab(label='Settings'):
+                if not args_manager.args.disable_preset_selection:
+                    preset_selection = gr.Dropdown(label='Preset',
+                                        preset_selection = gr.Dropdown(label='Preset',
                                                    choices=modules.config.available_presets,
                                                    value=args_manager.args.preset if args_manager.args.preset else "initial",
                                                    interactive=True)
-                    #preset_selection = gr.Radio(label='Preset',
-                     #                           choices=modules.config.available_presets,
-                     #                           value=args_manager.args.preset if args_manager.args.preset else "initial",
-                     #                           visible=False, interactive=True)
-                with gr.Group():
-                    performance_selection = gr.Radio(label='Performance',
-                                                 choices=flags.Performance.list(),
-                                                 value=modules.config.default_performance)
+                performance_selection = gr.Radio(label='Performance',
+                                                 choices=flags.Performance.values(),
+                                                 value=modules.config.default_performance,
+                                                 elem_classes=['performance_selection'])
+
                     image_number = gr.Slider(label='Image Count', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
                     with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
                         aspect_ratios_selection = gr.Textbox(value='', visible=False)
@@ -1022,7 +1013,7 @@ with shared.gradio_root:
                 refresh_files_output = [base_model, refiner_model, vae_name]
                 if not args_manager.args.disable_preset_selection:
                     refresh_files_output += [preset_selection]
-                refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
+                refresh_files.click(refresh_files_clicked, [], refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
 
             with gr.Tab(label='Enhanced', elem_id="scrollable-box"):
@@ -1270,7 +1261,7 @@ with shared.gradio_root:
 
             return [json.dumps(loaded_json), gr.update(visible=False), gr.update(visible=True), gr.update()]
 
-        prompt.input(parse_meta, inputs=[prompt, state_is_generating, state_topbar, prompt_panel_checkbox], outputs=[prompt, generate_button, load_parameter_button, prompt_panel_checkbox], queue=False, show_progress=False)
+        prompt.input(parse_meta, inputs=[prompt, state_is_generating, prompt_panel_checkbox], outputs=[prompt, generate_button, load_parameter_button, prompt_panel_checkbox], queue=False, show_progress=False)
 
         translator_button.click(lambda x, y: translator.convert(x, y), inputs=[prompt, translation_methods], outputs=prompt, queue=False, show_progress=True)
 
@@ -1289,8 +1280,7 @@ with shared.gradio_root:
             .then(style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False)
 
         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
-        nav_bars = [bar_title] + bar_buttons
-        protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
+      #  protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
         generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
             .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
             .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
@@ -1322,12 +1312,12 @@ with shared.gradio_root:
             if flags.describe_type_photo in modes:
                 from extras.interrogate import default_interrogator as default_interrogator_photo
                 describe_prompts.append(default_interrogator_photo(img))
-                styles.update(["Fooocus V2", "Fooocus Enhance", "Fooocus Sharp"])
+                styles.update(["Fooocus V2", "Fooocus Enhance"])
 
             if flags.describe_type_anime in modes:
                 from extras.wd14tagger import default_interrogator as default_interrogator_anime
                 describe_prompts.append(default_interrogator_anime(img))
-                styles.update(["Fooocus V2", "Fooocus Masterpiece"])
+                styles.update(["Fooocus V2", "Fooocus Semi Realistic"])
 
             if len(styles) == 0 or not apply_styles:
                 styles = gr.update()
@@ -1384,8 +1374,8 @@ with shared.gradio_root:
 
 
 
-    reset_layout_params = nav_bars + reset_preset_layout + reset_preset_func + load_data_outputs
-    reset_preset_inputs = [prompt, negative_prompt, state_topbar, state_is_generating, inpaint_mode, comfyd_active_checkbox]
+    reset_layout_params = reset_preset_layout + reset_preset_func + load_data_outputs
+    reset_preset_inputs = [prompt, negative_prompt, state_is_generating, inpaint_mode, comfyd_active_checkbox]
 
 
     binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
