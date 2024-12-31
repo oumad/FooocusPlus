@@ -179,7 +179,8 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
-title = f'{version.branch} {version.simplesdxl_ver} derived from Fooocus {fooocus_version.version}'
+import fooocusplus_version as fooocusplus_version
+title = f'{version.branch} {fooocusplus_version.version}'
 
 if isinstance(args_manager.args.preset, str):
     title += ' ' + args_manager.args.preset
@@ -659,13 +660,17 @@ with shared.gradio_root:
             current_tab = gr.Textbox(value=modules.config.default_selected_image_input_tab_id.split('_')[0], visible=False)
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
-            with gr.Tab(label='Setting', elem_id="scrollable-box"):
+            with gr.Tab(label='Settings', elem_id="scrollable-box"):
                 preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 if not args_manager.args.disable_preset_selection:
                     preset_selection = gr.Radio(label='Preset',
                                                 choices=modules.config.available_presets,
-                                                value=args_manager.args.preset if args_manager.args.preset else "initial",
-                                                visible=False, interactive=True)
+                                                value=args_manager.args.preset,
+                                                visible=False, interactive=False)
+                    preset_selection = gr.Dropdown(label='Preset',
+                                                   choices=modules.config.available_presets,
+                                                   value=args_manager.args.preset if args_manager.args.preset else "initial",
+                                                   interactive=True)               
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                                  choices=flags.Performance.list(),
@@ -695,8 +700,8 @@ with shared.gradio_root:
                                          choices=flags.OutputFormat.list(),
                                          value=modules.config.default_output_format)
                        
-                    negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type prompt here.",
-                                             info='Describing what you do not want to see.', lines=2,
+                    negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type negative prompt here.",
+                                             info='Describe what you do not want to see.', lines=2,
                                              elem_id='negative_prompt',
                                              value=modules.config.default_prompt_negative)
                     seed_random = gr.Checkbox(label='Random', value=True)
@@ -851,7 +856,7 @@ with shared.gradio_root:
                 #info_sync_button.click(toolbox.sync_model_info_click, inputs=models_infos, outputs=models_infos, queue=False, show_progress=False)
 
             with gr.Tab(label='Advanced', elem_id="scrollable-box"):
-                guidance_scale = gr.Slider(label='Guidance Scale', minimum=0.01, maximum=30.0, step=0.01,
+                guidance_scale = gr.Slider(label='Guidance Scale (CFG)', minimum=0.01, maximum=30.0, step=0.01,
                                            value=modules.config.default_cfg_scale,
                                            info='Higher value means style is cleaner, vivider, and more artistic.')
                 overwrite_step = gr.Slider(label='Forced Overwrite of Sampling Step',
@@ -862,10 +867,10 @@ with shared.gradio_root:
                                       value=modules.config.default_sample_sharpness,
                                       info='Higher value means image and texture are sharper.')
                 gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/117" target="_blank">\U0001F4D4 Documentation</a>')
-                dev_mode = gr.Checkbox(label='Developer Debug Mode', value=modules.config.default_developer_debug_mode_checkbox, container=False)
+                dev_mode = gr.Checkbox(label='Expert Mode', value=modules.config.default_developer_debug_mode_checkbox, container=False)
 
                 with gr.Column(visible=modules.config.default_developer_debug_mode_checkbox) as dev_tools:
-                    with gr.Tab(label='Debug Tools'):
+                    with gr.Tab(label='Expert Tools'):
                         sampler_name = gr.Dropdown(label='Sampler', choices=flags.sampler_list,
                                                    value=modules.config.default_sampler)
                         scheduler_name = gr.Dropdown(label='Scheduler', choices=flags.scheduler_list,
