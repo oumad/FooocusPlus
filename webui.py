@@ -690,12 +690,12 @@ with shared.gradio_root:
                                          choices=flags.OutputFormat.list(),
                                          value=modules.config.default_output_format)
 
-                    negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type negative prompt here.",
+                        negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type negative prompt here.",
                                              info='Describe what you do not want to see.', lines=2,
                                              elem_id='negative_prompt',
                                              value=modules.config.default_prompt_negative)
-                    seed_random = gr.Checkbox(label='Random', value=True)
-                    image_seed = gr.Textbox(label='Seed', value=0, max_lines=1, visible=False) # workaround for https://github.com/gradio-app/gradio/issues/5354
+                        seed_random = gr.Checkbox(label='Random', value=True)
+                        image_seed = gr.Textbox(label='Seed', value=0, max_lines=1, visible=False) # workaround for https://github.com/gradio-app/gradio/issues/5354
 
                 def random_checked(r):
                     return gr.update(visible=not r)
