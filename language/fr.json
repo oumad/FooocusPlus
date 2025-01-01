@@ -193,7 +193,7 @@
   "Type Download URL here.": "Entrez l'URL de téléchargement ici.",
   "🔄 Sync Remote Info": "🔄 Synchroniser les infos distantes",
   "Note: If MUID is not obtained after synchronizing, it means that it is a new model file. You need to add an available download URL before.": "Remarque : Si le MUID n'est pas obtenu après synchronisation, cela signifie qu'il s'agit d'un nouveau fichier modèle. Vous devez ajouter une URL de téléchargement disponible avant.",
-  "Enhanced": "Amélioré",
+  "Extras": "Amélioré",
   "Timing of translation": "Moment de la traduction",
   "No translate": "Ne pas traduire",
   "Translate then generate": "Traduire puis générer",
