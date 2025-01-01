@@ -143,7 +143,11 @@ def preset_instruction():
     body += f'<iframe id="instruction" src="{get_preset_inc_url()}" frameborder="0" scrolling="no" width="100%"></iframe>'
     return head + body + foot
 
-
+def preset_no_instruction():
+    head = "<div style='max-width:0px; max-height:0px; overflow:hidden'>"
+    foot = "</div>"
+    body = ''
+    return head + body + foot
 
 get_system_params_js = '''
 function(system_params) {
