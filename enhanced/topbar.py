@@ -211,9 +211,11 @@ function(system_params) {
     if (lang!=null) {
         set_language(lang);
     }
-    let preset_url = system_params["__preset_url"];
-    if (preset_url!=null) {
-        set_iframe_src(theme,lang,preset_url);
+    if (lang=="cn") {
+        let preset_url = system_params["__preset_url"];
+        if (preset_url!=null) {
+            set_iframe_src(theme,lang,preset_url);
+        }
     }
     return {}
 }
