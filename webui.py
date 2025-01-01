@@ -664,7 +664,7 @@ with shared.gradio_root:
                 if (shared.args.language=='cn'):
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
-                    preset_instruction = ""
+                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
                 if not args_manager.args.disable_preset_selection:
                     preset_selection = gr.Radio(label='Preset',
                                                 choices=modules.config.available_presets,
