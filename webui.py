@@ -1025,7 +1025,7 @@ with shared.gradio_root:
                 refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
 
-            with gr.Tab(label='Enhanced', elem_id="scrollable-box"):
+            with gr.Tab(label='Extras', elem_id="scrollable-box"):
                 with gr.Row(visible=False):
                     binding_id_button = gr.Button(value='Binding Identity', visible=True)
                 with gr.Row():
