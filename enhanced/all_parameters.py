@@ -83,11 +83,11 @@ default = {
     'invert_mask_checkbox': False,
     'inpaint_erode_or_dilate': 0,
     'loras_min_weight': -2,
-    'loras_max_weight': 2,
+    'loras_max_weight': 3,
     'max_lora_number': 5,
-    'max_image_number': 32,
-    'image_number': 2,
-    'output_format': 'jpeg',
+    'max_image_number': 50,
+    'image_number': 5,
+    'output_format': 'png',
     'save_metadata_to_images': False,
     'metadata_scheme': 'simple',
     'input_image_checkbox': False,
@@ -99,7 +99,7 @@ default = {
     'image_catalog_max_number': 65,
     'clip_skip': 2,
     'vae': 'Default (model)',
-    'developer_debug_mode_checkbox': True
+    'developer_debug_mode_checkbox': False
     }
 
 
