@@ -137,6 +137,7 @@ def get_system_message():
 
 
 def preset_instruction():
+    const lang=system_params["__lang"];
     if (lang=="cn") {
         head = "<div style='max-width:100%; max-height:86px; overflow:hidden'>"
         foot = "</div>"
