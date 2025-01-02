@@ -1034,7 +1034,7 @@ with shared.gradio_root:
                 with gr.Row():
                     language_ui=shared.args.language
                     if args_manager.args.disable_preset_selection:
-                        preselector = gr.Radio(label='Presets Disabled', interactive=False)
+                        preselector = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
                         preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
