@@ -691,8 +691,8 @@ with shared.gradio_root:
                             interactive=True)
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
-                                                 choices=flags.Performance.list(),
-                                                 value=modules.config.default_performance)
+                                            choices=flags.Performance.list(),
+                                            value=modules.config.default_performance)
                     image_number = gr.Slider(label='Image Quantity', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
                     with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
                         aspect_ratios_selection = gr.Textbox(value='', visible=False) 
@@ -703,11 +703,11 @@ with shared.gradio_root:
                         for aspect_ratios_select in aspect_ratios_selections:
                             aspect_ratios_select.change(lambda x: x, inputs=aspect_ratios_select, outputs=aspect_ratios_selection, queue=False, show_progress=False).then(lambda x: None, inputs=aspect_ratios_select, queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}')
                         overwrite_width = gr.Slider(label='Forced Overwrite of Generating Width',
-                                                    minimum=-1, maximum=2048, step=1, value=-1,
-                                                    info='Set as -1 to disable. For developer debugging. '
-                                                         'Results will be worse for non-standard numbers that SDXL is not trained on.')
+                                            minimum=-1, maximum=2048, step=1, value=-1,
+                                            info='Set as -1 to disable. For developer debugging. '
+                                            'Results will be worse for non-standard numbers that SDXL is not trained on.')
                         overwrite_height = gr.Slider(label='Forced Overwrite of Generating Height',
-                                                     minimum=-1, maximum=2048, step=1, value=-1)
+                                            minimum=-1, maximum=2048, step=1, value=-1)
                         def overwrite_aspect_ratios(width, height):
                             if width>0 and height>0:
                                 return flags.add_ratio(f'{width}*{height}')
@@ -719,9 +719,9 @@ with shared.gradio_root:
                                          value=modules.config.default_output_format)
                        
                     negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type negative prompt here.",
-                                             info='Describe what you do not want to see.', lines=2,
-                                             elem_id='negative_prompt',
-                                             value=modules.config.default_prompt_negative)
+                                        info='Describe what you do not want to see.', lines=2,
+                                        elem_id='negative_prompt',
+                                        value=modules.config.default_prompt_negative)
                     seed_random = gr.Checkbox(label='Random', value=True)
                     image_seed = gr.Textbox(label='Seed', value=0, max_lines=1, visible=False) # workaround for https://github.com/gradio-app/gradio/issues/5354
 
