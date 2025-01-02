@@ -775,7 +775,7 @@ default_inpaint_mask_sam_model = get_config_item_or_set_default(
 
 default_preselector = get_config_item_or_set_default(
     key='default_preselector',
-    default_value=ads.default['preselector']
+    default_value=ads.default['preselector'],
     validator=lambda x: isinstance(x, str),
     expected_type=str
 )
