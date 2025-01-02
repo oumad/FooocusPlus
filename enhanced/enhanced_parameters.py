@@ -19,4 +19,4 @@ def set_preselector():
             preselector='Topbar Menu'
         else:    
             preselector='Dropdown Menu'
-    return
+    return(preselector)
