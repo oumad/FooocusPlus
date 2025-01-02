@@ -1255,6 +1255,7 @@ with shared.gradio_root:
                   enhance_input_image, enhance_checkbox, enhance_uov_method, enhance_uov_processing_order,
                   enhance_uov_prompt_type]
         ctrls += enhance_ctrls
+        ctrls += preselector
 
         system_params = gr.JSON({}, visible=False)
         def parse_meta(raw_prompt_txt, is_generating, state_params, panel_status):
