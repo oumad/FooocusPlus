@@ -167,7 +167,7 @@ model_file_filter = {
         }
 model_file_filter['Fooocus'] = model_file_filter['SD3m'] + model_file_filter['Flux'] + model_file_filter['HyDiT']
 
-# preselector = lambda x: '中文' if x=='cn' else 'En'
+language_radio = lambda x: '中文' if x=='cn' else 'En'
 
 task_class_mapping = {
             'Fooocus': 'SDXL-Fooocus',
