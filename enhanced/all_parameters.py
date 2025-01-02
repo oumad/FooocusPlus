@@ -99,7 +99,7 @@ default = {
     'image_catalog_max_number': 65,
     'clip_skip': 2,
     'vae': 'Default (model)',
-    'developer_debug_mode_checkbox': False
+    'developer_debug_mode_checkbox': False,
     'preselector": ''
     }
 
