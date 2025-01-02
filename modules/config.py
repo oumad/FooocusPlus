@@ -774,6 +774,14 @@ default_inpaint_mask_sam_model = get_config_item_or_set_default(
     validator=lambda x: x in modules.flags.inpaint_mask_sam_model
 )
 
+default_preselector = get_config_item_or_set_default(
+    key='default_preselector',
+    if (lang=="cn):
+        default_value='Topbar Menu'
+    else
+        default_value='Dropdown Menu'
+)
+
 default_translation_methods = get_config_item_or_set_default(
     key='default_translation_methods',
     default_value=ads.default['translation_methods'],
