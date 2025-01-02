@@ -100,7 +100,10 @@ default = {
     'clip_skip': 2,
     'vae': 'Default (model)',
     'developer_debug_mode_checkbox': False,
-    'preselector': ''
+    if (lang=='cn'):
+        'preselector': 'Topbar Menu',
+    else:
+        'preselector': 'Dropdown Menu',
     }
 
 
