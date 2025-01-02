@@ -228,7 +228,7 @@
   "Extract and backfill prompt and negative prompt while switching historical gallery images.": "在浏览出图历史图集时，自动提取并回填正反向提示词。",
   "DeleteImage": "坏图删除",
   "DELETE the image from output directory and logs!": "将当前出坏的图片从目录和日志中**删除**!!! 重新点击'工具箱'对应菜单项可以取消本次操作。",
-  "Language of UI": "界面语言",
+  "Choose Preset Selector": "Choose Preset Selector",
   "Theme of background": "背景主题",
   "Mask generation model": "识别模型",
   "Cloth category": "衣服类别",
