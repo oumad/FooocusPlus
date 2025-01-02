@@ -135,7 +135,6 @@ def get_system_message():
     return body if body else ''
 
 
-
 def preset_instruction():
     head = "<div style='max-width:100%; max-height:86px; overflow:hidden'>"
     foot = "</div>"
