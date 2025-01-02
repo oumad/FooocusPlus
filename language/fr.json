@@ -224,7 +224,7 @@
   "Extract and backfill prompt and negative prompt while switching historical gallery images.": "Extraire et remplir l'invite et l'invite négative lors du changement d'images historiques.",
   "DeleteImage": "Supprimer l'image",
   "DELETE the image from output directory and logs!": "SUPPRIMER l'image du répertoire de sortie et des journaux !",
-  "Language of UI": "Langue de l'interface",
+  "Choose Preset Selector": "Choose Preset Selector",
   "Theme of background": "Thème de fond",
   "Mask generation model": "Modèle de génération de masque",
   "Cloth category": "Catégorie de vêtements",
