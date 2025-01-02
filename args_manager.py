@@ -18,6 +18,9 @@ args_parser.parser.add_argument("--disable-offload-from-vram", action="store_tru
                                   "Some Mac users may need this.")
 
 args_parser.parser.add_argument("--theme", type=str, help="Launches the UI with light or dark theme", default='dark')
+
+args_parser.parser.add_argument("--preselector", type=str, help="Location of Preset Selector", default='Topbar Menu')
+
 args_parser.parser.add_argument("--disable-image-log", action='store_true',
                                 help="Prevent writing images and logs to the outputs folder.")
 
