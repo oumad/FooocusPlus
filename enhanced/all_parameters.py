@@ -100,6 +100,7 @@ default = {
     'clip_skip': 2,
     'vae': 'Default (model)',
     'developer_debug_mode_checkbox': False
+    'preselector": ''
     }
 
 
@@ -183,4 +184,5 @@ def init_all_params_index(lora_number, disable_metadata):
         'save_metadata_to_images': 66+a,
         'metadata_scheme': 67+a,
         'ip_ctrls': 66+b,
+        'preselector': 68+a,
     }
