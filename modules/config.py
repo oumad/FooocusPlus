@@ -778,7 +778,7 @@ default_preselector = get_config_item_or_set_default(
     key='default_preselector',
     if (lang=='cn'):
         default_value='Topbar Menu'
-    else
+    else:
         default_value='Dropdown Menu'
 )
 
@@ -883,6 +883,7 @@ possible_preset_keys = {
     "default_inpaint_advanced_masking_checkbox": "inpaint_advanced_masking_checkbox",
     "default_mixing_image_prompt_and_vary_upscale": "mixing_image_prompt_and_vary_upscale",
     "default_mixing_image_prompt_and_inpaint": "mixing_image_prompt_and_inpaint",
+    "default_preselector": "preselector",
     "default_backfill_prompt": "backfill_prompt",
     "default_translation_methods": "translation_methods",
     "default_image_catalog_max_number": "image_catalog_max_number",
