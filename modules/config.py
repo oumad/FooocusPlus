@@ -426,8 +426,7 @@ default_styles = get_config_item_or_set_default(
     key='default_styles',
     default_value=[
         "Fooocus V2",
-        "Fooocus Enhance",
-        "Fooocus Sharp"
+        "Fooocus Enhance"
     ],
     validator=lambda x: isinstance(x, list) and all(y in modules.sdxl_styles.legal_style_names for y in x),
     expected_type=list
@@ -777,6 +776,8 @@ default_inpaint_mask_sam_model = get_config_item_or_set_default(
 default_preselector = get_config_item_or_set_default(
     key='default_preselector',
     default_value=ads.default['preselector']
+    validator=lambda x: isinstance(x, str),
+    expected_type=str
 )
 
 default_translation_methods = get_config_item_or_set_default(
