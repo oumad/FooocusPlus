@@ -1033,7 +1033,7 @@ with shared.gradio_root:
                     binding_id_button = gr.Button(value='Binding Identity', visible=True)
                 with gr.Row():
                     language_ui=shared.args.language
-                    preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value=args_manager.args.preselector), interactive=True)
+                    preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value=""), interactive=True)
                     background_theme = gr.Radio(label='Theme of background', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
                     prompt_preset_button = gr.Button(value='Save the current parameters as a preset package')
