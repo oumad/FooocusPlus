@@ -1037,6 +1037,7 @@ with shared.gradio_root:
                         preselector = gr.Radio(label='Presets Disabled', interactive=False)
                     else:
                         preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
+                    language_ui = gr.Radio(label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=false, visible=false)                        
                     background_theme = gr.Radio(label='Theme of background', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
                     prompt_preset_button = gr.Button(value='Save the current parameters as a preset package')
