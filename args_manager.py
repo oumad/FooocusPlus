@@ -5,7 +5,7 @@ args_parser.parser.add_argument("--preset", type=str, default='default', help="A
 args_parser.parser.add_argument("--disable-preset-selection", action='store_true',
                                 help="Disables preset selection in Gradio.")
 
-args_parser.parser.add_argument("--language", type=str, default='cn',
+# args_parser.parser.add_argument("--language", type=str, default='cn',
                                 help="Translate UI using json files in [language] folder. "
                                   "For example, [--language example] will use [language/example.json] for translation.")
 
