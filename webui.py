@@ -665,7 +665,7 @@ with shared.gradio_root:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-                set_preselector;
+                libs.set_preselector;
                 if not args_manager.args.disable_preset_selection:
                     if preselector == 'Topbar Menu':
                         preset_selection = gr.Radio(label='Preset',
