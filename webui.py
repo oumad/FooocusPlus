@@ -1096,7 +1096,7 @@ with shared.gradio_root:
                 state.update({name: value})
                 return state
 
-            language_ui.select(lambda x,y: update_state_topbar('__lang',x,y), inputs=[language_ui, state_topbar], outputs=state_topbar).then(None, inputs=language_ui, _js="(x) => set_language_by_ui(x)")
+           # language_ui.select(lambda x,y: update_state_topbar('__lang',x,y), inputs=[language_ui, state_topbar], outputs=state_topbar).then(None, inputs=language_ui, _js="(x) => set_language_by_ui(x)")
             background_theme.select(lambda x,y: update_state_topbar('__theme',x,y), inputs=[background_theme, state_topbar], outputs=state_topbar).then(None, inputs=background_theme, _js="(x) => set_theme_by_ui(x)")
 
             gallery_index.select(gallery_util.select_index, inputs=[gallery_index, image_tools_checkbox, state_topbar], outputs=[gallery, image_toolbox, progress_window, progress_gallery, prompt_info_box, params_note_box, params_note_info, params_note_input_name, params_note_regen_button, params_note_preset_button, state_topbar], show_progress=False)
