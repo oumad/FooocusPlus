@@ -36,6 +36,7 @@ import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
 from enhanced.simpleai import comfyd 
 
+print()
 print('Initializing user interface...')
 
 def get_task(*args):
