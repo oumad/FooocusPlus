@@ -8,9 +8,9 @@ import platform
 import time
 import shared
 import fooocus_version
+import fooocusplus_version as fooocusplus_version
 import comfy.comfy_version as comfy_version
 import enhanced.version as version
-import fooocusplus_version as fooocusplus_version
 
 from pathlib import Path
 from build_launcher import build_launcher, is_win32_standalone_build, python_embeded_path
