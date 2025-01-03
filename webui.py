@@ -669,7 +669,9 @@ with shared.gradio_root:
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
                 preselector=enhanced_parameters.set_preselector
+                print()
                 print(f'Preselector: {preselector}')
+                print()
                 if not args_manager.args.disable_preset_selection:
                     if preselector == 'Topbar Menu':
                         preset_selection = gr.Radio(label='Preset',
