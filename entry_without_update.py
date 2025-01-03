@@ -6,7 +6,7 @@ root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 os.chdir(root)
 
-print(f'Loading FooocusPlus without updating...')
+print('Loading FooocusPlus without updating...')
 
 #if __name__ == '__main__':
 #    import multiprocessing as mp
