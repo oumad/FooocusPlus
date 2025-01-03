@@ -1,12 +1,11 @@
 import os
 import sys
 
-
 root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 os.chdir(root)
 
-print(f'Loading FooocusPlus...')
+print('Loading FooocusPlus...')
 
 try:
     import pygit2
@@ -83,7 +82,6 @@ try:
 except Exception as e:
     print(f'{branch_name if branch_name!="FooocusPlus" else "FooocusPlus"}: Update failed.')
     print(str(e))
-
 
 #if __name__ == '__main__':
 #    import multiprocessing as mp
