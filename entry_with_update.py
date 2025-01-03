@@ -86,8 +86,7 @@ except Exception as e:
 
 
 #if __name__ == '__main__':
-if __name__ == '__FooocusPlus__':
-    import multiprocessing as mp
-    mp.set_start_method('spawn')
+#    import multiprocessing as mp
+#    mp.set_start_method('spawn')
 
 from launch import *
