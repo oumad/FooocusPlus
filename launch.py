@@ -33,11 +33,6 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def check_base_environment():
-    #import fooocus_version
-    #import comfy.comfy_version as comfy_version
-    #import enhanced.version as version
-    #import fooocusplus_version as fooocusplus_version
-
     print(f"Python {sys.version}")
     print(f"Fooocus version: {fooocus_version.version}")
     print(f"Comfy version: {comfy_version.version}")
@@ -231,6 +226,7 @@ def reset_env_args():
     shared.sysinfo = json.loads(shared.token.get_sysinfo().to_json())
     shared.sysinfo.update(dict(did=shared.token.get_did()))
     #print(f'sysinfo/基础环境信息:{sysinfo}')
+    print(f'sysinfo/基础环境信息:{sysinfo}')
 
     if '--location' in sys.argv:
         shared.sysinfo["location"] = args.location
