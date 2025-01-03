@@ -75,7 +75,7 @@ def check_base_environment():
         sys.exit(0)
 
     from simpleai_base import simpleai_base
-    print("Checking ...")
+    print("Checking...")
     token = simpleai_base.init_local(f'SimpleSDXL_User')
     sysinfo = json.loads(token.get_sysinfo().to_json())
     sysinfo.update(dict(did=token.get_did()))
@@ -226,7 +226,6 @@ def reset_env_args():
     shared.sysinfo = json.loads(shared.token.get_sysinfo().to_json())
     shared.sysinfo.update(dict(did=shared.token.get_did()))
     #print(f'sysinfo/基础环境信息:{sysinfo}')
-    print(f'sysinfo/基础环境信息:{sysinfo}')
 
     if '--location' in sys.argv:
         shared.sysinfo["location"] = args.location
