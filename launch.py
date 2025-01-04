@@ -74,8 +74,8 @@ def check_base_environment():
         print(f'有任何疑问可到SimpleSDXL的QQ群交流: 938075852')
         sys.exit(0)
 
-    from simpleai_base import simpleai_base
     print("Checking resources...")
+    from enhanced.simpleai_base import simpleai_base
     token = simpleai_base.init_local(f'SimpleSDXL_User')
     sysinfo = json.loads(token.get_sysinfo().to_json())
 # sysinfo.update(dict(did=token.get_did()))
