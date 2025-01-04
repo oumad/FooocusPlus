@@ -75,8 +75,9 @@ def check_base_environment():
         sys.exit(0)
 
     print("Checking resources...")
-    from enhanced.simpleai_base import simpleai_base
-    token = enhanced.simpleai_base.init_local(f'SimpleSDXL_User')
+    from enhanced import simpleai_base
+    #import enchanced.simplai_base
+    token = simpleai_base.init_local(f'SimpleSDXL_User')
     sysinfo = json.loads(token.get_sysinfo().to_json())
 # sysinfo.update(dict(did=token.get_did()))
     print(f'GPU: {sysinfo["gpu_name"]}, RAM: {sysinfo["ram_total"]}MB, SWAP: {sysinfo["ram_swap"]}MB, VRAM: {sysinfo["gpu_memory"]}MB, DiskFree: {sysinfo["disk_free"]}MB, CUDA: {sysinfo["cuda"]}')
