@@ -78,6 +78,7 @@ def check_base_environment():
 
     print("Checking resources...")
 #    import simpleai_base
+from simpleai_base import simpleai_base
 #    from simpleai_base import simpleai_base
 #    token = simpleai_base.init_local(f'SimpleSDXL_User')
 #    sysinfo = json.loads(token.get_sysinfo().to_json())
