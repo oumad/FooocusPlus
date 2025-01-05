@@ -83,8 +83,4 @@ except Exception as e:
     print(f'{branch_name if branch_name!="FooocusPlus" else "FooocusPlus"}: Update failed.')
     print(str(e))
 
-#if __name__ == '__main__':
-#    import multiprocessing as mp
-#    mp.set_start_method('spawn')
-
 from launch import *
