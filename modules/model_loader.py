@@ -5,6 +5,9 @@ from typing import Optional
 import json
 import shutil
 
+print('YOU HAVE ENTERED THE MODEL LOADER')
+print()
+
 urlmapping = {}
 urlmapping_path = os.path.abspath(f'./enhanced/urlmapping.json')
 with open(urlmapping_path, "r", encoding="utf-8") as json_file:
