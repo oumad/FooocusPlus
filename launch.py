@@ -10,6 +10,7 @@ os.chdir(root)
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
+os.environ["translators_default_region"] = "China"
 if "GRADIO_SERVER_PORT" not in os.environ:
     os.environ["GRADIO_SERVER_PORT"] = "7865"
 
