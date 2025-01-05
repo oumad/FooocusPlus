@@ -13,11 +13,6 @@ os.chdir(root)
 from modules.launch_util import is_installed, run_pip
 
 try:
-    if not is_installed("simpleai_base"):
-        run_pip(f"install simpleai_base -i https://pypi.org/simple", "simpleai_base")
-    from simpleai_base import simpleai_base
-    token = simpleai_base.init_local(f'SimpleSDXL_User')
-
     import pygit2
     pygit2.option(pygit2.GIT_OPT_SET_OWNER_VALIDATION, 0)
 
