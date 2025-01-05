@@ -20,7 +20,7 @@ import enhanced.superprompter as superprompter
 import enhanced.comfy_task as comfy_task
 import shared
 from enhanced.simpleai import comfyd
-from modules.model_loader import load_file_from_url, load_file_from_muid
+from modules.model_loader import load_file_from_url
 
 css = '''
 '''
