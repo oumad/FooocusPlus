@@ -42,10 +42,10 @@ def check_base_environment():
 
     base_pkg = "simpleai_base"
     ver_required = "0.3.21"
-    REINSTALL_BASE = False if '_dev' not in version.get_branch() else True
-    base_file = {
-        "Windows": f'simpleai_base-{ver_required}-cp310-none-win_amd64.whl',
-        "Linux": f'simpleai_base-{ver_required}-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'
+#    REINSTALL_BASE = False if '_dev' not in version.get_branch() else True
+#    base_file = {
+#        "Windows": f'simpleai_base-{ver_required}-cp310-none-win_amd64.whl',
+#        "Linux": f'simpleai_base-{ver_required}-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'
 #        "Windows": f'enhanced/libs/simpleai_base-{ver_required}-cp310-none-win_amd64.whl',
 #        "Linux": f'enhanced/libs/simpleai_base-{ver_required}-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'
         }
@@ -77,7 +77,8 @@ def check_base_environment():
         sys.exit(0)
 
     print("Checking resources...")
-    from simpleai_base import simpleai_base
+    import simpleai_base
+#    from simpleai_base import simpleai_base
     token = simpleai_base.init_local(f'SimpleSDXL_User')
     sysinfo = json.loads(token.get_sysinfo().to_json())
 # sysinfo.update(dict(did=token.get_did()))
