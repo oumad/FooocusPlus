@@ -153,17 +153,17 @@ def get_entry_point_id():
     else:
         return None
 
-import hashlib
-import base58
+#import hashlib
+#import base58
 
-def calc_sha256(data):
-    sha256_hash = hashlib.sha256(data).digest()
-    return sha256_hash
+#def calc_sha256(data):
+#    sha256_hash = hashlib.sha256(data).digest()
+#    return sha256_hash
 
-def gen_entry_point(pid):
-    def gen_entry_point_id(pid):
-        return base58.b58encode(calc_sha256(str(pid).encode())).decode()
-    return gen_entry_point_id(pid)
+#def gen_entry_point(pid):
+#    def gen_entry_point_id(pid):
+#        return base58.b58encode(calc_sha256(str(pid).encode())).decode()
+#    return gen_entry_point_id(pid)
 
 #[pyfunction from simpleai_base/src/lib.rs]
 #def gen_entry_point():
