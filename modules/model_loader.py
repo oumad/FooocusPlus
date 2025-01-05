@@ -70,7 +70,7 @@ def load_file_from_url(
     if not os.path.exists(cached_file):
         if (shared.args.language=='cn'):
             print(f'正在下载模型文件: "{url}"。如果速度慢，可终止运行，自行用工具下载后保存到: {cached_file}，然后重启应用。\n')
-        else
+        else:
             print(f'Downloading: "{url}" to {cached_file}')
         from torch.hub import download_url_to_file
         download_url_to_file(url, cached_file, progress=progress)
