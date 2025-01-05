@@ -95,7 +95,7 @@ if args.hf_mirror is not None:
 from modules import config
 from modules.hash_cache import init_cache
 
-os.environ["U2NET_HOME"] = config.paths_inpaint
+os.environ["U2NET_HOME"] = config.path_inpaint
 
 os.environ['GRADIO_TEMP_DIR'] = config.temp_path
 
