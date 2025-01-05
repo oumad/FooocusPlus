@@ -5,9 +5,11 @@ import json
 import importlib
 import packaging.version
 import platform
+import psutil
 import time
 import shared
 import simpleai_base
+import torch
 import fooocus_version
 import fooocusplus_version as fooocusplus_version
 import comfy.comfy_version as comfy_version
@@ -40,9 +42,12 @@ def check_base_environment():
     print(f"SimpleSDXL2 version: {version.get_simplesdxl_ver()}")
     print(f"FooocusPlus version: {fooocusplus_version.version}")
     print(f"")
+    total_vram = get_total_memory(get_torch_device()) / (1024 * 1024)
+    total_ram = psutil.virtual_memory().total / (1024 * 1024)
+    print("Total VRAM {:0.0f} MB, total RAM {:0.0f} MB".format(total_vram, total_ram))
 
-    base_pkg = "simpleai_base"
-    ver_required = "0.3.21"
+#    base_pkg = "simpleai_base"
+#    ver_required = "0.3.21"
 #    REINSTALL_BASE = False if '_dev' not in version.get_branch() else True
 #    base_file = {
 #        "Windows": f'simpleai_base-{ver_required}-cp310-none-win_amd64.whl',
@@ -227,8 +232,8 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
     return default_model, checkpoint_downloads
 
 def reset_env_args():
-    shared.sysinfo = json.loads(shared.token.get_sysinfo().to_json())
-    shared.sysinfo.update(dict(did=shared.token.get_did()))
+    #shared.sysinfo = json.loads(shared.token.get_sysinfo().to_json())
+    #shared.sysinfo.update(dict(did=shared.token.get_did()))
     #print(f'sysinfo/基础环境信息:{sysinfo}')
 
     if '--location' in sys.argv:
