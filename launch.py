@@ -79,18 +79,18 @@ def check_base_environment():
     print("Checking resources...")
     import simpleai_base
 #    from simpleai_base import simpleai_base
-    token = simpleai_base.init_local(f'SimpleSDXL_User')
-    sysinfo = json.loads(token.get_sysinfo().to_json())
+#    token = simpleai_base.init_local(f'SimpleSDXL_User')
+#    sysinfo = json.loads(token.get_sysinfo().to_json())
 # sysinfo.update(dict(did=token.get_did()))
-    print(f'GPU: {sysinfo["gpu_name"]}, RAM: {sysinfo["ram_total"]}MB, SWAP: {sysinfo["ram_swap"]}MB, VRAM: {sysinfo["gpu_memory"]}MB, DiskFree: {sysinfo["disk_free"]}MB, CUDA: {sysinfo["cuda"]}')
+#    print(f'GPU: {sysinfo["gpu_name"]}, RAM: {sysinfo["ram_total"]}MB, SWAP: {sysinfo["ram_swap"]}MB, VRAM: {sysinfo["gpu_memory"]}MB, DiskFree: {sysinfo["disk_free"]}MB, CUDA: {sysinfo["cuda"]}')
 
-    if (sysinfo["ram_total"]+sysinfo["ram_swap"])<40960:
-        print(f'The total virtual memory capacity of the system is too small, which will affect the loading and computing efficiency of the model. Please expand the total virtual memory capacity of the system to be greater than 40G.')
-        print(f'系统虚拟内存总容量过小，会影响模型的加载与计算效率，请扩充系统虚拟内存总容量(RAM+SWAP)大于40G。')
-        print(f'有任何疑问可到SimpleSDXL的QQ群交流: 938075852')
-        sys.exit(0)
+ #   if (sysinfo["ram_total"]+sysinfo["ram_swap"])<40960:
+ #       print(f'The total virtual memory capacity of the system is too small, which will affect the loading and computing efficiency of the model. Please expand the total virtual memory capacity of the system to be greater than 40G.')
+ #       print(f'系统虚拟内存总容量过小，会影响模型的加载与计算效率，请扩充系统虚拟内存总容量(RAM+SWAP)大于40G。')
+ #       print(f'有任何疑问可到SimpleSDXL的QQ群交流: 938075852')
+ #       sys.exit(0)
 
-    return token, sysinfo
+#    return token, sysinfo
 
 
     #Intel Arc
