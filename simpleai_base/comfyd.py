@@ -10,13 +10,6 @@ comfyd_process = None
 comfyd_active = False
 comfyd_args = [[]]
 
-#[pyfunction from simpleai_base/src/lib.rs]
-def gen_entry_point():
-    gen_entry_point_id(pid: u32) = String {
-    calc_sha256(pid.to_string().as_bytes()).to_base58()
-    }
-    return gen_entry_point_id(pid: u32)
-
 def is_running():
     global comfyd_process
     if 'comfyd_process' not in globals():
@@ -152,3 +145,29 @@ def args_mapping(args_fooocus):
     if not utils.echo_off:
         print(f'[Comfyd] args_fooocus: {args_fooocus}\nargs_comfy: {args_comfy}')
     return args_comfy
+
+def get_entry_point_id():
+    global comfyd_process
+    if 'comfyd_process' in globals() and comfyd_process:
+        return gen_entry_point_id(comfyd_process.pid)
+    else:
+        return None
+
+import hashlib
+import base58
+
+def calc_sha256(data):
+    sha256_hash = hashlib.sha256(data).digest()
+    return sha256_hash
+
+def gen_entry_point(pid):
+    def gen_entry_point_id(pid):
+        return base58.b58encode(calc_sha256(str(pid).encode())).decode()
+    return gen_entry_point_id(pid)
+
+#[pyfunction from simpleai_base/src/lib.rs]
+#def gen_entry_point():
+#    gen_entry_point_id(pid: u32) = String {
+#    calc_sha256(pid.to_string().as_bytes()).to_base58()
+#    }
+#    return gen_entry_point_id(pid: u32)
