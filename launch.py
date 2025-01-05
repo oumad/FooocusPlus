@@ -7,6 +7,7 @@ import packaging.version
 import platform
 import time
 import shared
+import simpleai_base
 import fooocus_version
 import fooocusplus_version as fooocusplus_version
 import comfy.comfy_version as comfy_version
@@ -77,7 +78,6 @@ def check_base_environment():
         sys.exit(0)
 
     print("Checking resources...")
-    import simpleai_base
 # from simpleai_base import simpleai_base
 #    from simpleai_base import simpleai_base
 #    token = simpleai_base.init_local(f'SimpleSDXL_User')
