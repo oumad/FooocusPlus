@@ -48,7 +48,7 @@ def check_base_environment():
 #        "Linux": f'simpleai_base-{ver_required}-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'
 #        "Windows": f'enhanced/libs/simpleai_base-{ver_required}-cp310-none-win_amd64.whl',
 #        "Linux": f'enhanced/libs/simpleai_base-{ver_required}-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'
-        }
+#        }
     #index_url = "https://pypi.org/simple"
  #   if not is_installed(base_pkg):
  #       run(f'"{python}" -m pip install {base_file[platform.system()]}', f'Install {base_pkg} {ver_required}')
