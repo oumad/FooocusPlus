@@ -50,13 +50,13 @@ def check_base_environment():
 #        "Linux": f'enhanced/libs/simpleai_base-{ver_required}-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'
         }
     #index_url = "https://pypi.org/simple"
-    if not is_installed(base_pkg):
-        run(f'"{python}" -m pip install {base_file[platform.system()]}', f'Install {base_pkg} {ver_required}')
-    else:
-        version_installed = importlib.metadata.version(base_pkg)
-        if REINSTALL_BASE or packaging.version.parse(ver_required) != packaging.version.parse(version_installed):
-            run(f'"{python}" -m pip uninstall -y {base_pkg}', f'Uninstall {base_pkg} {version_installed}')
-            run(f'"{python}" -m pip install {base_file[platform.system()]}', f'Install {base_pkg} {ver_required}')
+ #   if not is_installed(base_pkg):
+ #       run(f'"{python}" -m pip install {base_file[platform.system()]}', f'Install {base_pkg} {ver_required}')
+ #   else:
+ #       version_installed = importlib.metadata.version(base_pkg)
+ #       if REINSTALL_BASE or packaging.version.parse(ver_required) != packaging.version.parse(version_installed):
+ #           run(f'"{python}" -m pip uninstall -y {base_pkg}', f'Uninstall {base_pkg} {version_installed}')
+ #           run(f'"{python}" -m pip install {base_file[platform.system()]}', f'Install {base_pkg} {ver_required}')
 
     #extra_pkg = 'lark-parser'
     #if not is_installed(extra_pkg):
