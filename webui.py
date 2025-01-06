@@ -1053,7 +1053,7 @@ with shared.gradio_root:
                 with gr.Row(visible=False):
                     binding_id_button = gr.Button(value='Binding Identity', visible=True)
                 with gr.Row():
-                    language_ui=shared.args.language
+                    language_ui=args_manager.args.language
                     if args_manager.args.disable_preset_selection:
                         preselector = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
