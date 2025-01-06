@@ -225,7 +225,7 @@ function(system_params) {
 
 
 def init_nav_bars(state_params, request: gr.Request):
-    #print(f'request.headers:{request.headers}')
+    print(f'request.headers:{request.headers}')
     if "__lang" not in state_params.keys():
         if 'accept-language' in request.headers and 'zh-CN' in request.headers['accept-language']:
             args_manager.args.language = 'cn'
