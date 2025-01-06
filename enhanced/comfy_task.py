@@ -37,7 +37,6 @@ def is_lowlevel_device():
 
 def is_highlevel_device():
     total_vram = ldm_patched.modules.model_management.get_vram()
-    print('VRAM: ', total_vram)
     return total_vram>VRAM16G
 
 default_base_SD15_name = 'realisticVisionV60B1_v51VAE.safetensors'
