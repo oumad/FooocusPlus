@@ -1087,7 +1087,7 @@ with shared.gradio_root:
                 with gr.Row():
                     gr.Markdown(value=f'<h3>System Information</h3>\
                     System RAM: {int(ldm_patched.modules.model_management.get_sysram())} MB,\
-                    Video RAM: {int(ldm_patched.modules.model_management.get_vram()) MB}<br>\
+                    Video RAM: {int(ldm_patched.modules.model_management.get_vram())} MB<br>\
                     Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
                     Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}<br>\
                     FooocusPlus {fooocusplus_version.version}<br>')
