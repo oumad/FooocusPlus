@@ -32,11 +32,11 @@ def start(args_patch=[[]]):
         for patch in comfyd_args:
             found = False
             for i, sublist in enumerate(args_comfyd):
-                if sublist[0] == patch[0]:
-                    if len(sublist)>1:
-                        args_comfyd[i][1] = patch[1]
-                    found = True
-                    break
+#                if sublist[0] == patch[0]:
+#                    if len(sublist)>1:
+#                        args_comfyd[i][1] = patch[1]
+#                    found = True
+#                    break
             if not found:
                 args_comfyd.append(patch)
         if not utils.echo_off:
