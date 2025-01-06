@@ -94,7 +94,7 @@ def try_load_deprecated_user_path_config():
         else:
             os.replace('user_path_config.txt', 'user_path_config-deprecated.txt')
             print('Config updated successfully by user. '
-                  'A backup of previous config is written to "user_path_config-deprecated.txt".')
+                  'A backup of the previous config is written to "user_path_config-deprecated.txt".')
             return
     except Exception as e:
         print('Processing deprecated config failed')
@@ -149,7 +149,7 @@ def get_path_output() -> str:
         path_output_abs = os.path.abspath(path_output)
         config_dict['path_outputs'] = path_output_abs
     path_output = get_dir_or_set_default('path_outputs', f'../{path_output}')
-    print(f'The path_output: {path_output}')
+    print(f'Generated images will be stored here: {path_output}')
     return path_output
 
 def get_path_models_root() -> str:
