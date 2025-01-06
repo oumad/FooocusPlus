@@ -29,16 +29,16 @@ def start(args_patch=[[]]):
         args_comfyd = [["--preview-method", "auto"], ["--port", "8187"], ["--disable-auto-launch"]]
         if len(args_patch) > 0 and len(args_patch[0]) > 0:
             comfyd_args += args_patch
-        for patch in comfyd_args:
-            found = False
-            for i, sublist in enumerate(args_comfyd):
+#        for patch in comfyd_args:
+#            found = False
+#            for i, sublist in enumerate(args_comfyd):
 #                if sublist[0] == patch[0]:
 #                    if len(sublist)>1:
 #                        args_comfyd[i][1] = patch[1]
 #                    found = True
 #                    break
-            if not found:
-                args_comfyd.append(patch)
+#            if not found:
+#                args_comfyd.append(patch)
         if not utils.echo_off:
             print(f'[Comfyd] args_comfyd was patched: {args_comfyd}, patch:{comfyd_args}')
         arguments = [arg for sublist in args_comfyd for arg in sublist]
