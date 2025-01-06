@@ -1,7 +1,7 @@
 import os
 import zipfile
 import shutil
-import torch
+import ldm_patched
 import modules.config as config
 from shared import sysinfo, modelsinfo
 from enhanced.simpleai import ComfyTaskParams
