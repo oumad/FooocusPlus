@@ -19,6 +19,7 @@ import modules.style_sorter as style_sorter
 import modules.meta_parser
 import args_manager
 import copy
+import ldm_patched
 from extras.inpaint_mask import SAMOptions
 
 from PIL import Image
