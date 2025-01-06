@@ -186,7 +186,7 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
-title = f'FooocusPlus {fooocusplus_version.version}'
+title = f' {_version.version}'
 
 #if isinstance(args_manager.args.preset, str):
 #    title += ' ' + args_manager.args.preset
@@ -1086,7 +1086,8 @@ with shared.gradio_root:
                     super_prompter_prompt = gr.Textbox(label='Prompt prefix', value='Expand the following prompt to add more detail:', lines=1)
                 with gr.Row():
                     gr.Markdown(value=f'<h3>System Information</h3>\
-                    System RAM: {ldm_patched.modules.model_management.get_sysram()}, Video RAM: {ldm_patched.modules.model_management.get_vram()}\
+                    System RAM: {int(ldm_patched.modules.model_management.get_sysram())},\
+                    Video RAM: {int(ldm_patched.modules.model_management.get_vram())}<br>\
                     Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
                     Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}<br>\
                     FooocusPlus {fooocusplus_version.version}<br>')
