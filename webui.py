@@ -1091,7 +1091,7 @@ with shared.gradio_root:
                 with gr.Row():
                     gr.Markdown(label='System Information', value=f"Python {sys.version}", "Comfy version: {comfy_version.version}",\
                     "Fooocus version: {fooocus_version.version}", "SimpleSDXL2 version: {version.get_simplesdxl_ver()}"),\
-                    "FooocusPlus version: {fooocusplus_version.version}")
+                    "FooocusPlus version: {fooocusplus_version.version})")
 # gr.Markdown(value=f'OS: {shared.sysinfo["os_name"]}, {shared.sysinfo["cpu_arch"]}, {shared.sysinfo["cuda_version"]}, Torch{shared.sysinfo["torch_version"]}, XF{shared.sysinfo["xformers_version"]}<br>Ver: {version.branch} {version.simplesdxl_ver} / Fooocus {fooocus_version.version}<br>PyHash: {shared.sysinfo["pyhash"]}, UIHash: {shared.sysinfo["uihash"]}')
 
             iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
