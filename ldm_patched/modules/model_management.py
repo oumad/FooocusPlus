@@ -119,7 +119,7 @@ def get_total_memory(dev=None, torch_total_too=False):
     else:
         return mem_total
 
-def get_vram()
+def get_vram():
     return get_total_memory(get_torch_device()) / (1024 * 1024)
 
 total_vram = get_vram()
