@@ -186,7 +186,7 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
-title = f' {_version.version}'
+title = f'FooocusPlus {_version.version}'
 
 #if isinstance(args_manager.args.preset, str):
 #    title += ' ' + args_manager.args.preset
