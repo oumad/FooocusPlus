@@ -663,9 +663,8 @@ with shared.gradio_root:
             current_tab = gr.Textbox(value=modules.config.default_selected_image_input_tab_id.split('_')[0], visible=False)
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
-            print (shared.args.language)
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
-                if (shared.args.language=='cn'):
+                if (args_manager.args.language=='cn'):
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
