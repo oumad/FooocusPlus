@@ -17,9 +17,9 @@ if "GRADIO_SERVER_PORT" not in os.environ:
 ssl._create_default_https_context = ssl._create_unverified_context
 
 import platform
+import comfy.comfy_version as comfy_version
 import fooocus_version
 import fooocusplus_version as fooocusplus_version
-import comfy.comfy_version as comfy_version
 import enhanced.version as version
 
 from build_launcher import build_launcher
@@ -37,8 +37,8 @@ def prepare_environment():
     requirements_file = os.environ.get('REQS_FILE', "requirements_versions.txt")
 
     print(f"Python {sys.version}")
+    print(f"Comfy version: {comfy_version.version}")    
     print(f"Fooocus version: {fooocus_version.version}")
-    print(f"Comfy version: {comfy_version.version}")
     print(f"SimpleSDXL2 version: {version.get_simplesdxl_ver()}")
     print(f"FooocusPlus version: {fooocusplus_version.version}")
     print(f"")
