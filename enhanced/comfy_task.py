@@ -36,7 +36,7 @@ def is_lowlevel_device():
     return sysinfo["gpu_memory"]<VRAM8G
 
 def is_highlevel_device():
-    total_vram = get_total_memory(get_torch_device()) / (1024 * 1024)
+    total_vram = ldm_patched.modules.model_management.get_total_memory(get_torch_device()) / (1024 * 1024)
     print('VRAM: ', total_vram)
     return total_vram>VRAM16G
 
