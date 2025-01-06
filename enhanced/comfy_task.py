@@ -37,7 +37,7 @@ def is_lowlevel_device():
 
 def is_highlevel_device():
     total_vram = get_total_memory(get_torch_device()) / (1024 * 1024)
-    print('VRAM: " total_vram)
+    print('VRAM: ' total_vram)
     return total_vram>VRAM16G
 
 default_base_SD15_name = 'realisticVisionV60B1_v51VAE.safetensors'
