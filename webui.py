@@ -9,6 +9,7 @@ import shared
 import modules.config
 import fooocus_version
 import fooocusplus_version as fooocusplus_version
+import comfy.comfy_version as comfy_version
 import modules.html
 import modules.async_worker as worker
 import modules.constants as constants
@@ -28,9 +29,9 @@ from modules.auth import auth_enabled, check_auth
 from modules.util import is_json
 
 import enhanced.gallery as gallery_util
-import enhanced.topbar  as topbar
-import enhanced.toolbox  as toolbox
-import enhanced.translator  as translator
+import enhanced.topbar as topbar
+import enhanced.toolbox as toolbox
+import enhanced.translator as translator
 import enhanced.enhanced_parameters as enhanced_parameters
 import enhanced.version as version
 import enhanced.wildcards as wildcards
@@ -38,19 +39,12 @@ import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
 from enhanced.simpleai import comfyd
 
-# values for information list at the bottom of the Extras panel
-import platform
-import fooocus_version
-import fooocusplus_version as fooocusplus_version
-import comfy.comfy_version as comfy_version
-
 print()
 print('Initializing user interface...')
 
 def get_task(*args):
     args = list(args)
     args.pop(0)
-
     return worker.AsyncTask(args=args)
 
 def generate_clicked(task: worker.AsyncTask):
@@ -191,7 +185,7 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
-title = f'{version.branch} {fooocusplus_version.version}'
+title = f'{repo.head.shorthand} {fooocusplus_version.version}'
 
 #if isinstance(args_manager.args.preset, str):
 #    title += ' ' + args_manager.args.preset
