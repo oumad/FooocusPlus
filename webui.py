@@ -1084,7 +1084,7 @@ with shared.gradio_root:
                     #super_prompter = gr.Button(value="<<SuperPrompt", size="sm", min_width = 70)
                     super_prompter_prompt = gr.Textbox(label='Prompt prefix', value='Expand the following prompt to add more detail:', lines=1)
                 with gr.Row():
-                    gr.Markdown(label='System Information', value=f'Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
+                    gr.Markdown(value=f'<h2>System Information</h2>Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
                     Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}<br>\
                     FooocusPlus {fooocusplus_version.version}')
 
