@@ -1084,9 +1084,9 @@ with shared.gradio_root:
                     #super_prompter = gr.Button(value="<<SuperPrompt", size="sm", min_width = 70)
                     super_prompter_prompt = gr.Textbox(label='Prompt prefix', value='Expand the following prompt to add more detail:', lines=1)
                 with gr.Row():
-                    gr.Markdown(value=f'<h2>System Information</h2>Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
+                    gr.Markdown(value=f'<h3>System Information</h3>Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
                     Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}<br>\
-                    FooocusPlus {fooocusplus_version.version}')
+                    FooocusPlus {fooocusplus_version.version}<br>')
 
             iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
             layout_image_tab = [performance_selection, style_selections, freeu_enabled, refiner_model, refiner_switch] + lora_ctrls
