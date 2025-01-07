@@ -23,6 +23,7 @@ def get_config_path(key, default_value):
 
 wildcards_max_bfs_depth = 64
 config_path = get_config_path('config_path', "config.txt") if args_manager.args.config is None else os.path.abspath(os.path.join(args_manager.args.config, "config.txt"))
+print(config_path)
 config_example_path = get_config_path('config_example_path', "config_modification_tutorial.txt")
 config_dict = {}
 always_save_keys = []
