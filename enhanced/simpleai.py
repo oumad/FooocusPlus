@@ -1,7 +1,6 @@
 import os
 import sys
 import gradio as gr
-import shared
 from simpleai_base import simpleai_base, utils, comfyd, torch_version, xformers_version, cuda_version, comfyclient_pipeline
 from simpleai_base.params_mapper import ComfyTaskParams
 from simpleai_base.models_info import ModelsInfo, sync_model_info
