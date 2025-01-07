@@ -6,6 +6,7 @@ import modules.config as config
 import modules.flags
 import modules.sdxl_styles
 import numbers
+import args_manager
 import copy
 import re
 import args_manager
