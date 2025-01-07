@@ -9,7 +9,6 @@ import numbers
 import args_manager
 import copy
 import re
-import args_manager
 import random
 import modules.constants as constants
 import modules.meta_parser as meta_parser
@@ -20,6 +19,7 @@ import enhanced.gallery as gallery_util
 import enhanced.superprompter as superprompter
 import enhanced.comfy_task as comfy_task
 import shared
+from args_manager import args
 from enhanced.simpleai import comfyd
 from modules.model_loader import load_file_from_url
 
