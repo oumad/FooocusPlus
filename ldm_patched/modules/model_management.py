@@ -263,12 +263,12 @@ def get_torch_device_name(device):
     else:
         return "CUDA {}: {}".format(device, torch.cuda.get_device_name(device))
 
-try:
+#try:
     print("Device:", get_torch_device_name(get_torch_device()))
-    import shared
-    shared.torch_device = "{}".format(get_torch_device())
-except:
-    print("Could not pick default device.")
+#    import shared
+#    shared.torch_device = "{}".format(get_torch_device())
+#except:
+#    print("Could not pick default device.")
 
 print("VAE dtype:", VAE_DTYPE)
 
