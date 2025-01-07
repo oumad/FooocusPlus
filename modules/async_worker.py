@@ -237,9 +237,10 @@ def worker():
     import extras.ip_adapter as ip_adapter
     import extras.face_crop
     import fooocus_version
+    import fooocusplus_version
+    import enhanced.version
     import enhanced.wildcards as wildcards
-    import enhanced.version as version
-
+    
     from extras.censor import default_censor
     from modules.sdxl_styles import apply_style, get_random_style, fooocus_expansion, apply_arrays, random_style_name
     from modules.private_logger import log
@@ -482,7 +483,7 @@ def worker():
             d.append(('Backend Engine', 'backend_engine', async_task.task_class_full))
             d.append(('Metadata Scheme', 'metadata_scheme',
                       async_task.metadata_scheme.value if async_task.save_metadata_to_images else async_task.save_metadata_to_images))
-            d.append(('Version', 'version', f'Fooocus v{fooocus_version.version} {version.branch}_{version.get_simplesdxl_ver()}'))
+            d.append((f'Fooocus {fooocus_version.version} SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()} FooocusPlus fooocusplus_version.version'))
             img_paths.append(log(x, d, metadata_parser, async_task.output_format, task, persist_image))
 
         return img_paths
