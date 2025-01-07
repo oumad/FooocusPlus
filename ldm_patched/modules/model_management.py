@@ -119,8 +119,14 @@ def get_total_memory(dev=None, torch_total_too=False):
     else:
         return mem_total
 
-total_vram = get_total_memory(get_torch_device()) / (1024 * 1024)
-total_ram = psutil.virtual_memory().total / (1024 * 1024)
+def get_vram():
+    return get_total_memory(get_torch_device()) / (1024 * 1024)
+
+def get_sysram():
+    return psutil.virtual_memory().total / (1024 * 1024)
+
+total_vram = get_vram()
+total_ram = get_sysram()
 print("Total VRAM {:0.0f} MB, total RAM {:0.0f} MB".format(total_vram, total_ram))
 if not args.always_normal_vram and not args.always_cpu:
     if lowvram_available and total_vram <= 4096:

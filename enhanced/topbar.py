@@ -6,9 +6,9 @@ import modules.config as config
 import modules.flags
 import modules.sdxl_styles
 import numbers
+import args_manager
 import copy
 import re
-import args_manager
 import random
 import modules.constants as constants
 import modules.meta_parser as meta_parser
@@ -19,8 +19,9 @@ import enhanced.gallery as gallery_util
 import enhanced.superprompter as superprompter
 import enhanced.comfy_task as comfy_task
 import shared
+from args_manager import args
 from enhanced.simpleai import comfyd
-from modules.model_loader import load_file_from_url, load_file_from_muid
+from modules.model_loader import load_file_from_url
 
 css = '''
 '''
@@ -225,12 +226,12 @@ function(system_params) {
 
 
 def init_nav_bars(state_params, request: gr.Request):
-    #print(f'request.headers:{request.headers}')
+#    print(f'request.headers:{request.headers}')
     if "__lang" not in state_params.keys():
-        if 'accept-language' in request.headers and 'zh-CN' in request.headers['accept-language']:
-            args_manager.args.language = 'cn'
-        else:
-            print(f'[Topbar] No accept-language in request.headers:{request.headers}')
+#        if 'accept-language' in request.headers and 'zh-CN' in request.headers['accept-language']:
+#            args_manager.args.language = 'cn'
+#        else:
+#            print(f'[Topbar] No accept-language in request.headers:{request.headers}')
         state_params.update({"__lang": args_manager.args.language}) 
     if "__theme" not in state_params.keys():
         state_params.update({"__theme": args_manager.args.theme})
@@ -433,29 +434,28 @@ def reset_layout_params(prompt, negative_prompt, state_params, is_generating, in
 
 def download_models(default_model, previous_default_models, checkpoint_downloads, embeddings_downloads, lora_downloads, vae_downloads):
 
-    if shared.args.disable_preset_download:
+    if args.disable_preset_download:
         print('Skipped model download.')
         return default_model, checkpoint_downloads
 
-    if not shared.args.always_download_new_model:
-        if not os.path.isfile(shared.modelsinfo.get_file_path_by_name('checkpoints', default_model)):
+    if not args.always_download_new_model:
+        if not os.path.isfile(modelsinfo.get_file_path_by_name('checkpoints', default_model)):
             for alternative_model_name in previous_default_models:
-                if os.path.isfile(shared.modelsinfo.get_file_path_by_name('checkpoints', alternative_model_name)):
+                if os.path.isfile(modelsinfo.get_file_path_by_name('checkpoints', alternative_model_name)):
                     print(f'You do not have [{default_model}] but you have [{alternative_model_name}].')
-                    print(f'Fooocus will use [{alternative_model_name}] to avoid downloading new models, '
-                          f'but you are not using the latest models.')
+                    print(f'Fooocus will use [{alternative_model_name}] to avoid downloading new models.')
                     print('Use --always-download-new-model to avoid fallback and always get new models.')
                     checkpoint_downloads = {}
                     default_model = alternative_model_name
                     break
 
     for file_name, url in checkpoint_downloads.items():
-        model_dir = os.path.dirname(shared.modelsinfo.get_file_path_by_name('checkpoints', file_name))
+        model_dir = os.path.dirname(modelsinfo.get_file_path_by_name('checkpoints', file_name))
         load_file_from_url(url=url, model_dir=model_dir, file_name=os.path.basename(file_name))
     for file_name, url in embeddings_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_embeddings, file_name=file_name)
     for file_name, url in lora_downloads.items():
-        model_dir = os.path.dirname(shared.modelsinfo.get_file_path_by_name('loras', file_name))
+        model_dir = os.path.dirname(modelsinfo.get_file_path_by_name('loras', file_name))
         load_file_from_url(url=url, model_dir=model_dir, file_name=os.path.basename(file_name))
     for file_name, url in vae_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_vae, file_name=file_name)
@@ -468,7 +468,7 @@ import shutil
 
 cur_clip_path = os.path.join(config.path_clip_vision, "clip-vit-large-patch14")
 if not os.path.exists(cur_clip_path):
-    org_clip_path = os.path.join(shared.root, 'models/clip_vision/clip-vit-large-patch14')
+    org_clip_path = os.path.join(root, 'models/clip_vision/clip-vit-large-patch14')
     shutil.copytree(org_clip_path, cur_clip_path)
 tokenizer = CLIPTokenizer.from_pretrained(cur_clip_path)
  

@@ -1,6 +1,7 @@
 import os
 import zipfile
 import shutil
+import ldm_patched
 import modules.config as config
 from shared import sysinfo, modelsinfo
 from enhanced.simpleai import ComfyTaskParams
@@ -35,7 +36,8 @@ def is_lowlevel_device():
     return sysinfo["gpu_memory"]<VRAM8G
 
 def is_highlevel_device():
-    return sysinfo["gpu_memory"]>VRAM16G
+    total_vram = ldm_patched.modules.model_management.get_vram()
+    return total_vram>VRAM16G
 
 default_base_SD15_name = 'realisticVisionV60B1_v51VAE.safetensors'
 default_base_SD3m_name_list = ['sd3_medium_incl_clips.safetensors', 'sd3_medium_incl_clips_t5xxlfp8.safetensors', 'sd3_medium_incl_clips_t5xxlfp16.safetensors']

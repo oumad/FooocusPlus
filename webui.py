@@ -1,12 +1,15 @@
 import gradio as gr
 import random
 import os
+import sys
+import platform
 import json
 import time
 import shared
 import modules.config
 import fooocus_version
 import fooocusplus_version as fooocusplus_version
+import comfy.comfy_version as comfy_version
 import modules.html
 import modules.async_worker as worker
 import modules.constants as constants
@@ -16,6 +19,7 @@ import modules.style_sorter as style_sorter
 import modules.meta_parser
 import args_manager
 import copy
+import ldm_patched
 from extras.inpaint_mask import SAMOptions
 
 from PIL import Image
@@ -26,15 +30,15 @@ from modules.auth import auth_enabled, check_auth
 from modules.util import is_json
 
 import enhanced.gallery as gallery_util
-import enhanced.topbar  as topbar
-import enhanced.toolbox  as toolbox
-import enhanced.translator  as translator
+import enhanced.topbar as topbar
+import enhanced.toolbox as toolbox
+import enhanced.translator as translator
 import enhanced.enhanced_parameters as enhanced_parameters
 import enhanced.version as version
 import enhanced.wildcards as wildcards
 import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
-from enhanced.simpleai import comfyd 
+from enhanced.simpleai import comfyd
 
 print()
 print('Initializing user interface...')
@@ -42,7 +46,6 @@ print('Initializing user interface...')
 def get_task(*args):
     args = list(args)
     args.pop(0)
-
     return worker.AsyncTask(args=args)
 
 def generate_clicked(task: worker.AsyncTask):
@@ -183,7 +186,7 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
-title = f'{version.branch} {fooocusplus_version.version}'
+title = f'FooocusPlus {fooocusplus_version.version}'
 
 #if isinstance(args_manager.args.preset, str):
 #    title += ' ' + args_manager.args.preset
@@ -664,7 +667,7 @@ with shared.gradio_root:
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
-                if (shared.args.language=='cn'):
+                if (args_manager.args.language=='cn'):
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
@@ -1053,7 +1056,7 @@ with shared.gradio_root:
                 with gr.Row(visible=False):
                     binding_id_button = gr.Button(value='Binding Identity', visible=True)
                 with gr.Row():
-                    language_ui=shared.args.language
+                    language_ui=args_manager.args.language
                     if args_manager.args.disable_preset_selection:
                         preselector = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
@@ -1067,7 +1070,7 @@ with shared.gradio_root:
                     #finished_catalog_max_number = gr.Slider(label='Catalog Max Number', minimum=1, maximum=60, step=5, value=1)
                     backfill_prompt = gr.Checkbox(label='Backfill prompt while switching images', value=modules.config.default_backfill_prompt, interactive=True, info='Extract and backfill prompt and negative prompt while switching historical gallery images.')
                     translation_methods = gr.Radio(label='Translation methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third.')
-                    mobile_url = gr.Checkbox(label=f'http://{args_manager.args.listen}:{args_manager.args.port}{args_manager.args.webroot}/', value=True, info='Mobile phone access address within the LAN. If you want WAN access, consulting QQ group: 938075852.', interactive=False)
+                    mobile_url = gr.Checkbox(label=f'http://{args_manager.args.listen}:{args_manager.args.port}{args_manager.args.webroot}/', value=True, info='Mobile phone access address within the LAN. If you want WAN access, consulting QQ group: 938075852.', interactive=False, visible=False)
                     
                     def sync_params_backend(key, v, params):
                         params.update({key:v})
@@ -1082,7 +1085,12 @@ with shared.gradio_root:
                     #super_prompter = gr.Button(value="<<SuperPrompt", size="sm", min_width = 70)
                     super_prompter_prompt = gr.Textbox(label='Prompt prefix', value='Expand the following prompt to add more detail:', lines=1)
                 with gr.Row():
-                    gr.Markdown(value=f'OS: {shared.sysinfo["os_name"]}, {shared.sysinfo["cpu_arch"]}, {shared.sysinfo["cuda_version"]}, Torch{shared.sysinfo["torch_version"]}, XF{shared.sysinfo["xformers_version"]}<br>Fooocus v{fooocus_version.version} / SimpleSDXL2 {version.get_simplesdxl_ver()} / {version.branch} v{fooocusplus_version.version}<br>PyHash: {shared.sysinfo["pyhash"]}, UIHash: {shared.sysinfo["uihash"]}')
+                    gr.Markdown(value=f'<h3>System Information</h3>\
+                    System RAM: {int(ldm_patched.modules.model_management.get_sysram())} MB,\
+                    Video RAM: {int(ldm_patched.modules.model_management.get_vram())} MB<br>\
+                    Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
+                    Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}<br>\
+                    FooocusPlus {fooocusplus_version.version}<br>')
 
             iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
             layout_image_tab = [performance_selection, style_selections, freeu_enabled, refiner_model, refiner_switch] + lora_ctrls
