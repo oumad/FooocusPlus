@@ -3,9 +3,10 @@ import zipfile
 import shutil
 import ldm_patched
 import modules.config as config
-from shared import sysinfo, modelsinfo
 from enhanced.simpleai import ComfyTaskParams
 from modules.model_loader import load_file_from_url
+
+modelsinfo = None
 
 default_method_names = ['Blending given FG and IC-light', 'Generate foreground with Conv Injection']
 default_method_list = {
@@ -33,17 +34,19 @@ VRAM8G1 = 8192  # include 8G
 VRAM16G = 16300
 
 def is_lowlevel_device():
-    return sysinfo["gpu_memory"]<VRAM8G
+    return ldm_patched.modules.model_management.get_vram()<VRAM8G
 
 def is_highlevel_device():
-    total_vram = ldm_patched.modules.model_management.get_vram()
-    return total_vram>VRAM16G
+    return ldm_patched.modules.model_management.get_vram()>VRAM16G
 
 default_base_SD15_name = 'realisticVisionV60B1_v51VAE.safetensors'
 default_base_SD3m_name_list = ['sd3_medium_incl_clips.safetensors', 'sd3_medium_incl_clips_t5xxlfp8.safetensors', 'sd3_medium_incl_clips_t5xxlfp16.safetensors']
 
 def get_default_base_SD3m_name():
-    dtype = 0 if sysinfo["gpu_memory"]<VRAM8G and sysinfo["ram_total"]<RAM16G else 1 if sysinfo["gpu_memory"]<VRAM16G and sysinfo["ram_total"]<RAM32G else 2
+    total_vram = ldm_patched.modules.model_management.get_vram()
+    total_ram = ldm_patched.modules.model_management.get_sysram()
+    dtype = 0 if total_vram<VRAM8G and total_ram<RAM16G\
+        else 1 if total_vram<VRAM16G and total_ram<RAM32G else 2
     for i in range(dtype, -1 ,-1):
         sd3name = default_base_SD3m_name_list[i]
         if modelsinfo.exists_model_key(f'checkpoints/{sd3name}'):
@@ -52,9 +55,9 @@ def get_default_base_SD3m_name():
 
 default_base_Flux_name_list = ['flux1-dev.safetensors', 'flux1-dev-bnb-nf4.safetensors', 'flux1-dev-bnb-nf4-v2.safetensors', 'flux-hyp8-Q5_K_M.gguf', 'flux1-schnell.safetensors', 'flux1-schnell-bnb-nf4.safetensors']
 flux_model_urls = {
-    "flux1-dev.safetensors": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/flux1-dev.safetensors",
+    "flux1-dev.safetensors": "https://huggingface.co/realung/flux1-dev.safetensors/resolve/main/flux1-dev.safetensors",
     "flux1-dev-bnb-nf4-v2.safetensors": "https://huggingface.co/lllyasviel/flux1-dev-bnb-nf4/resolve/main/flux1-dev-bnb-nf4-v2.safetensors",
-    "flux1-schnell.safetensors": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/flux1-schnell.safetensor",
+    "flux1-schnell.safetensors": "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors",
     "flux1-schnell-bnb-nf4.safetensors": "https://huggingface.co/silveroxides/flux1-nf4-weights/resolve/main/flux1-schnell-bnb-nf4.safetensors",
     "flux-hyp8-Q5_K_M.gguf": "https://huggingface.co/mhnakif/flux-hyp8-gguf-k/resolve/main/flux-hyp8-Q5_K_M.gguf"
     }
@@ -156,9 +159,10 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
     
     elif task_name in ['Kolors+', 'Kolors']:
         comfy_params = ComfyTaskParams(default_params)
+        total_vram = ldm_patched.modules.model_management.get_vram()
         if 'llms_model' not in default_params or default_params['llms_model'] == 'auto':
             comfy_params.update_params({
-                "llms_model": 'quant4' if sysinfo["gpu_memory"]<VRAM8G else 'quant8' if sysinfo["gpu_memory"]<VRAM16G else 'fp16'
+                "llms_model": 'quant4' if total_vram<VRAM8G else 'quant8' if total_vram<VRAM16G else 'fp16'
                 })
         check_download_kolors_model(config.path_models_root)
         if task_name == 'Kolors':
@@ -174,18 +178,20 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
     elif task_name == 'Flux':
         comfy_params = ComfyTaskParams(default_params)
         base_model = default_params['base_model']
+        total_ram = ldm_patched.modules.model_management.get_sysram()
+        total_vram = ldm_patched.modules.model_management.get_vram()
         if base_model == 'auto':
             model_dev = 'flux1-dev.safetensors'
             model_nf4 = 'flux1-dev-bnb-nf4-v2.safetensors'
             model_hyp8 = 'flux-hyp8-Q5_K_M.gguf'
-            base_model = model_nf4 if sysinfo["gpu_memory"]<=VRAM8G1 else model_dev
+            base_model = model_nf4 if total_vram<=VRAM8G1 else model_dev
             if not modelsinfo.exists_model(catalog="checkpoints", model_path=base_model) and modelsinfo.exists_model(catalog="checkpoints", model_path=model_hyp8):
                 base_model = model_hyp8
                 default_params['steps'] = 12
             default_params['base_model'] = base_model  
         base_model_key = f'checkpoints/{base_model}'
         if 'nf4' in base_model.lower() and 'bnb' in base_model.lower():
-            if sysinfo["gpu_memory"]<VRAM8G:
+            if total_vram<VRAM8G:
                 task_method = 'flux_base_nf4_2'
             else:
                 task_method = 'flux_base_nf4'
@@ -197,14 +203,14 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
             comfy_params.delete_params(['clip_model', 'base_model_dtype'])
         else:
             if 'clip_model' not in default_params or default_params['clip_model'] == 'auto':
-                clip_model = 't5xxl_fp16.safetensors' if sysinfo["gpu_memory"]>VRAM8G1 and sysinfo["ram_total"]>RAM32G1 else 't5xxl_fp8_e4m3fn.safetensors'
+                clip_model = 't5xxl_fp16.safetensors' if total_vram>VRAM8G1 and total_ram>RAM32G1 else 't5xxl_fp8_e4m3fn.safetensors'
                 if not modelsinfo.exists_model("clip", clip_model):
                     if clip_model == 't5xxl_fp16.safetensors' and modelsinfo.exists_model("clip", 't5xxl_fp8_e4m3fn.safetensors'):
                         clip_model = 't5xxl_fp8_e4m3fn.safetensors'
                 comfy_params.update_params({"clip_model": clip_model})
             if 'base_model_dtype' not in default_params or default_params['base_model_dtype'] == 'auto':
                 comfy_params.update_params({
-                    "base_model_dtype": 'fp8_e4m3fn' if sysinfo["gpu_memory"]<VRAM16G or sysinfo["ram_total"]<=RAM32G1 or 'fp8' in base_model.lower() or 'lora_1' in default_params else 'default' #'fp16'
+                    "base_model_dtype": 'fp8_e4m3fn' if total_vram<VRAM16G or total_ram<=RAM32G1 or 'fp8' in base_model.lower() or 'lora_1' in default_params else 'default' #'fp16'
                 })
             else:
                 base_model_dtype = default_params['base_model_dtype']
