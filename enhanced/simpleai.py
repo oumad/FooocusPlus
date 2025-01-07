@@ -12,7 +12,7 @@ modelsinfo_filename = 'models_info.json'
 
 def init_modelsinfo(models_root, path_map):
     global modelsinfo_filename
-    models_info_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), modelsinfo_filename))
+    models_info_path = os.path.abspath(os.path.join(models_root, modelsinfo_filename))
     return ModelsInfo(models_info_path, path_map)
 
 def reset_simpleai_args():
