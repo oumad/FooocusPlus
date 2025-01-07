@@ -1,3 +1,4 @@
+import os
 import ldm_patched.modules.args_parser as args_parser
 
 root = os.path.dirname(os.path.abspath(__file__))
