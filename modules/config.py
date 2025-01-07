@@ -2,10 +2,8 @@ import os
 import json
 import math
 import numbers
-
 import args_manager
 import tempfile
-import shared
 import modules.flags
 import modules.sdxl_styles
 import enhanced.all_parameters as ads
@@ -25,6 +23,7 @@ def get_config_path(key, default_value):
 
 wildcards_max_bfs_depth = 64
 config_path = get_config_path('config_path', "config.txt") if args_manager.args.config is None else os.path.abspath(os.path.join(args_manager.args.config, "config.txt"))
+print(config_path)
 config_example_path = get_config_path('config_example_path', "config_modification_tutorial.txt")
 config_dict = {}
 always_save_keys = []
@@ -931,7 +930,7 @@ with open(config_example_path, "w", encoding="utf-8") as json_file:
                       'and there is no "," before the last "}". \n\n\n')
     json.dump({k: config_dict[k] for k in visited_keys}, json_file, indent=4)
 
-config_comfy_path = os.path.join(shared.root, 'comfy/extra_model_paths.yaml')
+config_comfy_path = os.path.join(args_manager.root, 'comfy/extra_model_paths.yaml')
 config_comfy_formatted_text = '''
 comfyui:
      models_root: {models_root}

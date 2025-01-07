@@ -18,10 +18,16 @@ import modules.style_sorter as style_sorter
 import enhanced.gallery as gallery_util
 import enhanced.superprompter as superprompter
 import enhanced.comfy_task as comfy_task
-import shared
 from args_manager import args
 from enhanced.simpleai import comfyd
 from modules.model_loader import load_file_from_url
+
+modelsinfo = None
+
+# hard-coded limit to topbar preset display
+# value inherited from SimpeSDXL2 was 14
+# use preset dropdown for no limits
+topbar_limit = 16
 
 css = '''
 '''
@@ -54,7 +60,7 @@ def get_preset_name_list():
     sorted_files = [f[0] for f in sorted_file_times]
     sorted_files.pop(sorted_files.index(f'{config.preset}.json'))
     sorted_files.insert(0, f'{config.preset}.json')
-    presets = sorted_files[:shared.BUTTON_NUM]
+    presets = sorted_files[:topbar_limit]
     name_list = ''
     for i in range(len(presets)):
         name_list += f'{presets[i][:-5]},'
@@ -70,9 +76,9 @@ def is_models_file_absent(preset_name):
             if 'Flux' in preset_name and config_preset["default_model"]== 'auto':
                 config_preset["default_model"] = comfy_task.get_default_base_Flux_name('+' in preset_name)
             model_key = f'checkpoints/{config_preset["default_model"]}'
-            return not shared.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
+            return not modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
         if config_preset["default_refiner"] and config_preset["default_refiner"] != 'None':
-           return not shared.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_refiner"])
+           return not modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_refiner"])
     return False
 
 
@@ -288,7 +294,7 @@ def get_preset_inc_url(preset_name='blank'):
 def refresh_nav_bars(state_params):
     state_params.update({"__nav_name_list": get_preset_name_list()})
     preset_name_list = state_params["__nav_name_list"].split(',')
-    for i in range(shared.BUTTON_NUM-len(preset_name_list)):
+    for i in range(topbar_limit-len(preset_name_list)):
         preset_name_list.append('')
     results = []
     if state_params["__is_mobile"]:
@@ -298,7 +304,7 @@ def refresh_nav_bars(state_params):
     for i in range(len(preset_name_list)):
         name = preset_name_list[i]
         name += '\u2B07' if is_models_file_absent(name) else ''
-        visible_flag = i<(7 if state_params["__is_mobile"] else shared.BUTTON_NUM)
+        visible_flag = i<(7 if state_params["__is_mobile"] else topbar_limit)
         if name:
             results += [gr.update(value=name, visible=visible_flag)]
         else: 
@@ -322,7 +328,7 @@ def process_before_generation(state_params, backend_params, backfill_prompt, tra
     # prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox, bar0_button, bar1_button, bar2_button, bar3_button, bar4_button, bar5_button, bar6_button, bar7_button, bar8_button
     preset_nums = len(state_params["__nav_name_list"].split(','))
     results += [gr.update(interactive=False)] * (preset_nums + 6)
-    results += [gr.update()] * (shared.BUTTON_NUM-preset_nums)
+    results += [gr.update()] * (topbar_limit-preset_nums)
     results += [backend_params]
     state_params["gallery_state"]='preview'
     return results
@@ -343,7 +349,7 @@ def process_after_generation(state_params):
     # prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox, bar0_button, bar1_button, bar2_button, bar3_button, bar4_button, bar5_button, bar6_button, bar7_button, bar8_button
     preset_nums = len(state_params["__nav_name_list"].split(','))
     results += [gr.update(interactive=True)] * (preset_nums + 6)
-    results += [gr.update()] * (shared.BUTTON_NUM-preset_nums)
+    results += [gr.update()] * (topbar_limit-preset_nums)
     
     if len(state_params["__output_list"]) > 0:
         output_index = state_params["__output_list"][0].split('/')[0]
@@ -374,7 +380,7 @@ def reset_layout_params(prompt, negative_prompt, state_params, is_generating, in
     state_params.update({"__message": system_message})
     system_message = 'system message was displayed!'
     if '__preset' not in state_params.keys() or 'bar_button' not in state_params.keys() or state_params["__preset"]==state_params['bar_button']:
-        return [gr.update()] * (35 + shared.BUTTON_NUM) + [state_params] + [gr.update()] * 55
+        return [gr.update()] * (35 + topbar_limit) + [state_params] + [gr.update()] * 55
     if '\u2B07' in state_params["bar_button"]:
         gr.Info(preset_down_note_info)
     preset = state_params["bar_button"] if '\u2B07' not in state_params["bar_button"] else state_params["bar_button"].replace('\u2B07', '')
@@ -406,14 +412,14 @@ def reset_layout_params(prompt, negative_prompt, state_params, is_generating, in
     model_dtype = preset_prepared.get('engine', {}).get('backend_params', {}).get('base_model_dtype', '')
     if engine == 'SD3m' and  model_dtype == 'auto':
         base_model = comfy_task.get_default_base_SD3m_name()
-        if shared.modelsinfo.exists_model(catalog="checkpoints", model_path=base_model):
+        if modelsinfo.exists_model(catalog="checkpoints", model_path=base_model):
             default_model = base_model
             preset_prepared['base_model'] = base_model
             checkpoint_downloads = {}
     if engine == 'Flux' and default_model=='auto':
         default_model = comfy_task.get_default_base_Flux_name('FluxS' in preset)
         preset_prepared['base_model'] = default_model
-        if shared.modelsinfo.exists_model(catalog="checkpoints", model_path=default_model):
+        if modelsinfo.exists_model(catalog="checkpoints", model_path=default_model):
             checkpoint_downloads = {}
         else:
             checkpoint_downloads = {default_model: comfy_task.flux_model_urls[default_model]}

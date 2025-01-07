@@ -63,6 +63,7 @@ sorted_styles.json
 !xl-to-v1_interposer-v3.1.safetensors
 !xlvaeapp.pth
 /enhanced/config.json
+/enhanced/models_info.json
 /src
 /pyproject.toml
 /Cargo.toml

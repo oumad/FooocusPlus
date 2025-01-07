@@ -5,11 +5,10 @@ import sys
 import platform
 import json
 import time
-import shared
 import modules.config
 import fooocus_version
-import fooocusplus_version as fooocusplus_version
-import comfy.comfy_version as comfy_version
+import fooocusplus_version
+import comfy.comfy_version
 import modules.html
 import modules.async_worker as worker
 import modules.constants as constants
@@ -34,7 +33,7 @@ import enhanced.topbar as topbar
 import enhanced.toolbox as toolbox
 import enhanced.translator as translator
 import enhanced.enhanced_parameters as enhanced_parameters
-import enhanced.version as version
+import enhanced.version
 import enhanced.wildcards as wildcards
 import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
@@ -191,11 +190,11 @@ title = f'FooocusPlus {fooocusplus_version.version}'
 #if isinstance(args_manager.args.preset, str):
 #    title += ' ' + args_manager.args.preset
 
-shared.gradio_root = gr.Blocks(
+local_gradio_root = gr.Blocks(
     title=title,
     css=topbar.css + toolbox.css).queue()
 
-with shared.gradio_root:
+with local_gradio_root:
     state_topbar = gr.State({})
     params_backend = gr.State({'translation_methods': modules.config.default_translation_methods})
     currentTask = gr.State(worker.AsyncTask(args=[]))
@@ -206,7 +205,7 @@ with shared.gradio_root:
                 with gr.Row():
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=False, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
-                    for i in range(shared.BUTTON_NUM):
+                    for i in range(topbar.topbar_limit):
                         bar_buttons.append(gr.Button(value='default' if i==0 else '', size='sm', visible=True, min_width=40, elem_id=f'bar{i}', elem_classes='bar_button'))
                     #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
                 with gr.Row():
@@ -226,20 +225,6 @@ with shared.gradio_root:
                     params_note_delete_button = gr.Button(value='Enter', visible=False)
                     params_note_regen_button = gr.Button(value='Enter', visible=False)
                     params_note_preset_button = gr.Button(value='Enter', visible=False)
-                with gr.Group(visible=False, elem_classes='identity_note') as identity_dialog:
-                    identity_note_info = gr.Markdown(elem_classes='note_info', value=simpleai.identity_note)
-                    with gr.Tab(label='New Identity') as new_id_tab:
-                        identity_nick_input = gr.Textbox(show_label=False, placeholder="Type nickname here.", min_width=70, elem_classes='identity_input')
-                        identity_tele_input = gr.Textbox(show_label=False, placeholder="Type telephone here.", min_width=70, elem_classes='identity_input')
-                        identity_getvcode_button = gr.Button(value='Get Verification Code', visible=True)
-                        identity_vcode_input = gr.Textbox(show_label=False, placeholder="Type vcode here.", min_width=70, elem_classes='identity_input')
-                        identity_bind_button = gr.Button(value='Bind identity', min_width=150, visible=True)
-                    with gr.Tab(label='Confirm Identity') as confirm_id_tab:
-                        identity_phrase_input = gr.Textbox(show_label=False, type='password', placeholder="Type id phrases here.", min_width=150, elem_classes='identity_input')
-                        identity_confirm_button = gr.Button(value='Confirm identity', visible=True)
-                    identity_getvcode_button.click(simpleai.get_vcode, inputs=[identity_nick_input, identity_tele_input, state_topbar], outputs=state_topbar)
-                    identity_bind_button.click(simpleai.bind_identity, inputs=[identity_nick_input, identity_tele_input, identity_vcode_input, state_topbar], outputs=state_topbar)
-                    identity_confirm_button.click(simpleai.confirm_identity, inputs=[identity_phrase_input, state_topbar], outputs=state_topbar)
 
                 with gr.Accordion("Finished Images Catalog", open=False, visible=False, elem_id='finished_images_catalog') as index_radio:
                     gallery_index_stat = gr.Textbox(value='', visible=False)
@@ -265,7 +250,7 @@ with shared.gradio_root:
 
                         default_prompt = modules.config.default_prompt
                         if isinstance(default_prompt, str) and default_prompt != '':
-                            shared.gradio_root.load(lambda: default_prompt, outputs=prompt)
+                            local_gradio_root.load(lambda: default_prompt, outputs=prompt)
                     with gr.Column(scale=2, min_width=0):
                         random_button = gr.Button(value="RandomPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
                         translator_button = gr.Button(value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
@@ -759,7 +744,7 @@ with shared.gradio_root:
                     return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
 
                 history_link = gr.HTML()
-                shared.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
+                local_gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
                 
                 with gr.Tabs():
                     with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
@@ -821,7 +806,7 @@ with shared.gradio_root:
                                                     elem_classes=['style_selections'])
                 gradio_receiver_style_selections = gr.Textbox(elem_id='gradio_receiver_style_selections', visible=False)
 
-                shared.gradio_root.load(lambda: gr.update(choices=copy.deepcopy(style_sorter.all_styles)),
+                local_gradio_root.load(lambda: gr.update(choices=copy.deepcopy(style_sorter.all_styles)),
                                         outputs=style_selections)
 
                 style_search_bar.change(style_sorter.search_styles,
@@ -1088,8 +1073,8 @@ with shared.gradio_root:
                     gr.Markdown(value=f'<h3>System Information</h3>\
                     System RAM: {int(ldm_patched.modules.model_management.get_sysram())} MB,\
                     Video RAM: {int(ldm_patched.modules.model_management.get_vram())} MB<br>\
-                    Python {platform.python_version()}, Comfy {comfy_version.version}<br>\
-                    Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}<br>\
+                    Python {platform.python_version()}, Comfy {comfy.comfy_version.version}<br>\
+                    Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}<br>\
                     FooocusPlus {fooocusplus_version.version}<br>')
 
             iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
@@ -1232,13 +1217,13 @@ with shared.gradio_root:
 
         # load configured default_inpaint_method
         # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
-        shared.gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
+        local_gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
                 inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts, 
                 inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field
             ], show_progress=False, queue=False)
 
         for mode, disable_initial_latent, engine, strength, respective_field in enhance_inpaint_update_ctrls:
-            shared.gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
+            local_gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
                 disable_initial_latent, engine, strength, respective_field
             ], show_progress=False, queue=False)
 
@@ -1427,7 +1412,7 @@ with shared.gradio_root:
     
     binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
 
-    for i in range(shared.BUTTON_NUM):
+    for i in range(topbar.topbar_limit):
         bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
                .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
@@ -1436,7 +1421,7 @@ with shared.gradio_root:
                .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
 
 
-    shared.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
+    local_gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
                       .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
                       .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                       .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
@@ -1473,7 +1458,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
-shared.gradio_root.launch(
+local_gradio_root.launch(
     inbrowser=args_manager.args.in_browser,
     server_name=args_manager.args.listen,
     server_port=args_manager.args.port,
