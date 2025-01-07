@@ -5,7 +5,6 @@ import sys
 import platform
 import json
 import time
-import shared
 import modules.config
 import fooocus_version
 import fooocusplus_version as fooocusplus_version
