@@ -18,7 +18,6 @@ from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 from enhanced.simpleai import sync_model_info
 from modules.model_loader import load_file_from_url
-from shared import sysinfo
 
 css = '''
 .toolbox {
@@ -173,13 +172,6 @@ def toggle_prompt_info(state_params):
 def check_preset_models(checklist, state_params):
     note_box_state = state_params["note_box_state"]
     note_box_state[2] = 0
-    #for i in range(len(checklist)):
-    #    if checklist[i] and checklist[i] != 'None':
-    #        k1 = "checkpoints/"+checklist[i]
-    #        k2 = "loras/"+checklist[i]
-    #        if (i<2 and (k1 not in models_info.keys() or not models_info[k1]['muid'])) or (i>=2 and (k2 not in models_info.keys() or not models_info[k2]['muid'])):
-    #            note_box_state[2] = 1
-    #            break
     state_params.update({"note_box_state": note_box_state})
     return state_params
 
