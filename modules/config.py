@@ -930,7 +930,7 @@ with open(config_example_path, "w", encoding="utf-8") as json_file:
                       'and there is no "," before the last "}". \n\n\n')
     json.dump({k: config_dict[k] for k in visited_keys}, json_file, indent=4)
 
-config_comfy_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'comfy/extra_model_paths.yaml')
+config_comfy_path = os.path.join(args_manager.root, 'comfy/extra_model_paths.yaml')
 print(config_comfy_path)
 config_comfy_formatted_text = '''
 comfyui:
