@@ -5,7 +5,8 @@ from multiprocessing import cpu_count
 
 import args_manager
 from modules.util import sha256, HASH_SHA256_LENGTH, get_file_from_folder_list
-from shared import modelsinfo 
+ 
+modelsinfo = None
 
 hash_cache_filename = 'hash_cache.txt'
 hash_cache = {}
