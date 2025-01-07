@@ -1,6 +1,8 @@
 import os
 import ldm_patched.modules.args_parser as args_parser
 
+gradio_root = None
+modelsinfo = None
 root = os.path.dirname(os.path.abspath(__file__))
 
 args_parser.parser.add_argument("--preset", type=str, default='default', help="Apply specified UI preset.")
