@@ -190,11 +190,11 @@ title = f'FooocusPlus {fooocusplus_version.version}'
 #if isinstance(args_manager.args.preset, str):
 #    title += ' ' + args_manager.args.preset
 
-local_gradio_root = gr.Blocks(
+args_manager.gradio_root = gr.Blocks(
     title=title,
     css=topbar.css + toolbox.css).queue()
 
-with local_gradio_root:
+with args_manager.gradio_root:
     state_topbar = gr.State({})
     params_backend = gr.State({'translation_methods': modules.config.default_translation_methods})
     currentTask = gr.State(worker.AsyncTask(args=[]))
@@ -250,7 +250,7 @@ with local_gradio_root:
 
                         default_prompt = modules.config.default_prompt
                         if isinstance(default_prompt, str) and default_prompt != '':
-                            local_gradio_root.load(lambda: default_prompt, outputs=prompt)
+                            args_manager.gradio_root.load(lambda: default_prompt, outputs=prompt)
                     with gr.Column(scale=2, min_width=0):
                         random_button = gr.Button(value="RandomPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
                         translator_button = gr.Button(value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
@@ -744,7 +744,7 @@ with local_gradio_root:
                     return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
 
                 history_link = gr.HTML()
-                local_gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
+                args_manager.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
                 
                 with gr.Tabs():
                     with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
@@ -806,7 +806,7 @@ with local_gradio_root:
                                                     elem_classes=['style_selections'])
                 gradio_receiver_style_selections = gr.Textbox(elem_id='gradio_receiver_style_selections', visible=False)
 
-                local_gradio_root.load(lambda: gr.update(choices=copy.deepcopy(style_sorter.all_styles)),
+                args_manager.gradio_root.load(lambda: gr.update(choices=copy.deepcopy(style_sorter.all_styles)),
                                         outputs=style_selections)
 
                 style_search_bar.change(style_sorter.search_styles,
@@ -1217,13 +1217,13 @@ with local_gradio_root:
 
         # load configured default_inpaint_method
         # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
-        local_gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
+        args_manager.gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
                 inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts, 
                 inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field
             ], show_progress=False, queue=False)
 
         for mode, disable_initial_latent, engine, strength, respective_field in enhance_inpaint_update_ctrls:
-            local_gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
+            args_manager.gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
                 disable_initial_latent, engine, strength, respective_field
             ], show_progress=False, queue=False)
 
@@ -1421,7 +1421,7 @@ with local_gradio_root:
                .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
 
 
-    local_gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
+    args_manager.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
                       .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
                       .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                       .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
@@ -1458,7 +1458,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
-local_gradio_root.launch(
+args_manager.gradio_root.launch(
     inbrowser=args_manager.args.in_browser,
     server_name=args_manager.args.listen,
     server_port=args_manager.args.port,
