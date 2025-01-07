@@ -405,16 +405,14 @@ def reset_layout_params(prompt, negative_prompt, state_params, is_generating, in
     model_dtype = preset_prepared.get('engine', {}).get('backend_params', {}).get('base_model_dtype', '')
     if engine == 'SD3m' and  model_dtype == 'auto':
         base_model = comfy_task.get_default_base_SD3m_name()
-        if modelsinfo.exists_model(catalog="checkpoints", model_path=base_model):
-            #removed the "shared" prefix
+        if sharedmodelsinfo.exists_model(catalog="checkpoints", model_path=base_model):
             default_model = base_model
             preset_prepared['base_model'] = base_model
             checkpoint_downloads = {}
     if engine == 'Flux' and default_model=='auto':
         default_model = comfy_task.get_default_base_Flux_name('FluxS' in preset)
         preset_prepared['base_model'] = default_model
-        if modelsinfo.exists_model(catalog="checkpoints", model_path=default_model):
-            #removed the "shared" prefix
+        if sharedmodelsinfo.exists_model(catalog="checkpoints", model_path=default_model):
             checkpoint_downloads = {}
         else:
             checkpoint_downloads = {default_model: comfy_task.flux_model_urls[default_model]}
