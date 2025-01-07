@@ -19,7 +19,7 @@ def get_simplesdxl_ver():
         else:
             line = '# 2023-12-20'
         date = line.split(' ')[1].split('-')
-        simplesdxl_ver = f'v{date[0]}{date[1]}{date[2]}'
+        simplesdxl_ver = f'{date[0]}{date[1]}{date[2]}'
         if commit_id:
             simplesdxl_ver += f'.{commit_id}'
     return simplesdxl_ver
