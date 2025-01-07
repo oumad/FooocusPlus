@@ -222,10 +222,10 @@ def worker():
     import numpy as np
     import torch
     import time
-    import shared
     import random
     import copy
     import cv2
+    import args_manager
     import modules.default_pipeline as pipeline
     import modules.core as core
     import modules.flags as flags
@@ -259,7 +259,7 @@ def worker():
     print(f'Started worker with PID {pid}')
 
     try:
-        async_gradio_app = shared.gradio_root
+        async_gradio_app = args_manager.gradio_root
         flag = f'''App started successful. Use the app with {str(async_gradio_app.local_url)} or {str(async_gradio_app.server_name)}:{str(async_gradio_app.server_port)}'''
         if async_gradio_app.share:
             flag += f''' or {async_gradio_app.share_url}'''
