@@ -483,8 +483,7 @@ def worker():
             d.append(('Backend Engine', 'backend_engine', async_task.task_class_full))
             d.append(('Metadata Scheme', 'metadata_scheme',
                       async_task.metadata_scheme.value if async_task.save_metadata_to_images else async_task.save_metadata_to_images))
-#            d.append((f'Fooocus {fooocus_version.version} SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()} FooocusPlus fooocusplus_version.version'))
-            d.append((f'Fooocus {fooocus_version.version} SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}'))
+            d.append((f'Fooocus {fooocus_version.version} SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()} FooocusPlus fooocusplus_version.version'))
             img_paths.append(log(x, d, metadata_parser, async_task.output_format, task, persist_image))
 
         return img_paths
