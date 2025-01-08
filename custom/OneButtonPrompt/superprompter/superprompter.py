@@ -19,4 +19,3 @@ def load_models():
             print("[SuperPrompt] Downloaded the model file for superprompter. \n")
         tokenizer = T5Tokenizer.from_pretrained(modelDir)
         model = T5ForConditionalGeneration.from_pretrained(modelDir, torch_dtype=torch.float16).to(shared.torch_device)
-
