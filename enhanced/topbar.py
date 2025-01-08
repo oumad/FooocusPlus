@@ -67,6 +67,7 @@ def get_preset_name_list():
 
 def is_models_file_absent(preset_name):
     preset_path = os.path.abspath(f'./presets/{preset_name}.json')
+    print(args_manager.modelsinfo)
     if os.path.exists(preset_path):
         with open(preset_path, "r", encoding="utf-8") as json_file:
             config_preset = json.load(json_file)
