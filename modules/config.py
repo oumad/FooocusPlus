@@ -149,6 +149,8 @@ def get_path_output() -> str:
         config_dict['path_outputs'] = path_output_abs
     path_output = get_dir_or_set_default('path_outputs', f'../{path_output}')
     print(f'Generated images will be stored in {path_output}')
+    print()
+    print('Loading support files...')
     return path_output
 
 def get_path_models_root() -> str:
