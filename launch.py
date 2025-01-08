@@ -94,8 +94,6 @@ if args.hf_mirror is not None:
     print("Set hf_mirror to:", args.hf_mirror)
 
 from modules import config
-print()
-print('Loading support files...')
 from modules.hash_cache import init_cache
 os.environ["U2NET_HOME"] = config.paths_inpaint[0]
 os.environ["BERT_HOME"] = config.paths_llms[0]
