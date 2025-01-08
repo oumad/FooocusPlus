@@ -18,37 +18,4 @@ def init_modelsinfo(models_root, path_map):
         args_manager.modelsinfo = ModelsInfo(models_info_path, path_map)
     return args_manager.modelsinfo
 
-def reset_simpleai_args():
-    global args_comfyd
-    shared.sysinfo.update(dict(
-        torch_version=torch_version,
-        xformers_version=xformers_version,
-        cuda_version=cuda_version))
-    comfyclient_pipeline.COMFYUI_ENDPOINT_PORT = shared.sysinfo["loopback_port"]
-    smart_memory = [] if shared.sysinfo['gpu_memory']<8180 else [['--disable-smart-memory']]
-    windows_standalone = [["--windows-standalone-build"]] if is_win32_standalone_build else []
-    args_comfyd = comfyd.args_mapping(sys.argv) + [["--listen"], ["--port", f'{shared.sysinfo["loopback_port"]}']] + smart_memory + windows_standalone
-    args_comfyd += [["--cuda-malloc"]] if not shared.args.disable_async_cuda_allocation and not shared.args.async_cuda_allocation else []
-    #args_comfyd += [["--fast"]] if 'RTX 40' in shared.sysinfo['gpu_name'] else []
-    comfyd.comfyd_args = args_comfyd
-    return
-
 from ldm_patched.modules.model_management import unload_all_models, soft_empty_cache
-
-#def get_vcode(nick, tele, state):
-#    return state
-
-#def bind_identity(nick, tele, vcode, state):
-#    return state
-
-#def confirm_identity(phrase, state):
-#    return state
-
-#def toggle_identity_dialog(state):
-#    if 'confirm_dialog' in state:
-#        flag = state['confirm_dialog']
-#    else:
-#        state['confirm_dialog'] = False
-#        flag = False
-#    state['confirm_dialog'] = not flag
-#    return gr.update(visible=not flag)
