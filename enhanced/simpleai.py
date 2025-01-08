@@ -7,7 +7,6 @@ from simpleai_base.params_mapper import ComfyTaskParams
 from simpleai_base.models_info import ModelsInfo, sync_model_info
 from build_launcher import is_win32_standalone_build
 
-#utils.echo_off = False
 args_comfyd = [[]]
 modelsinfo_filename = 'models_info.json'
 
@@ -18,4 +17,3 @@ def init_modelsinfo(models_root, path_map):
         args_manager.modelsinfo = ModelsInfo(models_info_path, path_map)
     return args_manager.modelsinfo
 
-from ldm_patched.modules.model_management import unload_all_models, soft_empty_cache
