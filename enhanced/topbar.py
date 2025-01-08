@@ -67,7 +67,6 @@ def get_preset_name_list():
 
 def is_models_file_absent(preset_name):
     preset_path = os.path.abspath(f'./presets/{preset_name}.json')
-    print('models info: args_manager.modelsinfo')
     if os.path.exists(preset_path):
         with open(preset_path, "r", encoding="utf-8") as json_file:
             config_preset = json.load(json_file)
@@ -75,7 +74,10 @@ def is_models_file_absent(preset_name):
             if 'Flux' in preset_name and config_preset["default_model"]== 'auto':
                 config_preset["default_model"] = comfy_task.get_default_base_Flux_name('+' in preset_name)
             model_key = f'checkpoints/{config_preset["default_model"]}'
-            return not args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
+            if not args_manager.modelsinfo:
+                return false
+            else:
+                return not args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
         if config_preset["default_refiner"] and config_preset["default_refiner"] != 'None':
            return not args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_refiner"])
     return False
