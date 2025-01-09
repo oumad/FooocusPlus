@@ -33,7 +33,7 @@ import enhanced.topbar as topbar
 import enhanced.toolbox as toolbox
 import enhanced.translator as translator
 import enhanced.enhanced_parameters as enhanced_parameters
-import enhanced.version
+import enhanced.version as version
 import enhanced.wildcards as wildcards
 import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
