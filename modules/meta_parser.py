@@ -628,7 +628,8 @@ class A1111MetadataParser(MetadataParser):
             generation_params[self.fooocus_to_a1111['lora_hashes']] = lora_hashes_string
             generation_params[self.fooocus_to_a1111['lora_weights']] = lora_weights_string
 
-        generation_params[self.fooocus_to_a1111['version']] = data['version']
+        generation_params[self.fooocus_to_a1111['version']] = data['fooocusplus.version']
+        #generation_params[self.fooocus_to_a1111['version']] = data['version']        
 
         if modules.config.metadata_created_by != '':
             generation_params[self.fooocus_to_a1111['created_by']] = modules.config.metadata_created_by
