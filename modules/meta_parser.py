@@ -9,6 +9,7 @@ from PIL import Image
 
 import fooocus_version
 import fooocusplus_version
+import enhanced.version
 import modules.config
 import modules.sdxl_styles
 from args_manager import modelsinfo
@@ -821,7 +822,7 @@ def read_info_from_image(file) -> tuple[str | None, MetadataScheme | None]:
             parameters = params_lora_fixed(parameters)
 
     try:
-        if metadata_scheme == 'fooocus':
+        if metadata_scheme == 'Fooocus':
             metadata_scheme = 'simple'
             parameters.update({'metadata_scheme': 'simple'})
         metadata_scheme = MetadataScheme(metadata_scheme)
@@ -851,9 +852,7 @@ def get_exif(metadata: str | None, metadata_scheme: str):
     # 0x9286 = UserComment
     exif[0x9286] = metadata
     # 0x0131 = Software
-    import enhanced.version as version
-    #exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'
-    exif[0x0131] = f'Fooocus v{fooocus_version.version} {version.branch}_{version.get_simplesdxl_ver()}'
+    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'
     # 0x927C = MakerNote
     exif[0x927C] = metadata_scheme
     return exif
