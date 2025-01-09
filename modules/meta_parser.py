@@ -852,7 +852,8 @@ def get_exif(metadata: str | None, metadata_scheme: str):
     exif[0x9286] = metadata
     # 0x0131 = Software
     import enhanced.version as version
-    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'
+    #exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'
+    exif[0x0131] = f'Fooocus v{fooocus_version.version} {version.branch}_{version.get_simplesdxl_ver()}'
     # 0x927C = MakerNote
     exif[0x927C] = metadata_scheme
     return exif
