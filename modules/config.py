@@ -923,6 +923,7 @@ if not os.path.exists(config_path):
 
 
 # Always write tutorials.
+global ROOT
 with open(config_example_path, "w", encoding="utf-8") as json_file:
     cpa = config_path.replace("\\", "\\\\")
     json_file.write(f'You can modify your "{cpa}" using the below keys, formats, and examples.\n'
