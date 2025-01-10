@@ -253,7 +253,10 @@ with args_manager.gradio_root:
                             args_manager.gradio_root.load(lambda: default_prompt, outputs=prompt)
                     with gr.Column(scale=2, min_width=0):
                         random_button = gr.Button(value="Random Prompt", elem_classes='type_row_third', size="sm", min_width = 70)
-                        translator_button = gr.Button(value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
+                        if (args_manager.args.language=='cn'):
+                            translator_button = gr.Button(visible=True, value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
+                        else:
+                            translator_button = gr.Button(visible=False, value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
                         super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
                     with gr.Column(scale=2, min_width=0):
                         generate_button = gr.Button(label="Generate", value="Generate", elem_classes='type_row', elem_id='generate_button', visible=True, min_width = 70)
@@ -1054,7 +1057,10 @@ with args_manager.gradio_root:
                     image_tools_checkbox = gr.Checkbox(label='Enable ParamsTools', value=True, info='Management of published image sets, located in the middle toolbox on the right side of the image set.')
                     #finished_catalog_max_number = gr.Slider(label='Catalog Max Number', minimum=1, maximum=60, step=5, value=1)
                     backfill_prompt = gr.Checkbox(label='Backfill Prompt While Switching Images', value=modules.config.default_backfill_prompt, interactive=True, info='Extract and backfill prompt and negative prompt while switching historical gallery images.')
-                    translation_methods = gr.Radio(label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third parties.')
+                    if (args_manager.args.language=='cn'):
+                        translation_methods = gr.Radio(visible=True, label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third parties.')
+                    else:
+                        translation_methods = gr.Radio(visible=False, label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third parties.')                    
                     mobile_url = gr.Checkbox(label=f'http://{args_manager.args.listen}:{args_manager.args.port}{args_manager.args.webroot}/', value=True, info='Mobile phone access address within the LAN. If you want WAN access, consulting QQ group: 938075852.', interactive=False, visible=False)
                     
                     def sync_params_backend(key, v, params):
