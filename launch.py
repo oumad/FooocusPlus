@@ -5,11 +5,9 @@ import ldm_patched
 
 print('[System ARGV] ' + str(sys.argv))
 
-# declare the ROOT global constant
-global ROOT
-ROOT = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(ROOT)
-os.chdir(ROOT)
+root = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(root)
+os.chdir(root)
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
