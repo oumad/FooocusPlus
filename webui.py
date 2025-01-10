@@ -211,7 +211,7 @@ with args_manager.gradio_root:
                 with gr.Row():
                     progress_window = grh.Image(label='Preview', show_label=False, visible=True, height=768, elem_id='preview_generating',
                                             elem_classes=['main_view'], value="enhanced/attached/welcome.png")
-                    progress_gallery = gr.Gallery(label='Finished Images', show_label=True, object_fit='contain', elem_id='finished_gallery',
+                    progress_gallery = gr.Gallery(label='Image Gallery', show_label=True, object_fit='contain', elem_id='finished_gallery',
                                               height=520, visible=False, elem_classes=['main_view', 'image_gallery'])
                 progress_html = gr.HTML(value=modules.html.make_progress_html(32, 'Progress 32%'), visible=False,
                                     elem_id='progress-bar', elem_classes='progress-bar')
@@ -228,7 +228,7 @@ with args_manager.gradio_root:
 
                 with gr.Accordion("Finished Images Catalog", open=False, visible=False, elem_id='finished_images_catalog') as index_radio:
                     gallery_index_stat = gr.Textbox(value='', visible=False)
-                    gallery_index = gr.Radio(choices=None, label="Gallery_Index", value=None, show_label=False)
+                    gallery_index = gr.Radio(choices=None, label="Gallery Index", value=None, show_label=False)
                     gallery_index.change(gallery_util.images_list_update, inputs=[gallery_index, state_topbar], outputs=[gallery, index_radio, state_topbar], show_progress=False)
             with gr.Group():
                 with gr.Row():
@@ -252,7 +252,7 @@ with args_manager.gradio_root:
                         if isinstance(default_prompt, str) and default_prompt != '':
                             args_manager.gradio_root.load(lambda: default_prompt, outputs=prompt)
                     with gr.Column(scale=2, min_width=0):
-                        random_button = gr.Button(value="RandomPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
+                        random_button = gr.Button(value="Random Prompt", elem_classes='type_row_third', size="sm", min_width = 70)
                         translator_button = gr.Button(value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
                         super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
                     with gr.Column(scale=2, min_width=0):
@@ -295,12 +295,12 @@ with args_manager.gradio_root:
             with gr.Row(elem_classes='advanced_check_row'):
                 input_image_checkbox = gr.Checkbox(label='Input Image', value=modules.config.default_image_prompt_checkbox, container=False, elem_classes='min_check')
                 prompt_panel_checkbox = gr.Checkbox(label='Prompt Panel', value=False, container=False, elem_classes='min_check')
-                advanced_checkbox = gr.Checkbox(label='Advanced+', value=modules.config.default_advanced_checkbox, container=False, elem_classes='min_check')
+                advanced_checkbox = gr.Checkbox(label='Advanced', value=modules.config.default_advanced_checkbox, container=False, elem_classes='min_check')
             with gr.Group(visible=False, elem_classes='toolbox') as image_toolbox:
-                image_tools_box_title = gr.Markdown('<b>ToolBox</b>', visible=True)
-                prompt_info_button = gr.Button(value='ViewMeta', size='sm', visible=True)
-                prompt_regen_button = gr.Button(value='ReGenerate', size='sm', visible=True)
-                prompt_delete_button = gr.Button(value='DeleteImage', size='sm', visible=True)
+                image_tools_box_title = gr.Markdown('<b>Toolbox</b>', visible=True)
+                prompt_info_button = gr.Button(value='View Info', size='sm', visible=True)
+                prompt_regen_button = gr.Button(value='Regenerate', size='sm', visible=True)
+                prompt_delete_button = gr.Button(value='Delete Image', size='sm', visible=True)
                 prompt_info_button.click(toolbox.toggle_prompt_info, inputs=state_topbar, outputs=[prompt_info_box, state_topbar], show_progress=False)
             
             with gr.Row(visible=modules.config.default_image_prompt_checkbox) as image_input_panel:
@@ -491,7 +491,7 @@ with args_manager.gradio_root:
                                                 with gr.Column():
                                                     enhance_uov_method = gr.Radio(label='Upscale or Variation:', choices=flags.uov_list,
                                                               value=modules.config.default_enhance_uov_method)
-                                                    enhance_uov_processing_order = gr.Radio(label='Order of Processing',
+                                                    enhance_uov_processing_order = gr.Radio(label='Processing Order',
                                                                         info='Use before to enhance small details and after to enhance large areas.',
                                                                         choices=flags.enhancement_uov_processing_order,
                                                                         value=modules.config.default_enhance_uov_processing_order)
@@ -1039,7 +1039,7 @@ with args_manager.gradio_root:
 
             with gr.Tab(label='Extras', elem_id="scrollable-box"):
                 with gr.Row(visible=False):
-                    binding_id_button = gr.Button(value='Binding Identity', visible=True)
+                    binding_id_button = gr.Button(value='Binding Identity', visible=False)
                 with gr.Row():
                     language_ui=args_manager.args.language
                     if args_manager.args.disable_preset_selection:
@@ -1054,7 +1054,7 @@ with args_manager.gradio_root:
                     image_tools_checkbox = gr.Checkbox(label='Enable ParamsTools', value=True, info='Management of published image sets, located in the middle toolbox on the right side of the image set.')
                     #finished_catalog_max_number = gr.Slider(label='Catalog Max Number', minimum=1, maximum=60, step=5, value=1)
                     backfill_prompt = gr.Checkbox(label='Backfill prompt while switching images', value=modules.config.default_backfill_prompt, interactive=True, info='Extract and backfill prompt and negative prompt while switching historical gallery images.')
-                    translation_methods = gr.Radio(label='Translation methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third.')
+                    translation_methods = gr.Radio(label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third.')
                     mobile_url = gr.Checkbox(label=f'http://{args_manager.args.listen}:{args_manager.args.port}{args_manager.args.webroot}/', value=True, info='Mobile phone access address within the LAN. If you want WAN access, consulting QQ group: 938075852.', interactive=False, visible=False)
                     
                     def sync_params_backend(key, v, params):
