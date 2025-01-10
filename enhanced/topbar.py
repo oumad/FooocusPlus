@@ -23,7 +23,7 @@ from enhanced.simpleai import comfyd
 from modules.model_loader import load_file_from_url
 
 # hard-coded limit to topbar preset display
-# value inherited from SimpeSDXL2 was 14
+# the value inherited from SimpeSDXL2 was 14
 # use preset dropdown for no limits
 topbar_limit = 16
 
@@ -361,7 +361,7 @@ def sync_message(state_params):
     state_params.update({"__message":system_message})
     return state_params
 
-preset_down_note_info = 'The preset package being loaded has model files that need to be downloaded, and it will take some time to wait...'
+preset_down_note_info = 'Loading model files...'
 def check_absent_model(bar_button, state_params):
     #print(f'check_absent_model,state_params:{state_params}')
     state_params.update({'bar_button': bar_button})
