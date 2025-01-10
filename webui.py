@@ -33,7 +33,7 @@ import enhanced.topbar as topbar
 import enhanced.toolbox as toolbox
 import enhanced.translator as translator
 import enhanced.enhanced_parameters as enhanced_parameters
-import enhanced.version
+import enhanced.version as version
 import enhanced.wildcards as wildcards
 import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
@@ -190,11 +190,11 @@ title = f'FooocusPlus {fooocusplus_version.version}'
 #if isinstance(args_manager.args.preset, str):
 #    title += ' ' + args_manager.args.preset
 
-local_gradio_root = gr.Blocks(
+args_manager.gradio_root = gr.Blocks(
     title=title,
     css=topbar.css + toolbox.css).queue()
 
-with local_gradio_root:
+with args_manager.gradio_root:
     state_topbar = gr.State({})
     params_backend = gr.State({'translation_methods': modules.config.default_translation_methods})
     currentTask = gr.State(worker.AsyncTask(args=[]))
@@ -211,7 +211,7 @@ with local_gradio_root:
                 with gr.Row():
                     progress_window = grh.Image(label='Preview', show_label=False, visible=True, height=768, elem_id='preview_generating',
                                             elem_classes=['main_view'], value="enhanced/attached/welcome.png")
-                    progress_gallery = gr.Gallery(label='Finished Images', show_label=True, object_fit='contain', elem_id='finished_gallery',
+                    progress_gallery = gr.Gallery(label='Image Gallery', show_label=True, object_fit='contain', elem_id='finished_gallery',
                                               height=520, visible=False, elem_classes=['main_view', 'image_gallery'])
                 progress_html = gr.HTML(value=modules.html.make_progress_html(32, 'Progress 32%'), visible=False,
                                     elem_id='progress-bar', elem_classes='progress-bar')
@@ -228,7 +228,7 @@ with local_gradio_root:
 
                 with gr.Accordion("Finished Images Catalog", open=False, visible=False, elem_id='finished_images_catalog') as index_radio:
                     gallery_index_stat = gr.Textbox(value='', visible=False)
-                    gallery_index = gr.Radio(choices=None, label="Gallery_Index", value=None, show_label=False)
+                    gallery_index = gr.Radio(choices=None, label="Gallery Index", value=None, show_label=False)
                     gallery_index.change(gallery_util.images_list_update, inputs=[gallery_index, state_topbar], outputs=[gallery, index_radio, state_topbar], show_progress=False)
             with gr.Group():
                 with gr.Row():
@@ -250,9 +250,9 @@ with local_gradio_root:
 
                         default_prompt = modules.config.default_prompt
                         if isinstance(default_prompt, str) and default_prompt != '':
-                            local_gradio_root.load(lambda: default_prompt, outputs=prompt)
+                            args_manager.gradio_root.load(lambda: default_prompt, outputs=prompt)
                     with gr.Column(scale=2, min_width=0):
-                        random_button = gr.Button(value="RandomPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
+                        random_button = gr.Button(value="Random Prompt", elem_classes='type_row_third', size="sm", min_width = 70)
                         translator_button = gr.Button(value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
                         super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
                     with gr.Column(scale=2, min_width=0):
@@ -295,12 +295,12 @@ with local_gradio_root:
             with gr.Row(elem_classes='advanced_check_row'):
                 input_image_checkbox = gr.Checkbox(label='Input Image', value=modules.config.default_image_prompt_checkbox, container=False, elem_classes='min_check')
                 prompt_panel_checkbox = gr.Checkbox(label='Prompt Panel', value=False, container=False, elem_classes='min_check')
-                advanced_checkbox = gr.Checkbox(label='Advanced+', value=modules.config.default_advanced_checkbox, container=False, elem_classes='min_check')
+                advanced_checkbox = gr.Checkbox(label='Advanced', value=modules.config.default_advanced_checkbox, container=False, elem_classes='min_check')
             with gr.Group(visible=False, elem_classes='toolbox') as image_toolbox:
-                image_tools_box_title = gr.Markdown('<b>ToolBox</b>', visible=True)
-                prompt_info_button = gr.Button(value='ViewMeta', size='sm', visible=True)
-                prompt_regen_button = gr.Button(value='ReGenerate', size='sm', visible=True)
-                prompt_delete_button = gr.Button(value='DeleteImage', size='sm', visible=True)
+                image_tools_box_title = gr.Markdown('<b>Toolbox</b>', visible=True)
+                prompt_info_button = gr.Button(value='View Info', size='sm', visible=True)
+                prompt_regen_button = gr.Button(value='Regenerate', size='sm', visible=True)
+                prompt_delete_button = gr.Button(value='Delete Image', size='sm', visible=True)
                 prompt_info_button.click(toolbox.toggle_prompt_info, inputs=state_topbar, outputs=[prompt_info_box, state_topbar], show_progress=False)
             
             with gr.Row(visible=modules.config.default_image_prompt_checkbox) as image_input_panel:
@@ -393,7 +393,7 @@ with local_gradio_root:
                                                              choices=flags.inpaint_mask_cloth_category,
                                                              value=modules.config.default_inpaint_mask_cloth_category,
                                                              visible=False)
-                                inpaint_mask_dino_prompt_text = gr.Textbox(label='Detection prompt', value='', visible=False, info='Use singular whenever possible', placeholder='Describe what you want to detect.')
+                                inpaint_mask_dino_prompt_text = gr.Textbox(label='Detection Prompt', value='', visible=False, info='Use singular whenever possible', placeholder='Describe what you want to detect.')
                                 example_inpaint_mask_dino_prompt_text = gr.Dataset(
                                     samples=modules.config.example_enhance_detection_prompts,
                                     label='Detection Prompt Quick List',
@@ -404,12 +404,12 @@ with local_gradio_root:
                                                                             outputs=inpaint_mask_dino_prompt_text,
                                                                             show_progress=False, queue=False)
 
-                                with gr.Accordion("Advanced options", visible=False, open=False) as inpaint_mask_advanced_options:
+                                with gr.Accordion("Advanced Options", visible=False, open=False) as inpaint_mask_advanced_options:
                                     inpaint_mask_sam_model = gr.Dropdown(label='SAM model', choices=flags.inpaint_mask_sam_model, value=modules.config.default_inpaint_mask_sam_model)
                                     inpaint_mask_box_threshold = gr.Slider(label="Box Threshold", minimum=0.0, maximum=1.0, value=0.3, step=0.05)
                                     inpaint_mask_text_threshold = gr.Slider(label="Text Threshold", minimum=0.0, maximum=1.0, value=0.25, step=0.05)
-                                    inpaint_mask_sam_max_detections = gr.Slider(label="Maximum number of detections", info="Set to 0 to detect all", minimum=0, maximum=10, value=modules.config.default_sam_max_detections, step=1, interactive=True)
-                                generate_mask_button = gr.Button(value='Generate mask from image')
+                                    inpaint_mask_sam_max_detections = gr.Slider(label="Maximum Number of Detections", info="Set to 0 to detect all", minimum=0, maximum=10, value=modules.config.default_sam_max_detections, step=1, interactive=True)
+                                generate_mask_button = gr.Button(value='Generate Mask from Image')
                         with gr.Row():
                             inpaint_strength = gr.Slider(label='Inpaint Denoising Strength',
                                                      minimum=0.0, maximum=1.0, step=0.001, value=1.0,
@@ -491,7 +491,7 @@ with local_gradio_root:
                                                 with gr.Column():
                                                     enhance_uov_method = gr.Radio(label='Upscale or Variation:', choices=flags.uov_list,
                                                               value=modules.config.default_enhance_uov_method)
-                                                    enhance_uov_processing_order = gr.Radio(label='Order of Processing',
+                                                    enhance_uov_processing_order = gr.Radio(label='Processing Order',
                                                                         info='Use before to enhance small details and after to enhance large areas.',
                                                                         choices=flags.enhancement_uov_processing_order,
                                                                         value=modules.config.default_enhance_uov_processing_order)
@@ -531,18 +531,18 @@ with local_gradio_root:
                                                                         outputs=enhance_mask_dino_prompt_text,
                                                                         show_progress=False, queue=False)
 
-                                                enhance_prompt = gr.Textbox(label="Enhancement positive prompt",
+                                                enhance_prompt = gr.Textbox(label="Enhancement Positive Prompt",
                                                         placeholder="Uses original prompt instead if empty.",
                                                         elem_id='enhance_prompt')
-                                                enhance_negative_prompt = gr.Textbox(label="Enhancement negative prompt",
+                                                enhance_negative_prompt = gr.Textbox(label="Enhancement Negative Prompt",
                                                                  placeholder="Uses original negative prompt instead if empty.",
                                                                  elem_id='enhance_negative_prompt')
 
                                                 with gr.Accordion("Detection", open=False):
-                                                    enhance_mask_model = gr.Dropdown(label='Mask generation model',
+                                                    enhance_mask_model = gr.Dropdown(label='Mask Generation Model',
                                                                  choices=flags.inpaint_mask_models,
                                                                  value=modules.config.default_enhance_inpaint_mask_model)
-                                                    enhance_mask_cloth_category = gr.Dropdown(label='Cloth category',
+                                                    enhance_mask_cloth_category = gr.Dropdown(label='Cloth Category',
                                                                           choices=flags.inpaint_mask_cloth_category,
                                                                           value=modules.config.default_inpaint_mask_cloth_category,
                                                                           visible=modules.config.default_enhance_inpaint_mask_model == 'u2net_cloth_seg',
@@ -572,7 +572,7 @@ with local_gradio_root:
                                                                    value=modules.config.default_inpaint_method if index not in [0,1] else modules.flags.inpaint_option_detail,
                                                                    label='Method', interactive=True)
                                                     enhance_inpaint_disable_initial_latent = gr.Checkbox(
-                                                        label='Disable initial latent in inpaint', value=False)
+                                                        label='Disable Initial Latent in Inpaint', value=False)
                                                     enhance_inpaint_engine = gr.Dropdown(label='Inpaint Engine',
                                                                      value=modules.config.default_inpaint_engine_version,
                                                                      choices=flags.inpaint_engine_versions,
@@ -744,7 +744,7 @@ with local_gradio_root:
                     return gr.update(value=f'<a href="file={get_current_html_path(output_format)}" target="_blank">\U0001F4DA History Log</a>')
 
                 history_link = gr.HTML()
-                local_gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
+                args_manager.gradio_root.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
                 
                 with gr.Tabs():
                     with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
@@ -806,7 +806,7 @@ with local_gradio_root:
                                                     elem_classes=['style_selections'])
                 gradio_receiver_style_selections = gr.Textbox(elem_id='gradio_receiver_style_selections', visible=False)
 
-                local_gradio_root.load(lambda: gr.update(choices=copy.deepcopy(style_sorter.all_styles)),
+                args_manager.gradio_root.load(lambda: gr.update(choices=copy.deepcopy(style_sorter.all_styles)),
                                         outputs=style_selections)
 
                 style_search_bar.change(style_sorter.search_styles,
@@ -895,7 +895,7 @@ with local_gradio_root:
                                                    step=0.001, value=0.3,
                                                    info='When to end the guidance from positive/negative ADM. ')
 
-                        refiner_swap_method = gr.Dropdown(label='Refiner swap method', value=flags.refiner_swap_method,
+                        refiner_swap_method = gr.Dropdown(label='Refiner Swap Method', value=flags.refiner_swap_method,
                                                           choices=['joint', 'separate', 'vae'])
 
                         adaptive_cfg = gr.Slider(label='CFG Mimicking from TSNR', minimum=1.0, maximum=30.0, step=0.01,
@@ -923,10 +923,10 @@ with local_gradio_root:
                                                       value=flags.Performance.has_restricted_features(modules.config.default_performance),
                                                       info='Disable intermediate results during generation, only show final gallery.')
 
-                        disable_seed_increment = gr.Checkbox(label='Disable seed increment',
+                        disable_seed_increment = gr.Checkbox(label='Disable Seed Increment',
                                                              info='Disable automatic seed increment when image number is > 1.',
                                                              value=False)
-                        read_wildcards_in_order = gr.Checkbox(label="Read wildcards in order", value=False, visible=False)
+                        read_wildcards_in_order = gr.Checkbox(label="Read Wildcards in Order", value=False, visible=False)
 
                         black_out_nsfw = gr.Checkbox(label='Black Out NSFW', value=modules.config.default_black_out_nsfw,
                                                      interactive=not modules.config.default_black_out_nsfw,
@@ -937,14 +937,14 @@ with local_gradio_root:
                                               show_progress=False)
 
                         if not args_manager.args.disable_image_log:
-                            save_final_enhanced_image_only = gr.Checkbox(label='Save only final enhanced image',
+                            save_final_enhanced_image_only = gr.Checkbox(label='Save Only the Final Enhanced Image',
                                                                          value=modules.config.default_save_only_final_enhanced_image)
 
                         if not args_manager.args.disable_metadata:
                             save_metadata_to_images = gr.Checkbox(label='Save Metadata to Images', value=modules.config.default_save_metadata_to_images,
                                                                   info='Adds parameters to generated images allowing manual regeneration.')
                             metadata_scheme = gr.Radio(label='Metadata Scheme', choices=flags.metadata_scheme, value=modules.config.default_metadata_scheme,
-                                                       info='Image Prompt parameters are not included. Use png and a1111 for compatibility with Civitai.',
+                                                       info='Image Prompt parameters are not included. Use png and A1111 for compatibility with Civitai.',
                                                        visible=modules.config.default_save_metadata_to_images)
 
                             save_metadata_to_images.change(lambda x: [gr.update(visible=x)], inputs=[save_metadata_to_images], outputs=[metadata_scheme], queue=False, show_progress=False)
@@ -972,7 +972,7 @@ with local_gradio_root:
                                                                        info='Show enhance masks in preview and final results')
                         debugging_dino = gr.Checkbox(label='Debug GroundingDINO', value=False,
                                                      info='Use GroundingDINO boxes instead of more detailed SAM masks')
-                        inpaint_disable_initial_latent = gr.Checkbox(label='Disable initial latent in inpaint', value=False)
+                        inpaint_disable_initial_latent = gr.Checkbox(label='Disable Initial Latent in Inpaint', value=False)
                         inpaint_engine = gr.Dropdown(label='Inpaint Engine',
                                                      value=modules.config.default_inpaint_engine_version,
                                                      choices=flags.inpaint_engine_versions,
@@ -1039,7 +1039,7 @@ with local_gradio_root:
 
             with gr.Tab(label='Extras', elem_id="scrollable-box"):
                 with gr.Row(visible=False):
-                    binding_id_button = gr.Button(value='Binding Identity', visible=True)
+                    binding_id_button = gr.Button(value='Binding Identity', visible=False)
                 with gr.Row():
                     language_ui=args_manager.args.language
                     if args_manager.args.disable_preset_selection:
@@ -1047,14 +1047,14 @@ with local_gradio_root:
                     else:
                         preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
-                    background_theme = gr.Radio(label='Theme of background', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
+                    background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
                     prompt_preset_button = gr.Button(value='Save the current parameters as a preset package')
-                    comfyd_active_checkbox = gr.Checkbox(label='Enable Comfyd always active', value=not args_manager.args.disable_comfyd, info='Enabling will improve execution speed but occupy some memory.')
+                    comfyd_active_checkbox = gr.Checkbox(label='Enable Comfyd Always Active', value=not args_manager.args.disable_comfyd, info='Enabling will improve execution speed but occupy some memory.')
                     image_tools_checkbox = gr.Checkbox(label='Enable ParamsTools', value=True, info='Management of published image sets, located in the middle toolbox on the right side of the image set.')
                     #finished_catalog_max_number = gr.Slider(label='Catalog Max Number', minimum=1, maximum=60, step=5, value=1)
-                    backfill_prompt = gr.Checkbox(label='Backfill prompt while switching images', value=modules.config.default_backfill_prompt, interactive=True, info='Extract and backfill prompt and negative prompt while switching historical gallery images.')
-                    translation_methods = gr.Radio(label='Translation methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third.')
+                    backfill_prompt = gr.Checkbox(label='Backfill Prompt While Switching Images', value=modules.config.default_backfill_prompt, interactive=True, info='Extract and backfill prompt and negative prompt while switching historical gallery images.')
+                    translation_methods = gr.Radio(label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third parties.')
                     mobile_url = gr.Checkbox(label=f'http://{args_manager.args.listen}:{args_manager.args.port}{args_manager.args.webroot}/', value=True, info='Mobile phone access address within the LAN. If you want WAN access, consulting QQ group: 938075852.', interactive=False, visible=False)
                     
                     def sync_params_backend(key, v, params):
@@ -1074,7 +1074,7 @@ with local_gradio_root:
                     System RAM: {int(ldm_patched.modules.model_management.get_sysram())} MB,\
                     Video RAM: {int(ldm_patched.modules.model_management.get_vram())} MB<br>\
                     Python {platform.python_version()}, Comfy {comfy.comfy_version.version}<br>\
-                    Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}<br>\
+                    Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}<br>\
                     FooocusPlus {fooocusplus_version.version}<br>')
 
             iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
@@ -1217,13 +1217,13 @@ with local_gradio_root:
 
         # load configured default_inpaint_method
         # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
-        local_gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
+        args_manager.gradio_root.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
                 inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts, 
                 inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field
             ], show_progress=False, queue=False)
 
         for mode, disable_initial_latent, engine, strength, respective_field in enhance_inpaint_update_ctrls:
-            local_gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
+            args_manager.gradio_root.load(enhance_inpaint_mode_change, inputs=[mode, inpaint_engine_state], outputs=[
                 disable_initial_latent, engine, strength, respective_field
             ], show_progress=False, queue=False)
 
@@ -1409,9 +1409,6 @@ with local_gradio_root:
     reset_layout_params = nav_bars + reset_preset_layout + reset_preset_func + load_data_outputs
     reset_preset_inputs = [prompt, negative_prompt, state_topbar, state_is_generating, inpaint_mode, comfyd_active_checkbox]
 
-    
-    binding_id_button.click(simpleai.toggle_identity_dialog, inputs=state_topbar, outputs=identity_dialog, show_progress=False)
-
     for i in range(topbar.topbar_limit):
         bar_buttons[i].click(topbar.check_absent_model, inputs=[bar_buttons[i], state_topbar], outputs=[state_topbar]) \
                .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
@@ -1421,7 +1418,7 @@ with local_gradio_root:
                .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
 
 
-    local_gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
+    args_manager.gradio_root.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
                       .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
                       .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
                       .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
@@ -1458,13 +1455,11 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
-local_gradio_root.launch(
+args_manager.gradio_root.launch(
     inbrowser=args_manager.args.in_browser,
     server_name=args_manager.args.listen,
     server_port=args_manager.args.port,
-    share=args_manager.args.share,
     root_path=args_manager.args.webroot,
-    auth=check_auth if (args_manager.args.share or args_manager.args.listen) and auth_enabled else None,
     allowed_paths=[modules.config.path_outputs],
     blocked_paths=[constants.AUTH_FILENAME]
 )

@@ -1,6 +1,6 @@
 import os
 import sys
-from shared import *
+import args_manager
 import modules.config as config
 
 paths_checkpoints = config.paths_checkpoints
@@ -15,7 +15,7 @@ path_fooocus_expansion = config.path_fooocus_expansion
 paths_llms = config.paths_llms
 path_outputs = config.path_outputs
 
-path_root = root
+path_root = args_manager.root
 
 def init_module(file_path):
     module_root = os.path.dirname(file_path)

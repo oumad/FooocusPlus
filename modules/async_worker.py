@@ -225,7 +225,6 @@ def worker():
     import random
     import copy
     import cv2
-    import args_manager
     import modules.default_pipeline as pipeline
     import modules.core as core
     import modules.flags as flags
@@ -241,6 +240,7 @@ def worker():
     import enhanced.version
     import enhanced.wildcards as wildcards
     
+    from args_manager import gradio_root
     from extras.censor import default_censor
     from modules.sdxl_styles import apply_style, get_random_style, fooocus_expansion, apply_arrays, random_style_name
     from modules.private_logger import log
@@ -259,7 +259,7 @@ def worker():
     print(f'Started worker with PID {pid}')
 
     try:
-        async_gradio_app = args_manager.gradio_root
+        async_gradio_app = gradio_root
         flag = f'''App started successful. Use the app with {str(async_gradio_app.local_url)} or {str(async_gradio_app.server_name)}:{str(async_gradio_app.server_port)}'''
         if async_gradio_app.share:
             flag += f''' or {async_gradio_app.share_url}'''
@@ -483,7 +483,7 @@ def worker():
             d.append(('Backend Engine', 'backend_engine', async_task.task_class_full))
             d.append(('Metadata Scheme', 'metadata_scheme',
                       async_task.metadata_scheme.value if async_task.save_metadata_to_images else async_task.save_metadata_to_images))
-            d.append((f'Fooocus {fooocus_version.version} SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()} FooocusPlus fooocusplus_version.version'))
+            d.append(('Version', 'version', f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'))
             img_paths.append(log(x, d, metadata_parser, async_task.output_format, task, persist_image))
 
         return img_paths

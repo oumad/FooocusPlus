@@ -100,7 +100,8 @@ describe_type_photo = 'Photograph'
 describe_type_anime = 'Art/Anime'
 describe_types = [describe_type_photo, describe_type_anime]
 
-translation_methods = ['Slim Model', 'Big Model', 'Third APIs']
+translation_methods = ['Slim Model', 'Third APIs']
+#translation_methods = ['Slim Model', 'Big Model', 'Third APIs']
 
 COMFY_KSAMPLER_NAMES = ["euler", "euler_cfg_pp", "euler_ancestral", "euler_ancestral_cfg_pp", "heun", "heunpp2","dpm_2", "dpm_2_ancestral",
                   "lms", "dpm_fast", "dpm_adaptive", "dpmpp_2s_ancestral", "dpmpp_sde", "dpmpp_sde_gpu",
@@ -275,12 +276,12 @@ get_engine_default_backend_params = lambda x: get_engine_default_params(x).get('
 class MetadataScheme(Enum):
     FOOOCUS = 'fooocus'
     A1111 = 'a1111'
-    SIMPLE = 'simple'
+    SIMPLE = 'fooocus'
 
 
 metadata_scheme = [
     (f'{MetadataScheme.SIMPLE.value}', MetadataScheme.SIMPLE.value),
-    (f'{MetadataScheme.FOOOCUS.value}', MetadataScheme.FOOOCUS.value),
+#    (f'{MetadataScheme.FOOOCUS.value}', MetadataScheme.FOOOCUS.value),
     (f'{MetadataScheme.A1111.value}', MetadataScheme.A1111.value),
 ]
 

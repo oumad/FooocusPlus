@@ -9,15 +9,15 @@ from PIL import Image
 
 import fooocus_version
 import fooocusplus_version
+import enhanced.version
 import modules.config
 import modules.sdxl_styles
+from args_manager import modelsinfo
 from modules.flags import MetadataScheme, Performance, Steps, task_class_mapping, get_taskclass_by_fullname, default_class_params, scheduler_list, sampler_list
 from modules.flags import SAMPLERS, CIVITAI_NO_KARRAS
 from modules.util import quote, unquote, extract_styles_from_prompt, is_json, sha256
 import enhanced.all_parameters as ads
 from modules.hash_cache import sha256_from_cache
-
-modelsinfo = None
 
 re_param_code = r'\s*(\w[\w \-/]+):\s*("(?:\\.|[^\\"])+"|[^,]*)(?:,|$)'
 re_param = re.compile(re_param_code)
@@ -629,7 +629,8 @@ class A1111MetadataParser(MetadataParser):
             generation_params[self.fooocus_to_a1111['lora_hashes']] = lora_hashes_string
             generation_params[self.fooocus_to_a1111['lora_weights']] = lora_weights_string
 
-        generation_params[self.fooocus_to_a1111['version']] = data['version']
+        #generation_params[self.fooocus_to_a1111['version']] = data[fooocusplus_version.version]
+        generation_params[self.fooocus_to_a1111['version']] = data['version']        
 
         if modules.config.metadata_created_by != '':
             generation_params[self.fooocus_to_a1111['created_by']] = modules.config.metadata_created_by
@@ -821,7 +822,7 @@ def read_info_from_image(file) -> tuple[str | None, MetadataScheme | None]:
             parameters = params_lora_fixed(parameters)
 
     try:
-        if metadata_scheme == 'fooocus':
+        if metadata_scheme == 'Fooocus':
             metadata_scheme = 'simple'
             parameters.update({'metadata_scheme': 'simple'})
         metadata_scheme = MetadataScheme(metadata_scheme)
@@ -851,8 +852,7 @@ def get_exif(metadata: str | None, metadata_scheme: str):
     # 0x9286 = UserComment
     exif[0x9286] = metadata
     # 0x0131 = Software
-    import enhanced.version as version
-    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'
+    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'
     # 0x927C = MakerNote
     exif[0x927C] = metadata_scheme
     return exif
