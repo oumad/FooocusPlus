@@ -6,7 +6,8 @@ import ldm_patched
 print('[System ARGV] ' + str(sys.argv))
 
 # declare the ROOT global constant
-global ROOT = os.path.dirname(os.path.abspath(__file__))
+global ROOT
+ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
 
