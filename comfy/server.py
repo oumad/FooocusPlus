@@ -31,7 +31,7 @@ from app.frontend_management import FrontendManager
 from app.user_manager import UserManager
 from typing import Optional
 from api_server.routes.internal.internal_routes import InternalRoutes
-from simpleai_base.simpleai_base import check_entry_point, cert_verify_by_did
+# from simpleai_base.simpleai_base import check_entry_point, cert_verify_by_did
 from datetime import datetime
 import re
 
