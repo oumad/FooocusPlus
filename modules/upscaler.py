@@ -13,7 +13,7 @@ model = None
 def perform_upscale(img):
     global model
 
-    print(f'Upscaling image with shape {str(img.shape)} ...')
+    print(f'Upscaling image with shape {str(img.shape)}...')
 
     if model is None:
         model_filename = downloading_upscale_model()
