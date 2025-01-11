@@ -15,13 +15,8 @@ import time
 from comfy.cli_args import args
 from app.logger import setup_logger
 
-if __name__ == "__main__":
-    #NOTE: These do not do anything on core ComfyUI which should already have no communication with the internet, they are for custom nodes.
-    os.environ['HF_HUB_DISABLE_TELEMETRY'] = '1'
-    os.environ['DO_NOT_TRACK'] = '1'
 
-
-setup_logger(log_level=args.verbose)
+setup_logger(verbose=args.verbose)
 
 
 def execute_prestartup_script():
@@ -82,7 +77,6 @@ if os.name == "nt":
 if __name__ == "__main__":
     if args.cuda_device is not None:
         os.environ['CUDA_VISIBLE_DEVICES'] = str(args.cuda_device)
-        os.environ['HIP_VISIBLE_DEVICES'] = str(args.cuda_device)
         logging.info("Set cuda device to: {}".format(args.cuda_device))
 
     if args.deterministic:
@@ -165,16 +159,14 @@ def prompt_worker(q, server):
         if need_gc:
             current_time = time.perf_counter()
             if (current_time - last_gc_collect) > gc_collect_interval:
+                comfy.model_management.cleanup_models()
                 gc.collect()
                 comfy.model_management.soft_empty_cache()
                 last_gc_collect = current_time
                 need_gc = False
 
 async def run(server, address='', port=8188, verbose=True, call_on_start=None):
-    addresses = []
-    for addr in address.split(","):
-        addresses.append((addr, port))
-    await asyncio.gather(server.start_multi_address(addresses, call_on_start), server.publish_loop())
+    await asyncio.gather(server.start(address, port, verbose, call_on_start), server.publish_loop())
 
 
 def hijack_progress(server):
@@ -247,7 +239,7 @@ if __name__ == "__main__":
         input_dir = os.path.abspath(args.input_directory)
         logging.info(f"Setting input directory to: {input_dir}")
         folder_paths.set_input_directory(input_dir)
-
+    
     if args.user_directory:
         user_dir = os.path.abspath(args.user_directory)
         logging.info(f"Setting user directory to: {user_dir}")
@@ -256,15 +248,12 @@ if __name__ == "__main__":
     if args.quick_test_for_ci:
         exit(0)
 
-    os.makedirs(folder_paths.get_temp_directory(), exist_ok=True)
     call_on_start = None
     if args.auto_launch:
         def startup_server(scheme, address, port):
             import webbrowser
             if os.name == 'nt' and address == '0.0.0.0':
                 address = '127.0.0.1'
-            if ':' in address:
-                address = "[{}]".format(address)
             webbrowser.open(f"{scheme}://{address}:{port}")
         call_on_start = startup_server
 
