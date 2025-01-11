@@ -277,7 +277,7 @@ def worker():
             imgs = [imgs]
 
         if censor and (modules.config.default_black_out_nsfw or black_out_nsfw):
-            progressbar(async_task, progressbar_index, 'Checking for NSFW content ...')
+            progressbar(async_task, progressbar_index, 'Checking for NSFW content...')
             imgs = default_censor(imgs)
 
         async_task.results = async_task.results + imgs
@@ -406,9 +406,9 @@ def worker():
         
         current_progress = int(base_progress + (100 - preparation_steps) / float(all_steps) * steps)
         if modules.config.default_black_out_nsfw or async_task.black_out_nsfw:
-            progressbar(async_task, current_progress, 'Checking for NSFW content ...')
+            progressbar(async_task, current_progress, 'Checking for NSFW content...')
             imgs = default_censor(imgs)
-        progressbar(async_task, current_progress, f'Saving image {current_task_id + 1}/{total_count} to system ...')
+        progressbar(async_task, current_progress, f'Saving image {current_task_id + 1}/{total_count} to system...')
         img_paths = save_and_log(async_task, height, imgs, task, use_expansion, width, loras, persist_image)
         yield_result(async_task, img_paths, current_progress, async_task.black_out_nsfw, False,
                      do_not_show_finished_images=not show_intermediate_results or async_task.disable_intermediate_results)
@@ -557,7 +557,7 @@ def worker():
         initial_pixels = core.numpy_to_pytorch(uov_input_image)
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, current_progress, 'VAE encoding ...')
+        progressbar(async_task, current_progress, 'VAE encoding...')
         candidate_vae, _ = pipeline.get_candidate_vae(
             steps=async_task.steps,
             switch=switch,
@@ -591,7 +591,7 @@ def worker():
 
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, current_progress, 'VAE Inpaint encoding ...')
+        progressbar(async_task, current_progress, 'VAE Inpaint encoding...')
         inpaint_pixel_fill = core.numpy_to_pytorch(inpaint_worker.current_task.interested_fill)
         inpaint_pixel_image = core.numpy_to_pytorch(inpaint_worker.current_task.interested_image)
         inpaint_pixel_mask = core.numpy_to_pytorch(inpaint_worker.current_task.interested_mask)
@@ -609,13 +609,13 @@ def worker():
         if candidate_vae_swap is not None:
             if advance_progress:
                 current_progress += 1
-            progressbar(async_task, current_progress, 'VAE SD15 encoding ...')
+            progressbar(async_task, current_progress, 'VAE SD15 encoding...')
             latent_swap = core.encode_vae(
                 vae=candidate_vae_swap,
                 pixels=inpaint_pixel_fill)['samples']
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, current_progress, 'VAE encoding ...')
+        progressbar(async_task, current_progress, 'VAE encoding...')
         latent_fill = core.encode_vae(
             vae=candidate_vae,
             pixels=inpaint_pixel_fill)['samples']
@@ -669,7 +669,7 @@ def worker():
         H, W, C = uov_input_image.shape
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, current_progress, f'Upscaling image from {str((W, H))} ...')
+        progressbar(async_task, current_progress, f'Upscaling image from {str((W, H))}...')
         uov_input_image = perform_upscale(uov_input_image)
         print(f'Image upscaled.')
         if '1.5x' in uov_method:
@@ -705,7 +705,7 @@ def worker():
         initial_pixels = core.numpy_to_pytorch(uov_input_image)
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, current_progress, 'VAE encoding ...')
+        progressbar(async_task, current_progress, 'VAE encoding...')
         candidate_vae, _ = pipeline.get_candidate_vae(
             steps=async_task.steps,
             switch=switch,
@@ -754,7 +754,7 @@ def worker():
         if async_task.task_class in ['Fooocus']:
             if advance_progress:
                 current_progress += 1
-            progressbar(async_task, current_progress, 'Loading models ...')
+            progressbar(async_task, current_progress, 'Loading models...')
             pipeline.refresh_everything(refiner_model_name=async_task.refiner_model_name,
                                     base_model_name=async_task.base_model_name,
                                     loras=loras, base_model_additional_loras=base_model_additional_loras,
@@ -764,7 +764,7 @@ def worker():
             pipeline.reload_expansion()
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, current_progress, 'Processing prompts ...')
+        progressbar(async_task, current_progress, 'Processing prompts...')
         tasks = []
         task_rng = random.Random(async_task.seed % (constants.MAX_SEED + 1))
         prompt, wildcards_arrays, arrays_mult, seed_fixed = wildcards.compile_arrays(prompt, task_rng)
@@ -831,7 +831,7 @@ def worker():
                 current_progress += 1
             for i, t in enumerate(tasks):
 
-                progressbar(async_task, current_progress, f'Preparing Fooocus text #{i + 1} ...')
+                progressbar(async_task, current_progress, f'Preparing Fooocus text #{i + 1}...')
                 expansion = pipeline.final_expansion(t['task_prompt'], t['task_seed'])
                 print(f'[Prompt Expansion] {expansion}')
                 t['expansion'] = expansion
@@ -840,7 +840,7 @@ def worker():
             if advance_progress:
                 current_progress += 1
             for i, t in enumerate(tasks):
-                progressbar(async_task, current_progress, f'Encoding positive #{i + 1} ...')
+                progressbar(async_task, current_progress, f'Encoding positive #{i + 1}...')
                 t['c'] = pipeline.clip_encode(texts=t['positive'], pool_top_k=t['positive_top_k'])
             if advance_progress:
                 current_progress += 1
@@ -848,7 +848,7 @@ def worker():
                 if abs(float(async_task.cfg_scale) - 1.0) < 1e-4:
                     t['uc'] = pipeline.clone_cond(t['c'])
                 else:
-                    progressbar(async_task, current_progress, f'Encoding negative #{i + 1} ...')
+                    progressbar(async_task, current_progress, f'Encoding negative #{i + 1}...')
                     t['uc'] = pipeline.clip_encode(texts=t['negative'], pool_top_k=t['negative_top_k'])
         return tasks, use_expansion, loras, current_progress
 
@@ -891,7 +891,7 @@ def worker():
         print('Enter Hyper-SD mode.')
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, current_progress, 'Downloading Hyper-SD components ...')
+        progressbar(async_task, current_progress, 'Downloading Hyper-SD components...')
         async_task.performance_loras += [(modules.config.downloading_sdxl_hyper_sd_lora(), 0.8)]
         if async_task.refiner_model_name != 'None':
             print(f'Refiner disabled in Hyper-SD mode.')
@@ -911,7 +911,7 @@ def worker():
         print('Enter Lightning mode.')
         if advance_progress:
             current_progress += 1
-        progressbar(async_task, 1, 'Downloading Lightning components ...')
+        progressbar(async_task, 1, 'Downloading Lightning components...')
         async_task.performance_loras += [(modules.config.downloading_sdxl_lightning_lora(), 1.0)]
         if async_task.refiner_model_name != 'None':
             print(f'Refiner disabled in Lightning mode.')
@@ -990,10 +990,10 @@ def worker():
             inpaint_image = HWC3(inpaint_image)
             if isinstance(inpaint_image, np.ndarray) and isinstance(inpaint_mask, np.ndarray) \
                     and (np.any(inpaint_mask > 127) or len(async_task.outpaint_selections) > 0):
-                progressbar(async_task, 1, 'Downloading upscale models ...')
+                progressbar(async_task, 1, 'Downloading upscale models...')
                 modules.config.downloading_upscale_model()
                 if inpaint_parameterized:
-                    progressbar(async_task, 1, 'Downloading inpainter ...')
+                    progressbar(async_task, 1, 'Downloading inpainter...')
                     inpaint_head_model_path, inpaint_patch_model_path = modules.config.downloading_inpaint_models(
                         async_task.inpaint_engine)
                     base_model_additional_loras += [(inpaint_patch_model_path, 1.0)]
@@ -1014,7 +1014,7 @@ def worker():
                 async_task.mixing_image_prompt_and_vary_upscale or \
                 async_task.mixing_image_prompt_and_inpaint:
             goals.append('cn')
-            progressbar(async_task, 1, 'Downloading control models ...')
+            progressbar(async_task, 1, 'Downloading control models...')
             if len(async_task.cn_tasks[flags.cn_canny]) > 0:
                 controlnet_canny_path = modules.config.downloading_controlnet_canny()
             if len(async_task.cn_tasks[flags.cn_cpds]) > 0:
@@ -1045,7 +1045,7 @@ def worker():
 
             if advance_progress:
                 current_progress += 1
-            progressbar(async_task, current_progress, 'Downloading upscale models ...')
+            progressbar(async_task, current_progress, 'Downloading upscale models...')
             modules.config.downloading_upscale_model()
         return uov_input_image, skip_prompt_processing, steps
 
@@ -1088,21 +1088,21 @@ def worker():
             if direct_return:
                 d = [('Upscale (Fast)', 'upscale_fast', '2x')]
                 if modules.config.default_black_out_nsfw or async_task.black_out_nsfw:
-                    progressbar(async_task, current_progress, 'Checking for NSFW content ...')
+                    progressbar(async_task, current_progress, 'Checking for NSFW content...')
                     img = default_censor(img)
-                progressbar(async_task, current_progress, f'Saving image {current_task_id + 1}/{total_count} to system ...')
+                progressbar(async_task, current_progress, f'Saving image {current_task_id + 1}/{total_count} to system...')
                 uov_image_path = log(img, d, output_format=async_task.output_format, persist_image=persist_image)
                 yield_result(async_task, uov_image_path, current_progress, async_task.black_out_nsfw, False,
                              do_not_show_finished_images=not show_intermediate_results or async_task.disable_intermediate_results)
                 return current_progress, img, prompt, negative_prompt
 
         if 'inpaint' in goals and inpaint_parameterized:
-            progressbar(async_task, current_progress, 'Downloading inpainter ...')
+            progressbar(async_task, current_progress, 'Downloading inpainter...')
             inpaint_head_model_path, inpaint_patch_model_path = modules.config.downloading_inpaint_models(
                 inpaint_engine)
             if inpaint_patch_model_path not in base_model_additional_loras:
                 base_model_additional_loras += [(inpaint_patch_model_path, 1.0)]
-        progressbar(async_task, current_progress, 'Preparing enhance prompts ...')
+        progressbar(async_task, current_progress, 'Preparing enhance prompts...')
         # positive and negative conditioning aren't available here anymore, process prompt again
         tasks_enhance, use_expansion, loras, current_progress = process_prompt(
             async_task, prompt, negative_prompt, base_model_additional_loras, 1, True,
@@ -1259,7 +1259,7 @@ def worker():
                 ip_adapter_path, ip_negative_path, skip_prompt_processing, use_synthetic_refiner)
 
         # Load or unload CNs
-        progressbar(async_task, current_progress, 'Loading control models ...')
+        progressbar(async_task, current_progress, 'Loading control models...')
         pipeline.refresh_controlnets([controlnet_canny_path, controlnet_cpds_path])
         ip_adapter.load_ip_adapter(clip_vision_path, ip_negative_path, ip_adapter_path)
         ip_adapter.load_ip_adapter(clip_vision_path, ip_negative_path, ip_adapter_face_path)
@@ -1269,7 +1269,7 @@ def worker():
         print(f'[Parameters] Sampler = {async_task.sampler_name} - {async_task.scheduler_name}')
         print(f'[Parameters] Steps = {async_task.steps} - {switch}')
 
-        progressbar(async_task, current_progress, 'Initializing ...')
+        progressbar(async_task, current_progress, 'Initializing...')
 
         loras = async_task.loras
         if not skip_prompt_processing:
@@ -1280,7 +1280,7 @@ def worker():
 
         if len(goals) > 0:
             current_progress += 1
-            progressbar(async_task, current_progress, 'Image processing ...')
+            progressbar(async_task, current_progress, 'Image processing...')
 
         should_enhance = async_task.enhance_checkbox and (async_task.enhance_uov_method != flags.disabled.casefold() or len(async_task.enhance_ctrls) > 0)
 
@@ -1296,9 +1296,9 @@ def worker():
             if direct_return:
                 d = [('Upscale (Fast)', 'upscale_fast', '2x')]
                 if modules.config.default_black_out_nsfw or async_task.black_out_nsfw:
-                    progressbar(async_task, 100, 'Checking for NSFW content ...')
+                    progressbar(async_task, 100, 'Checking for NSFW content...')
                     async_task.uov_input_image = default_censor(async_task.uov_input_image)
-                progressbar(async_task, 100, 'Saving image to system ...')
+                progressbar(async_task, 100, 'Saving image to system...')
                 uov_input_image_path = log(async_task.uov_input_image, d, output_format=async_task.output_format)
                 yield_result(async_task, uov_input_image_path, 100, async_task.black_out_nsfw, False,
                              do_not_show_finished_images=True)
@@ -1377,9 +1377,9 @@ def worker():
         print(f'Using {final_scheduler_name} scheduler.')
 
         if async_task.task_class == 'Fooocus':
-            async_task.yields.append(['preview', (current_progress, 'Moving model to GPU ...', None)])
+            async_task.yields.append(['preview', (current_progress, 'Moving model to GPU...', None)])
         else:
-            async_task.yields.append(['preview', (current_progress, f'Process {async_task.task_class} Task ...', None)])
+            async_task.yields.append(['preview', (current_progress, f'Process {async_task.task_class} Task...', None)])
 
         processing_start_time = time.perf_counter()
 
@@ -1392,7 +1392,7 @@ def worker():
             async_task.callback_steps += (100 - preparation_steps) / float(all_steps)
             async_task.yields.append(['preview', (
                 int(current_progress + async_task.callback_steps),
-                f'Sampling step {step + 1}/{total_steps}, image {current_task_id + 1}/{total_count} ...', y)])
+                f'Sampling step {step + 1}/{total_steps}, image {current_task_id + 1}/{total_count}...', y)])
 
         def callback_comfytask(step, total_steps, y):
             if step == 1:
@@ -1400,7 +1400,7 @@ def worker():
             async_task.callback_steps += (100 - preparation_steps) / float(all_steps)
             async_task.yields.append(['preview', (
                 int(current_progress + async_task.callback_steps),
-                f'Sampling step {step + 1}/{total_steps}, image {current_task_id + 1}/{total_count} ...', y)])
+                f'Sampling step {step + 1}/{total_steps}, image {current_task_id + 1}/{total_count}...', y)])
 
         def callback_hydittask(pipe, step, time_steps, callback_kwargs):
             from enhanced.latent_preview import get_previewer
@@ -1417,7 +1417,7 @@ def worker():
             async_task.callback_steps += (100 - preparation_steps) / float(all_steps)
             async_task.yields.append(['preview', (
                 int(current_progress + async_task.callback_steps),
-                f'Sampling step {step + 1}/{steps}, image {current_task_id + 1}/{total_count} ...', y)])
+                f'Sampling step {step + 1}/{steps}, image {current_task_id + 1}/{total_count}...', y)])
             return callback_kwargs
 
         callback_function = callback
@@ -1439,7 +1439,7 @@ def worker():
         persist_image = not async_task.should_enhance or not async_task.save_final_enhanced_image_only
 
         for current_task_id, task in enumerate(tasks):
-            progressbar(async_task, current_progress, f'Preparing {async_task.task_class} task {current_task_id + 1}/{async_task.image_number} ...')
+            progressbar(async_task, current_progress, f'Preparing {async_task.task_class} task {current_task_id + 1}/{async_task.image_number}...')
             execution_start_time = time.perf_counter()
 
             try:
@@ -1523,7 +1523,7 @@ def worker():
             for enhance_mask_dino_prompt_text, enhance_prompt, enhance_negative_prompt, enhance_mask_model, enhance_mask_cloth_category, enhance_mask_sam_model, enhance_mask_text_threshold, enhance_mask_box_threshold, enhance_mask_sam_max_detections, enhance_inpaint_disable_initial_latent, enhance_inpaint_engine, enhance_inpaint_strength, enhance_inpaint_respective_field, enhance_inpaint_erode_or_dilate, enhance_mask_invert in async_task.enhance_ctrls:
                 current_task_id += 1
                 current_progress = int(base_progress + (100 - preparation_steps) / float(all_steps) * (done_steps_upscaling + done_steps_inpainting))
-                progressbar(async_task, current_progress, f'Preparing enhancement {current_task_id + 1}/{total_count} ...')
+                progressbar(async_task, current_progress, f'Preparing enhancement {current_task_id + 1}/{total_count}...')
                 enhancement_task_start_time = time.perf_counter()
                 is_last_enhance_for_image = (current_task_id + 1) % active_enhance_tabs == 0 and not enhance_uov_after
                 persist_image = not async_task.save_final_enhanced_image_only or is_last_enhance_for_image
@@ -1558,7 +1558,7 @@ def worker():
                     mask = 255 - mask
 
                 if async_task.debugging_enhance_masks_checkbox:
-                    async_task.yields.append(['preview', (current_progress, 'Loading ...', mask)])
+                    async_task.yields.append(['preview', (current_progress, 'Loading...', mask)])
                     yield_result(async_task, mask, current_progress, async_task.black_out_nsfw, False,
                                  async_task.disable_intermediate_results)
                     async_task.enhance_stats[index] += 1
