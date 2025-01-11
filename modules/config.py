@@ -8,6 +8,7 @@ import modules.flags
 import modules.sdxl_styles
 import enhanced.all_parameters as ads
 
+from launch import ROOT
 from modules.model_loader import load_file_from_url
 from modules.extra_utils import makedirs_with_log, get_files_from_folder, try_eval_env_var
 from modules.flags import OutputFormat, Performance, MetadataScheme
@@ -932,7 +933,7 @@ with open(config_example_path, "w", encoding="utf-8") as json_file:
                       'and there is no "," before the last "}". \n\n\n')
     json.dump({k: config_dict[k] for k in visited_keys}, json_file, indent=4)
 
-config_comfy_path = os.path.join(args_manager.root, 'comfy/extra_model_paths.yaml')
+config_comfy_path = os.path.join(ROOT, 'comfy/extra_model_paths.yaml')
 config_comfy_formatted_text = '''
 comfyui:
      models_root: {models_root}
