@@ -110,6 +110,8 @@ function showSysMsg(message, theme) {
 }
 
 function initPresetPreviewOverlay() {
+    set_language_by_ui(newLanguage);
+	if (newLanguage != "cn") return;
     let overlayVisible = false;
     const samplesPath = document.querySelector("meta[name='preset-samples-path']").getAttribute("content")
     const overlay = document.createElement('div');
