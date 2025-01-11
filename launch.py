@@ -5,7 +5,9 @@ import ldm_patched
 
 print('[System ARGV] ' + str(sys.argv))
 
-# the ROOT constant is used by reference from other modules
+# these constants are imported to other modules
+# for example: from launch import ROOT
+GRADIO_ROOT = None
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
