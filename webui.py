@@ -60,7 +60,7 @@ def generate_clicked(task: worker.AsyncTask):
     execution_start_time = time.perf_counter()
     finished = False
 
-    yield gr.update(visible=True, value=modules.html.make_progress_html(1, 'Waiting for task to start ...')), \
+    yield gr.update(visible=True, value=modules.html.make_progress_html(1, 'Waiting for task to start...')), \
         gr.update(visible=True, value=None), \
         gr.update(visible=False, value=None), \
         gr.update(visible=False)
@@ -799,7 +799,7 @@ with args_manager.gradio_root:
                     default_selected=modules.config.default_styles)
 
                 style_search_bar = gr.Textbox(show_label=False, container=False,
-                                              placeholder="\U0001F50E Type here to search styles ...",
+                                              placeholder="\U0001F50E Type here to search styles...",
                                               value="",
                                               label='Search Styles')
                 style_selections = gr.CheckboxGroup(show_label=False, container=False,
