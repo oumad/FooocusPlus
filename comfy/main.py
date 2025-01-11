@@ -15,6 +15,11 @@ import time
 from comfy.cli_args import args
 from app.logger import setup_logger
 
+if __name__ == "__main__":
+    #NOTE: These do not do anything on core ComfyUI which should already have no communication with the internet, they are for custom nodes.
+    os.environ['HF_HUB_DISABLE_TELEMETRY'] = '1'
+    os.environ['DO_NOT_TRACK'] = '1'
+
 
 setup_logger(verbose=args.verbose)
 
@@ -247,7 +252,8 @@ if __name__ == "__main__":
 
     if args.quick_test_for_ci:
         exit(0)
-
+    
+    os.makedirs(folder_paths.get_temp_directory(), exist_ok=True)
     call_on_start = None
     if args.auto_launch:
         def startup_server(scheme, address, port):
