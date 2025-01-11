@@ -219,6 +219,7 @@ function(system_params) {
         set_language(lang);
     }
     if (lang=="cn") {
+        _js=initPresetPreviewOverlay(lang);
         let preset_url = system_params["__preset_url"];
         if (preset_url!=null) {
             set_iframe_src(theme,lang,preset_url);
