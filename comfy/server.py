@@ -29,9 +29,11 @@ import comfy.model_management
 import node_helpers
 from app.frontend_management import FrontendManager
 from app.user_manager import UserManager
-from model_filemanager import download_model, DownloadModelStatus
 from typing import Optional
 from api_server.routes.internal.internal_routes import InternalRoutes
+from simpleai_base.simpleai_base import check_entry_point, cert_verify_by_did
+from datetime import datetime
+import re
 
 class BinaryEventTypes:
     PREVIEW_IMAGE = 1
@@ -40,7 +42,7 @@ class BinaryEventTypes:
 async def send_socket_catch_exception(function, message):
     try:
         await function(message)
-    except (aiohttp.ClientError, aiohttp.ClientPayloadError, ConnectionResetError) as err:
+    except (aiohttp.ClientError, aiohttp.ClientPayloadError, ConnectionResetError, BrokenPipeError, ConnectionError) as err:
         logging.warning("send error: {}".format(err))
 
 def get_comfyui_version():
@@ -152,7 +154,7 @@ class PromptServer():
         mimetypes.types_map['.js'] = 'application/javascript; charset=utf-8'
 
         self.user_manager = UserManager()
-        self.internal_routes = InternalRoutes()
+        self.internal_routes = InternalRoutes(self)
         self.supports = ["custom_nodes_from_web"]
         self.prompt_queue = None
         self.loop = loop
@@ -211,16 +213,37 @@ class PromptServer():
 
         @routes.get("/")
         async def get_root(request):
-            response = web.FileResponse(os.path.join(os.path.dirname(os.path.realpath(__file__)), "index.html"))
+            key_point = request.query.get("p")
+            if not key_point or (not check_entry_point(key_point) and datetime.now().strftime("%Y%m%d%H") not in key_point):
+                return web.Response(status=403, text="Invalid identity key / 没有有效的身份标识 !")
+            response = web.FileResponse(os.path.join(self.web_root, "index.html"))
+            response.set_cookie("sstoken", key_point, max_age=3600*24*30*6, httponly=True, secure=True)
             response.headers['Cache-Control'] = 'no-cache'
             response.headers["Pragma"] = "no-cache"
             response.headers["Expires"] = "0"
             return response
 
+        @routes.post("/setvars")
+        async def set_variable(request):
+            json_data =  await request.json()
+            #logging.info(f"got variable: {json_data}")
+            if "outputs" in json_data:
+                folder_paths.set_output_directory(json_data['outputs'])
+            if "reserved_vram" in json_data:
+                comfy.model_management.set_extra_reserved_vram(json_data['reserved_vram'])
+            return web.json_response({'feedback': 'ok'})
+
+
         @routes.get("/embeddings")
         def get_embeddings(self):
             embeddings = folder_paths.get_filename_list("embeddings")
             return web.json_response(list(map(lambda a: os.path.splitext(a)[0], embeddings)))
+        
+        @routes.get("/models")
+        def list_model_types(request):
+            model_types = list(folder_paths.folder_names_and_paths.keys())
+
+            return web.json_response(model_types)
 
         @routes.get("/models/{folder}")
         async def get_models(request):
@@ -484,12 +507,17 @@ class PromptServer():
         async def system_stats(request):
             device = comfy.model_management.get_torch_device()
             device_name = comfy.model_management.get_torch_device_name(device)
+            cpu_device = comfy.model_management.torch.device("cpu")
+            ram_total = comfy.model_management.get_total_memory(cpu_device)
+            ram_free = comfy.model_management.get_free_memory(cpu_device)
             vram_total, torch_vram_total = comfy.model_management.get_total_memory(device, torch_total_too=True)
             vram_free, torch_vram_free = comfy.model_management.get_free_memory(device, torch_free_too=True)
 
             system_stats = {
                 "system": {
                     "os": os.name,
+                    "ram_total": ram_total,
+                    "ram_free": ram_free,
                     "comfyui_version": get_comfyui_version(),
                     "python_version": sys.version,
                     "pytorch_version": comfy.model_management.torch_version,
@@ -546,14 +574,15 @@ class PromptServer():
 
         @routes.get("/object_info")
         async def get_object_info(request):
-            out = {}
-            for x in nodes.NODE_CLASS_MAPPINGS:
-                try:
-                    out[x] = node_info(x)
-                except Exception as e:
-                    logging.error(f"[ERROR] An error occurred while retrieving information for the '{x}' node.")
-                    logging.error(traceback.format_exc())
-            return web.json_response(out)
+            with folder_paths.cache_helper:
+                out = {}
+                for x in nodes.NODE_CLASS_MAPPINGS:
+                    try:
+                        out[x] = node_info(x)
+                    except Exception as e:
+                        logging.error(f"[ERROR] An error occurred while retrieving information for the '{x}' node.")
+                        logging.error(traceback.format_exc())
+                return web.json_response(out)
 
         @routes.get("/object_info/{node_class}")
         async def get_object_info_node(request):
@@ -610,6 +639,12 @@ class PromptServer():
 
                 if "client_id" in json_data:
                     extra_data["client_id"] = json_data["client_id"]
+                    if "user_cert" not in json_data or not cert_verify_by_did(json_data["user_cert"], json_data["client_id"]):
+                        hexstr = re.compile(r'^[0-9a-f]+$')
+                        if len(json_data["client_id"])!=32 or not hexstr.match(json_data["client_id"]):
+                            if "user_cert" in json_data:
+                                pass #print(f'user_did: {json_data["client_id"]}, user_cert: {json_data["user_cert"]}')
+                            return web.json_response({"error": "no cert or invalid cert", "node_errors": []}, status=400)
                 if valid[0]:
                     prompt_id = str(uuid.uuid4())
                     outputs_to_execute = valid[2]
@@ -664,34 +699,6 @@ class PromptServer():
                     self.prompt_queue.delete_history_item(id_to_delete)
 
             return web.Response(status=200)
-        
-        # Internal route. Should not be depended upon and is subject to change at any time.
-        # TODO(robinhuang): Move to internal route table class once we refactor PromptServer to pass around Websocket.
-        @routes.post("/internal/models/download")
-        async def download_handler(request):
-            async def report_progress(filename: str, status: DownloadModelStatus):
-                payload = status.to_dict()
-                payload['download_path'] = filename
-                await self.send_json("download_progress", payload)
-
-            data = await request.json()
-            url = data.get('url')
-            model_directory = data.get('model_directory')
-            model_filename = data.get('model_filename')
-            progress_interval = data.get('progress_interval', 1.0) # In seconds, how often to report download progress.
-
-            if not url or not model_directory or not model_filename:
-                return web.json_response({"status": "error", "message": "Missing URL or folder path or filename"}, status=400)
-
-            session = self.client_session
-            if session is None:
-                logging.error("Client session is not initialized")
-                return web.Response(status=500)
-            
-            task = asyncio.create_task(download_model(lambda url: session.get(url), model_filename, url, model_directory, report_progress, progress_interval))
-            await task
-
-            return web.json_response(task.result().to_dict())
 
     async def setup(self):
         timeout = aiohttp.ClientTimeout(total=None) # no timeout
@@ -805,6 +812,9 @@ class PromptServer():
             await self.send(*msg)
 
     async def start(self, address, port, verbose=True, call_on_start=None):
+        await self.start_multi_address([(address, port)], call_on_start=call_on_start)
+
+    async def start_multi_address(self, addresses, call_on_start=None):
         runner = web.AppRunner(self.app, access_log=None)
         await runner.setup()
         ssl_ctx = None
@@ -815,17 +825,26 @@ class PromptServer():
                                 keyfile=args.tls_keyfile)
                 scheme = "https"
 
-        site = web.TCPSite(runner, address, port, ssl_context=ssl_ctx)
-        await site.start()
+        logging.info("Starting server\n")
+        for addr in addresses:
+            address = addr[0]
+            port = addr[1]
+            site = web.TCPSite(runner, address, port, ssl_context=ssl_ctx)
+            await site.start()
 
-        self.address = address
-        self.port = port
+            if not hasattr(self, 'address'):
+                self.address = address #TODO: remove this
+                self.port = port
 
-        if verbose:
-            logging.info(f'Starting Comfyd server!\n')
-            #logging.info("To see the GUI go to: {}://{}:{}".format(scheme, address, port))
+            if ':' in address:
+                address_print = "[{}]".format(address)
+            else:
+                address_print = address
+
+            #logging.info("To see the GUI go to: {}://{}:{}".format(scheme, address_print, port))
+
         if call_on_start is not None:
-            call_on_start(scheme, address, port)
+            call_on_start(scheme, self.address, self.port)
 
     def add_on_prompt_handler(self, handler):
         self.on_prompt_handlers.append(handler)

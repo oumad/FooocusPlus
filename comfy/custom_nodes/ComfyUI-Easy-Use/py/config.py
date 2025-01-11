@@ -80,11 +80,11 @@ BRUSHNET_MODELS = {
 }
 POWERPAINT_MODELS = {
     "base_fp16": {
-        "model_url": "https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/text_encoder/model.fp16.safetensors"
+        "model_url": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/SimpleModels/clip/sd15_clip_model.fp16.safetensors"
     },
     "v2.1": {
-        "model_url": "https://huggingface.co/JunhaoZhuang/PowerPaint-v2-1/resolve/main/PowerPaint_Brushnet/diffusion_pytorch_model.safetensors",
-        "clip_url": "https://huggingface.co/JunhaoZhuang/PowerPaint-v2-1/resolve/main/PowerPaint_Brushnet/pytorch_model.bin",
+        "model_url": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/SimpleModels/inpaint/sd15_powerpaint_brushnet_v2_1.safetensors",
+        "clip_url": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/SimpleModels/inpaint/sd15_powerpaint_brushnet_clip_v2_1.bin",
     }
 }
 
@@ -349,6 +349,9 @@ HUMANPARSING_MODELS = {
     "parsing_lip": {
         "model_url": "https://huggingface.co/levihsu/OOTDiffusion/resolve/main/checkpoints/humanparsing/parsing_lip.onnx",
     },
+    "human-parts":{
+        "model_url":"https://huggingface.co/Metal3d/deeplabv3p-resnet50-human/resolve/main/deeplabv3p-resnet50-human.onnx",
+    }
 }
 
 #mediapipe

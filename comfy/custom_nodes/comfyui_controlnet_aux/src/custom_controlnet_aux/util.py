@@ -11,7 +11,7 @@ import torch
 from huggingface_hub import constants, hf_hub_download
 from torch.hub import get_dir, download_url_to_file
 from ast import literal_eval
-
+import folder_paths
 
 TORCHHUB_PATH = Path(__file__).parent / 'depth_anything' / 'torchhub'
 HF_MODEL_NAME = "lllyasviel/Annotators"
@@ -35,7 +35,7 @@ DEPTH_ANYTHING_V2_MODEL_NAME_DICT = {
 }
 
 temp_dir = tempfile.gettempdir()
-annotator_ckpts_path = os.path.join(Path(__file__).parents[2], 'ckpts')
+annotator_ckpts_path = os.path.join(folder_paths.models_dir, "controlnet") #os.path.join(Path(__file__).parents[2], 'ckpts')
 USE_SYMLINKS = False
 
 try:
