@@ -660,16 +660,16 @@ with GRADIO_ROOT:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-                if (args_manager.agrs.preselector==''):
+                if (arg_manager.agrs.preselector==''):
                     if (args_manager.args.language=='cn'):
-                        args_manager.agrs.preselector=='Topbar Menu'
+                        arg_manager.agrs.preselector=='Topbar Menu'
                     else:
-                        args_manager.args.preselector=='Dropdown Menu'
+                        arg_manager.args.preselector=='Dropdown Menu'
                 print()
-                print(f'Preselector: (args_manager.args.preselector)')
+                print(f'Preselector: (arg_manager.args.preselector)')
                 print()
                 if not args_manager.args.disable_preset_selection:
-                    if (args_manager.agrs.preselector) == 'Topbar Menu':
+                    if (arg_manager.agrs.preselector) == 'Topbar Menu':
                         preset_selection = gr.Radio(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
