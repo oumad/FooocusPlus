@@ -3,7 +3,7 @@ import zipfile
 import shutil
 import ldm_patched
 import modules.config as config
-from launch import MODELSINFO
+from launch import MODELS_INFO
 from enhanced.simpleai import ComfyTaskParams
 from modules.model_loader import load_file_from_url
 
@@ -48,7 +48,7 @@ def get_default_base_SD3m_name():
         else 1 if total_vram<VRAM16G and total_ram<RAM32G else 2
     for i in range(dtype, -1 ,-1):
         sd3name = default_base_SD3m_name_list[i]
-        if MODELSINFO.exists_model_key(f'checkpoints/{sd3name}'):
+        if MODELS_INFO.exists_model_key(f'checkpoints/{sd3name}'):
             return sd3name
     return default_base_SD3m_name_list[0]
 
@@ -74,7 +74,7 @@ def get_default_base_Flux_name(plus=False):
             checklist = [default_base_Flux_name_list[2], default_base_Flux_name_list[1], default_base_Flux_name_list[3]]
     for i in range(0, len(checklist)):
         fluxname = checklist[i]
-        if MODELSINFO.exists_model(catalog="checkpoints", model_path=fluxname):
+        if MODELS_INFO.exists_model(catalog="checkpoints", model_path=fluxname):
             return fluxname
     return checklist[0]
         
@@ -127,7 +127,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
                 raise ValueError("input_images cannot be None for this method")
             images = {"input_image": input_images[0]}
             if 'iclight_enable' in options and options["iclight_enable"]:
-                if MODELSINFO.exists_model(catalog="checkpoints", model_path=default_base_SD15_name):
+                if MODELS_INFO.exists_model(catalog="checkpoints", model_path=default_base_SD15_name):
                     config.downloading_base_sd15_model()
                 comfy_params.update_params({"base_model": default_base_SD15_name})
                 if options["iclight_source_radio"] == 'CenterLight':
@@ -150,7 +150,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
 
     elif task_name == 'SD3m':
         comfy_params = ComfyTaskParams(default_params)
-        if not MODELSINFO.exists_model(catalog="checkpoints", model_path=default_params["base_model"]):
+        if not MODELS_INFO.exists_model(catalog="checkpoints", model_path=default_params["base_model"]):
             config.downloading_sd3_medium_model()
         if 'base_model_dtype' in default_params:
             comfy_params.delete_params(['base_model_dtype'])
@@ -170,7 +170,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
     
     elif task_name in ['HyDiT+', 'HyDiT']:
         comfy_params = ComfyTaskParams(default_params)
-        if not MODELSINFO.exists_model(catalog="checkpoints", model_path=default_params["base_model"]):
+        if not MODELS_INFO.exists_model(catalog="checkpoints", model_path=default_params["base_model"]):
             config.downloading_hydit_model()
         return ComfyTask(task_method, comfy_params)
     
@@ -184,7 +184,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
             model_nf4 = 'flux1-dev-bnb-nf4-v2.safetensors'
             model_hyp8 = 'flux-hyp8-Q5_K_M.gguf'
             base_model = model_nf4 if total_vram<=VRAM8G1 else model_dev
-            if not MODELSINFO.exists_model(catalog="checkpoints", model_path=base_model) and MODELSINFO.exists_model(catalog="checkpoints", model_path=model_hyp8):
+            if not MODELS_INFO.exists_model(catalog="checkpoints", model_path=base_model) and MODELS_INFO.exists_model(catalog="checkpoints", model_path=model_hyp8):
                 base_model = model_hyp8
                 default_params['steps'] = 12
             default_params['base_model'] = base_model  
@@ -195,7 +195,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
             else:
                 task_method = 'flux_base_nf4'
             comfy_params.delete_params(['clip_model', 'base_model_dtype', 'lora_1', 'lora_1_strength'])
-        elif 'fp8' in base_model.lower() and MODELSINFO.exists_model_key(base_model_key)  and MODELSINFO.get_model_key_info(base_model_key)["size"]/(1024*1024*1024)>15:
+        elif 'fp8' in base_model.lower() and MODELS_INFO.exists_model_key(base_model_key)  and MODELS_INFO.get_model_key_info(base_model_key)["size"]/(1024*1024*1024)>15:
             task_method = 'flux_base_fp8'
             if 'lora_1' in default_params:
                 task_method = 'flux_base2_fp8'
@@ -203,8 +203,8 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
         else:
             if 'clip_model' not in default_params or default_params['clip_model'] == 'auto':
                 clip_model = 't5xxl_fp16.safetensors' if total_vram>VRAM8G1 and total_ram>RAM32G1 else 't5xxl_fp8_e4m3fn.safetensors'
-                if not MODELSINFO.exists_model("clip", clip_model):
-                    if clip_model == 't5xxl_fp16.safetensors' and MODELSINFO.exists_model("clip", 't5xxl_fp8_e4m3fn.safetensors'):
+                if not MODELS_INFO.exists_model("clip", clip_model):
+                    if clip_model == 't5xxl_fp16.safetensors' and MODELS_INFO.exists_model("clip", 't5xxl_fp8_e4m3fn.safetensors'):
                         clip_model = 't5xxl_fp8_e4m3fn.safetensors'
                 comfy_params.update_params({"clip_model": clip_model})
             if 'base_model_dtype' not in default_params or default_params['base_model_dtype'] == 'auto':
@@ -267,7 +267,7 @@ def check_download_kolors_model(path_root):
     path_temp = os.path.join(path_root, 'temp')
     if not os.path.exists(path_temp):
         os.makedirs(path_temp)
-    if not MODELSINFO.exists_model_key(check_model_file[0]):
+    if not MODELS_INFO.exists_model_key(check_model_file[0]):
         load_file_from_url(
             url='https://huggingface.co/metercai/SimpleSDXL2/resolve/main/models_kolors_fp16_simpleai_0909.zip',
             model_dir=path_temp,
@@ -281,23 +281,23 @@ def check_download_kolors_model(path_root):
         os.remove(downfile)
         shutil.rmtree(path_temp)
     
-    if not MODELSINFO.exists_model_key(check_model_file[1]):
+    if not MODELS_INFO.exists_model_key(check_model_file[1]):
         path_dst = os.path.join(config.paths_diffusers[0], 'Kolors/unet/diffusion_pytorch_model.fp16.safetensors')
         path_org = os.path.join(config.path_unet, 'kolors_unet_fp16.safetensors')
         print(f'model file copy: {path_org} to {path_dst}')
         shutil.copy(path_org, path_dst)
 
-    if not MODELSINFO.exists_model_key(check_model_file[2]):
+    if not MODELS_INFO.exists_model_key(check_model_file[2]):
         path_dst = os.path.join(config.paths_diffusers[0], 'Kolors/vae/diffusion_pytorch_model.fp16.safetensors')
         path_org = os.path.join(config.path_vae, 'sdxl_fp16.vae.safetensors')
         print(f'model file copy: {path_org} to {path_dst}')
         shutil.copy(path_org, path_dst)
    
-    MODELSINFO.refresh_from_path()  
+    MODELS_INFO.refresh_from_path()  
     return
 
 def check_download_base_model(base_model):
-    if not MODELSINFO.exists_model(catalog="checkpoints", model_path=base_model):
+    if not MODELS_INFO.exists_model(catalog="checkpoints", model_path=base_model):
         load_file_from_url(
             url='https://huggingface.co/silveroxides/flux1-nf4-weights/resolve/main/{base_model}',
             model_dir=config.paths_checkpoints[0],
@@ -306,7 +306,7 @@ def check_download_base_model(base_model):
     return
 
 def check_download_flux_model(base_model, clip_model=None):
-    if not MODELSINFO.exists_model(catalog="checkpoints", model_path=base_model):
+    if not MODELS_INFO.exists_model(catalog="checkpoints", model_path=base_model):
         if 'nf4' in base_model:
             if 'schnell' in base_model:
                 load_file_from_url(
@@ -353,19 +353,19 @@ def check_download_flux_model(base_model, clip_model=None):
                 file_name=base_model
             )
     if clip_model:
-        if not MODELSINFO.exists_model(catalog="clip", model_path=clip_model):
+        if not MODELS_INFO.exists_model(catalog="clip", model_path=clip_model):
             load_file_from_url(
                 url=f'https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/{clip_model}',
                 model_dir=config.path_clip,
                 file_name=f'{clip_model}'
             )
-        if not MODELSINFO.exists_model(catalog="clip", model_path='clip_l.safetensors'):
+        if not MODELS_INFO.exists_model(catalog="clip", model_path='clip_l.safetensors'):
             load_file_from_url(
                 url=f'https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors',
                 model_dir=config.path_clip,
                 file_name=f'clip_l.safetensors'
             )
-        if not MODELSINFO.exists_model(catalog="vae", model_path='ae.safetensors'):
+        if not MODELS_INFO.exists_model(catalog="vae", model_path='ae.safetensors'):
             load_file_from_url(
                 url='https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/ae.safetensors',
                 model_dir=config.path_vae,
