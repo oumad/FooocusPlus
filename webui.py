@@ -660,9 +660,9 @@ with args_manager.gradio_root:
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
 
-                if (arg_manager.agrs.preselector==''):
+                if (arg_manager.args.preselector==''):
                     if (args_manager.args.language=='cn'):
-                        arg_manager.agrs.preselector=='Topbar Menu'
+                        arg_manager.args.preselector=='Topbar Menu'
                     else:
                         arg_manager.args.preselector=='Dropdown Menu'
 
@@ -673,10 +673,10 @@ with args_manager.gradio_root:
                         args_manager.args.preselector=='Dropdown Menu'
 
                 print()
-                print(f'Preselector: (arg_manager.args.preselector)')
+                print(f'Preselector: (args_manager.args.preselector)')
                 print()
                 if not args_manager.args.disable_preset_selection:
-                    if (arg_manager.agrs.preselector) == 'Topbar Menu':
+                    if (arg_manager.args.preselector) == 'Topbar Menu':
                         preset_selection = gr.Radio(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
