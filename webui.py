@@ -666,7 +666,7 @@ with args_manager.gradio_root:
                     else:
                         args_manager.args.preselector=='Dropdown Menu'
 
-                if (args_manager.agrs.preselector==''):
+                if (args_manager.args.preselector==''):
                     if (args_manager.args.language=='cn'):
                         args_manager.args.preselector=='Topbar Menu'
                     else:
