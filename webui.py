@@ -656,9 +656,9 @@ with args_manager.gradio_root:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-                preselector=enhanced_parameters.set_preselector
+#                preselector=enhanced_parameters.set_preselector
                 print()
-                print(f'Preselector: {preselector}')
+  #              print(f'Preselector: {preselector}')
                 print()
                 if not args_manager.args.disable_preset_selection:
                     if preselector == 'Topbar Menu':
