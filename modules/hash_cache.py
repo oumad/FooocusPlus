@@ -1,5 +1,6 @@
 import json
 import os
+import common
 from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import cpu_count
 import args_manager
@@ -23,7 +24,7 @@ def sha256_from_cache(filepath):
         if 'kolors_' in filepath:
             hash_value = sha256_filename(filepath)            
         else:
-            hash_value = args_manager.modelsinfo.get_file_muid(filepath)
+            hash_value = common.MODELS_INFO.get_file_muid(filepath)
             if not hash_value:
                 print(f"[Cache] Calculating sha256 for {filepath}")
                 hash_value = sha256(filepath)

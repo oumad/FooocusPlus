@@ -54,7 +54,7 @@ const zhCN = {
     "Too many thumbnails, have closed the display": "模型缩略图太多啦，为您关闭了显示",
     // selector
     "Empty All": "清空所有",
-    "🔎 Type here to search styles ...": "🔎 在此处输入以搜索样式 ...",
+    "🔎 Type here to search styles...": "🔎 在此处输入以搜索样式...",
     // account
     "Loading UserInfo...": "正在获取用户信息...",
     "Please set the APIKEY first": "请先设置APIKEY",

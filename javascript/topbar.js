@@ -109,7 +109,8 @@ function showSysMsg(message, theme) {
     sysmsg.style.display = "block";
 }
 
-function initPresetPreviewOverlay() {
+function initPresetPreviewOverlay(language) {
+    if (language != "cn") return;
     let overlayVisible = false;
     const samplesPath = document.querySelector("meta[name='preset-samples-path']").getAttribute("content")
     const overlay = document.createElement('div');
@@ -252,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     document.body.appendChild(sysmsg);
-    initPresetPreviewOverlay();
+    initPresetPreviewOverlay("");
     
 });
 

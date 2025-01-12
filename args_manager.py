@@ -1,10 +1,6 @@
 import os
 import ldm_patched.modules.args_parser as args_parser
 
-gradio_root = None
-modelsinfo = None
-root = os.path.dirname(os.path.abspath(__file__))
-
 args_parser.parser.add_argument("--preset", type=str, default='default', help="Apply specified UI preset.")
 args_parser.parser.add_argument("--disable-preset-selection", action='store_true',
                                 help="Disables preset selection in Gradio.")
@@ -23,7 +19,7 @@ args_parser.parser.add_argument("--disable-offload-from-vram", action="store_tru
 
 args_parser.parser.add_argument("--theme", type=str, help="Launches the UI with light or dark theme", default='dark')
 
-args_parser.parser.add_argument("--preselector", type=str, help="Location of Preset Selector", default='Topbar Menu')
+args_parser.parser.add_argument("--preselector", type=str, help="Location of Preset Selector", default='')
 
 args_parser.parser.add_argument("--disable-image-log", action='store_true',
                                 help="Prevent writing images and logs to the outputs folder.")

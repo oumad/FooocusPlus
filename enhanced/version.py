@@ -32,7 +32,7 @@ def get_branch():
         repo = pygit2.Repository(os.path.abspath(os.path.dirname(__file__)))
         branch = repo.head.shorthand
         if branch=="main":
-            branch = "Fooocus"
+            branch = "FooocusPlus"
         commit_id = f'{repo.head.target}'[:7]
     return branch
 

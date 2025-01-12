@@ -10,6 +10,7 @@ import args_manager
 import copy
 import re
 import random
+import common
 import modules.constants as constants
 import modules.meta_parser as meta_parser
 import enhanced.all_parameters as ads
@@ -23,7 +24,7 @@ from enhanced.simpleai import comfyd
 from modules.model_loader import load_file_from_url
 
 # hard-coded limit to topbar preset display
-# value inherited from SimpeSDXL2 was 14
+# the value inherited from SimpeSDXL2 was 14
 # use preset dropdown for no limits
 topbar_limit = 16
 
@@ -74,9 +75,9 @@ def is_models_file_absent(preset_name):
             if 'Flux' in preset_name and config_preset["default_model"]== 'auto':
                 config_preset["default_model"] = comfy_task.get_default_base_Flux_name('+' in preset_name)
             model_key = f'checkpoints/{config_preset["default_model"]}'
-            return not args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
+            return not common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
         if config_preset["default_refiner"] and config_preset["default_refiner"] != 'None':
-           return not args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_refiner"])
+           return not common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=config_preset["default_refiner"])
     return False
 
 
@@ -219,6 +220,7 @@ function(system_params) {
         set_language(lang);
     }
     if (lang=="cn") {
+        _js=initPresetPreviewOverlay(lang);
         let preset_url = system_params["__preset_url"];
         if (preset_url!=null) {
             set_iframe_src(theme,lang,preset_url);
@@ -361,7 +363,7 @@ def sync_message(state_params):
     state_params.update({"__message":system_message})
     return state_params
 
-preset_down_note_info = 'The preset package being loaded has model files that need to be downloaded, and it will take some time to wait...'
+preset_down_note_info = 'Loading model files...'
 def check_absent_model(bar_button, state_params):
     #print(f'check_absent_model,state_params:{state_params}')
     state_params.update({'bar_button': bar_button})
@@ -410,14 +412,14 @@ def reset_layout_params(prompt, negative_prompt, state_params, is_generating, in
     model_dtype = preset_prepared.get('engine', {}).get('backend_params', {}).get('base_model_dtype', '')
     if engine == 'SD3m' and  model_dtype == 'auto':
         base_model = comfy_task.get_default_base_SD3m_name()
-        if args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=base_model):
+        if common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=base_model):
             default_model = base_model
             preset_prepared['base_model'] = base_model
             checkpoint_downloads = {}
     if engine == 'Flux' and default_model=='auto':
         default_model = comfy_task.get_default_base_Flux_name('FluxS' in preset)
         preset_prepared['base_model'] = default_model
-        if args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=default_model):
+        if common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=default_model):
             checkpoint_downloads = {}
         else:
             checkpoint_downloads = {default_model: comfy_task.flux_model_urls[default_model]}
@@ -443,9 +445,9 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         return default_model, checkpoint_downloads
 
     if not args.always_download_new_model:
-        if not os.path.isfile(args_manager.modelsinfo.get_file_path_by_name('checkpoints', default_model)):
+        if not os.path.isfile(common.MODELS_INFO.get_file_path_by_name('checkpoints', default_model)):
             for alternative_model_name in previous_default_models:
-                if os.path.isfile(args_manager.modelsinfo.get_file_path_by_name('checkpoints', alternative_model_name)):
+                if os.path.isfile(common.MODELS_INFO.get_file_path_by_name('checkpoints', alternative_model_name)):
                     print(f'You do not have [{default_model}] but you have [{alternative_model_name}].')
                     print(f'Fooocus will use [{alternative_model_name}] to avoid downloading new models.')
                     print('Use --always-download-new-model to avoid fallback and always get new models.')
@@ -454,12 +456,12 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
                     break
 
     for file_name, url in checkpoint_downloads.items():
-        model_dir = os.path.dirname(args_manager.modelsinfo.get_file_path_by_name('checkpoints', file_name))
+        model_dir = os.path.dirname(common.MODELS_INFO.get_file_path_by_name('checkpoints', file_name))
         load_file_from_url(url=url, model_dir=model_dir, file_name=os.path.basename(file_name))
     for file_name, url in embeddings_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_embeddings, file_name=file_name)
     for file_name, url in lora_downloads.items():
-        model_dir = os.path.dirname(args_manager.modelsinfo.get_file_path_by_name('loras', file_name))
+        model_dir = os.path.dirname(common.MODELS_INFO.get_file_path_by_name('loras', file_name))
         load_file_from_url(url=url, model_dir=model_dir, file_name=os.path.basename(file_name))
     for file_name, url in vae_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_vae, file_name=file_name)

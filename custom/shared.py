@@ -1,7 +1,7 @@
 import os
 import sys
-import args_manager
 import modules.config as config
+from launch import ROOT
 
 paths_checkpoints = config.paths_checkpoints
 paths_loras = config.paths_loras
@@ -14,14 +14,12 @@ path_clip_vision = config.path_clip_vision
 path_fooocus_expansion = config.path_fooocus_expansion
 paths_llms = config.paths_llms
 path_outputs = config.path_outputs
-
-path_root = args_manager.root
+path_root = ROOT
 
 def init_module(file_path):
     module_root = os.path.dirname(file_path)
     sys.path.append(module_root)
     module_name = os.path.relpath(module_root, os.path.dirname(os.path.abspath(__file__)))
-    print(f'[{module_name}] The customized module:{module_name} is initializing ...') 
+    print(f'[{module_name}] The customized module:{module_name} is initializing...') 
     return module_name, module_root
-
 

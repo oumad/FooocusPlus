@@ -5,7 +5,7 @@ root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 os.chdir(root)
 
-print('Loading FooocusPlus...')
+print('Welcome to FooocusPlus...')
 
 try:
     import pygit2
