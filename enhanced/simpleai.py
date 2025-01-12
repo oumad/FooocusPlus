@@ -13,7 +13,7 @@ modelsinfo_filename = 'models_info.json'
 def init_modelsinfo(models_root, path_map):
     global modelsinfo_filename
     models_info_path = os.path.abspath(os.path.join(models_root, modelsinfo_filename))
-    if not launch.MODELS_INFO:
-        launch.MODELS_INFO = ModelsInfo(models_info_path, path_map)
-    return launch.MODELS_INFO
+    if not launch.MODELSINFO:
+        launch.MODELSINFO = ModelsInfo(models_info_path, path_map)
+    return launch.MODELSINFO
 
