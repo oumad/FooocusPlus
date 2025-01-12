@@ -6,7 +6,6 @@ import modules.config as config
 import modules.flags
 import modules.sdxl_styles
 import numbers
-import args_manager
 import copy
 import re
 import random
@@ -20,6 +19,7 @@ import enhanced.superprompter as superprompter
 import enhanced.comfy_task as comfy_task
 from args_manager import args
 from enhanced.simpleai import comfyd
+from launch import MODELSINFO
 from modules.model_loader import load_file_from_url
 
 # hard-coded limit to topbar preset display
@@ -74,9 +74,9 @@ def is_models_file_absent(preset_name):
             if 'Flux' in preset_name and config_preset["default_model"]== 'auto':
                 config_preset["default_model"] = comfy_task.get_default_base_Flux_name('+' in preset_name)
             model_key = f'checkpoints/{config_preset["default_model"]}'
-            return not args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
+            return not MODELSINFO.exists_model(catalog="checkpoints", model_path=config_preset["default_model"])
         if config_preset["default_refiner"] and config_preset["default_refiner"] != 'None':
-           return not args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=config_preset["default_refiner"])
+           return not MODELSINFO.exists_model(catalog="checkpoints", model_path=config_preset["default_refiner"])
     return False
 
 
@@ -123,11 +123,11 @@ def get_system_message():
     f_log_path = os.path.abspath("./update_log.md")
     s_log_path = os.path.abspath("./simplesdxl_log.md")
     if len(update_msg_f)>0:
-        body_f = f'<b id="update_f">[Fooocus更新信息]</b>: {update_msg_f}<a href="{args_manager.args.webroot}/file={f_log_path}">更多>></a>   '
+        body_f = f'<b id="update_f">[Fooocus更新信息]</b>: {update_msg_f}<a href="{args.webroot}/file={f_log_path}">更多>></a>   '
     else:
         body_f = '<b id="update_f"> </b>'
     if len(update_msg_s)>0:
-        body_s = f'<b id="update_s">[系统消息 - 已更新内容]</b>: {update_msg_s}<a href="{args_manager.args.webroot}/file={s_log_path}">更多>></a>'
+        body_s = f'<b id="update_s">[系统消息 - 已更新内容]</b>: {update_msg_s}<a href="{args.webroot}/file={s_log_path}">更多>></a>'
     else:
          body_s = '<b id="update_s"> </b>'
     import mistune
@@ -234,12 +234,12 @@ def init_nav_bars(state_params, request: gr.Request):
 #    print(f'request.headers:{request.headers}')
     if "__lang" not in state_params.keys():
 #        if 'accept-language' in request.headers and 'zh-CN' in request.headers['accept-language']:
-#            args_manager.args.language = 'cn'
+#            args.language = 'cn'
 #        else:
 #            print(f'[Topbar] No accept-language in request.headers:{request.headers}')
-        state_params.update({"__lang": args_manager.args.language}) 
+        state_params.update({"__lang": args.language}) 
     if "__theme" not in state_params.keys():
-        state_params.update({"__theme": args_manager.args.theme})
+        state_params.update({"__theme": args.theme})
     if "__preset" not in state_params.keys():
         state_params.update({"__preset": config.preset})
     if "__session" not in state_params.keys() and "cookie" in request.headers.keys():
@@ -250,7 +250,7 @@ def init_nav_bars(state_params, request: gr.Request):
     if "__is_mobile" not in state_params.keys():
         state_params.update({"__is_mobile": True if user_agent.find("Mobile")>0 and user_agent.find("AppleWebKit")>0 else False})
     if "__webpath" not in state_params.keys():
-        state_params.update({"__webpath": f'{args_manager.args.webroot}/file={os.getcwd()}'})
+        state_params.update({"__webpath": f'{args.webroot}/file={os.getcwd()}'})
     if "__max_per_page" not in state_params.keys():
         if state_params["__is_mobile"]:
             state_params.update({"__max_per_page": 9})
@@ -286,9 +286,9 @@ def get_preset_inc_url(preset_name='blank'):
     preset_inc_path = os.path.abspath(f'./presets/html/{preset_name}.html')
     blank_inc_path = os.path.abspath(f'./presets/html/blank.inc.html')
     if os.path.exists(preset_inc_path):
-        return f'{args_manager.args.webroot}/file={preset_inc_path}'
+        return f'{args.webroot}/file={preset_inc_path}'
     else:
-        return f'{args_manager.args.webroot}/file={blank_inc_path}'
+        return f'{args.webroot}/file={blank_inc_path}'
 
 def refresh_nav_bars(state_params):
     state_params.update({"__nav_name_list": get_preset_name_list()})
@@ -411,14 +411,14 @@ def reset_layout_params(prompt, negative_prompt, state_params, is_generating, in
     model_dtype = preset_prepared.get('engine', {}).get('backend_params', {}).get('base_model_dtype', '')
     if engine == 'SD3m' and  model_dtype == 'auto':
         base_model = comfy_task.get_default_base_SD3m_name()
-        if args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=base_model):
+        if MODELSINFO.exists_model(catalog="checkpoints", model_path=base_model):
             default_model = base_model
             preset_prepared['base_model'] = base_model
             checkpoint_downloads = {}
     if engine == 'Flux' and default_model=='auto':
         default_model = comfy_task.get_default_base_Flux_name('FluxS' in preset)
         preset_prepared['base_model'] = default_model
-        if args_manager.modelsinfo.exists_model(catalog="checkpoints", model_path=default_model):
+        if MODELSINFO.exists_model(catalog="checkpoints", model_path=default_model):
             checkpoint_downloads = {}
         else:
             checkpoint_downloads = {default_model: comfy_task.flux_model_urls[default_model]}
@@ -444,9 +444,9 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         return default_model, checkpoint_downloads
 
     if not args.always_download_new_model:
-        if not os.path.isfile(args_manager.modelsinfo.get_file_path_by_name('checkpoints', default_model)):
+        if not os.path.isfile(MODELSINFO.get_file_path_by_name('checkpoints', default_model)):
             for alternative_model_name in previous_default_models:
-                if os.path.isfile(args_manager.modelsinfo.get_file_path_by_name('checkpoints', alternative_model_name)):
+                if os.path.isfile(MODELSINFO.get_file_path_by_name('checkpoints', alternative_model_name)):
                     print(f'You do not have [{default_model}] but you have [{alternative_model_name}].')
                     print(f'Fooocus will use [{alternative_model_name}] to avoid downloading new models.')
                     print('Use --always-download-new-model to avoid fallback and always get new models.')
@@ -455,12 +455,12 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
                     break
 
     for file_name, url in checkpoint_downloads.items():
-        model_dir = os.path.dirname(args_manager.modelsinfo.get_file_path_by_name('checkpoints', file_name))
+        model_dir = os.path.dirname(MODELSINFO.get_file_path_by_name('checkpoints', file_name))
         load_file_from_url(url=url, model_dir=model_dir, file_name=os.path.basename(file_name))
     for file_name, url in embeddings_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_embeddings, file_name=file_name)
     for file_name, url in lora_downloads.items():
-        model_dir = os.path.dirname(args_manager.modelsinfo.get_file_path_by_name('loras', file_name))
+        model_dir = os.path.dirname(MODELSINFO.get_file_path_by_name('loras', file_name))
         load_file_from_url(url=url, model_dir=model_dir, file_name=os.path.basename(file_name))
     for file_name, url in vae_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_vae, file_name=file_name)
