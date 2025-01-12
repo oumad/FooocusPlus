@@ -2,8 +2,7 @@ import json
 import os
 from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import cpu_count
-from args_manager import args
-from launch import MODELSINFO
+import args_manager
 from modules.util import sha256, HASH_SHA256_LENGTH, get_file_from_folder_list
 
 hash_cache_filename = 'hash_cache.txt'
@@ -24,7 +23,7 @@ def sha256_from_cache(filepath):
         if 'kolors_' in filepath:
             hash_value = sha256_filename(filepath)            
         else:
-            hash_value = MODELSINFO.get_file_muid(filepath)
+            hash_value = args_manager.modelsinfo.get_file_muid(filepath)
             if not hash_value:
                 print(f"[Cache] Calculating sha256 for {filepath}")
                 hash_value = sha256(filepath)
@@ -74,8 +73,8 @@ def save_cache_to_file(filename=None, hash_value=None):
 def init_cache(model_filenames, paths_checkpoints, lora_filenames, paths_loras):
     load_cache_from_file()
 
-    if args.rebuild_hash_cache:
-        max_workers = args.rebuild_hash_cache if args.rebuild_hash_cache > 0 else cpu_count()
+    if args_manager.args.rebuild_hash_cache:
+        max_workers = args_manager.args.rebuild_hash_cache if args_manager.args.rebuild_hash_cache > 0 else cpu_count()
         rebuild_cache(lora_filenames, model_filenames, paths_checkpoints, paths_loras, max_workers)
 
     # write cache to file again for sorting and cleanup of invalid cache entries
