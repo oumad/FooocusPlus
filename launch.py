@@ -9,6 +9,9 @@ print('[System ARGV] ' + str(sys.argv))
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
+gradio_root = None
+MODELSINFO = None
+
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
