@@ -183,7 +183,7 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
         False, inpaint_engine_version, 1.0, 0.618
     ]
 
-def preset_selector():
+def preset_selector()
     print()
     print(f'Preselector: {args_manager.args.preselector}')
     print()
