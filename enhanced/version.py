@@ -19,7 +19,7 @@ def get_simplesdxl_ver():
         else:
             line = '# 2023-12-20'
         date = line.split(' ')[1].split('-')
-        simplesdxl_ver = f'v{date[0]}{date[1]}{date[2]}'
+        simplesdxl_ver = f'{date[0]}{date[1]}{date[2]}'
         if commit_id:
             simplesdxl_ver += f'.{commit_id}'
     return simplesdxl_ver
@@ -32,7 +32,7 @@ def get_branch():
         repo = pygit2.Repository(os.path.abspath(os.path.dirname(__file__)))
         branch = repo.head.shorthand
         if branch=="main":
-            branch = "Fooocus"
+            branch = "FooocusPlus"
         commit_id = f'{repo.head.target}'[:7]
     return branch
 
