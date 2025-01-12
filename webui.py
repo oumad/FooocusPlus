@@ -660,11 +660,11 @@ with args_manager.gradio_root:
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
 
-                if (arg_manager.args.preselector==''):
+                if (args_manager.args.preselector==''):
                     if (args_manager.args.language=='cn'):
-                        arg_manager.args.preselector=='Topbar Menu'
+                        args_manager.args.preselector=='Topbar Menu'
                     else:
-                        arg_manager.args.preselector=='Dropdown Menu'
+                        args_manager.args.preselector=='Dropdown Menu'
 
                 if (args_manager.agrs.preselector==''):
                     if (args_manager.args.language=='cn'):
