@@ -659,19 +659,19 @@ with args_manager.gradio_root:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-<<<<<<< HEAD
+
                 if (arg_manager.agrs.preselector==''):
                     if (args_manager.args.language=='cn'):
                         arg_manager.agrs.preselector=='Topbar Menu'
                     else:
                         arg_manager.args.preselector=='Dropdown Menu'
-=======
+
                 if (args_manager.agrs.preselector==''):
                     if (args_manager.args.language=='cn'):
                         args_manager.args.preselector=='Topbar Menu'
                     else:
                         args_manager.args.preselector=='Dropdown Menu'
->>>>>>> parent of dc594bb7 (Update webui.py And another typo)
+
                 print()
                 print(f'Preselector: (arg_manager.args.preselector)')
                 print()
