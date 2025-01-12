@@ -7,7 +7,7 @@ print('[System ARGV] ' + str(sys.argv))
 
 # these globals are imported by other modules
 # and sometimes changed by them
-# for example: from launch import GRADIO_ROOT
+# for example: "from launch import GRADIO_ROOT"
 GRADIO_ROOT = None
 MODELS_INFO = None
 # ROOT is a true constant, imported to other modules
