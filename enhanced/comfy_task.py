@@ -148,9 +148,8 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
                 comfy_params.delete_params(['denoise'])
                 return ComfyTask('layerdiffuse_cond', comfy_params, images)
 
-    elif task_name == 'SD3m':
-        comfy_params = ComfyTaskParams(default_params)
-        if not common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=default_params["base_model"]):
+    elif task_name == 'SD3x':
+        if not modelsinfo.exists_model(catalog="checkpoints", model_path=default_params["base_model"]):
             config.downloading_sd3_medium_model()
         if 'base_model_dtype' in default_params:
             comfy_params.delete_params(['base_model_dtype'])
