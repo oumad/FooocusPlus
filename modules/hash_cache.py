@@ -3,7 +3,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import cpu_count
 from args_manager import args
-from launch import MODELSINFO
+from launch import MODELS_INFO
 from modules.util import sha256, HASH_SHA256_LENGTH, get_file_from_folder_list
 
 hash_cache_filename = 'hash_cache.txt'
@@ -24,7 +24,7 @@ def sha256_from_cache(filepath):
         if 'kolors_' in filepath:
             hash_value = sha256_filename(filepath)            
         else:
-            hash_value = MODELSINFO.get_file_muid(filepath)
+            hash_value = MODELS_INFO.get_file_muid(filepath)
             if not hash_value:
                 print(f"[Cache] Calculating sha256 for {filepath}")
                 hash_value = sha256(filepath)
