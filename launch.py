@@ -5,12 +5,14 @@ import ldm_patched
 
 print('[System ARGV] ' + str(sys.argv))
 
-# the ROOT constant is used by reference from other modules
+# These globals are imported by several functions
+# ROOT is used as a true constant but the others
+# are subject to change
+GRADIO_ROOT = None
+MODELS_INFO = None
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
-gradio_root = None
-MODELSINFO = None
 
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
