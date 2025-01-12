@@ -660,12 +660,16 @@ with GRADIO_ROOT:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-                preselector=enhanced_parameters.set_preselector
+                if (arg_manager.agrs.preselector==''):
+                    if (args_manager.args.language=='cn'):
+                        arg_manager.agrs.preselector=='Topbar Menu'
+                    else:
+                        arg_manager.args.preselector=='Dropdown Menu'
                 print()
-                print(f'Preselector: {preselector}')
+                print(f'Preselector: (arg_manager.args.preselector)')
                 print()
                 if not args_manager.args.disable_preset_selection:
-                    if preselector == 'Topbar Menu':
+                    if (arg_manager.agrs.preselector) == 'Topbar Menu':
                         preset_selection = gr.Radio(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
@@ -1047,9 +1051,9 @@ with GRADIO_ROOT:
                 with gr.Row():
                     language_ui=args_manager.args.language
                     if args_manager.args.disable_preset_selection:
-                        preselector = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
+                        args_manager.args.preselector = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
-                        preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
+                        args_manager.args.preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
