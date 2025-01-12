@@ -660,29 +660,29 @@ with args_manager.gradio_root:
                 print()
   #              print(f'Preselector: {preselector}')
                 print()
-                if not args_manager.args.disable_preset_selection:
-                    if preselector == 'Topbar Menu':
-                        preset_selection = gr.Radio(label='Preset',
-                            visible=True,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset,
-                            interactive=True)
-                        preset_selection = gr.Dropdown(label='Preset',
-                            visible=False,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset if args_manager.args.preset else "initial",
-                            interactive=False)
-                    else:
-                        preset_selection = gr.Radio(label='Preset',
-                            visible=False,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset,
-                            interactive=False)
-                        preset_selection = gr.Dropdown(label='Preset',
-                            visible=True,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset if args_manager.args.preset else "initial",
-                            interactive=True)
+ #               if not args_manager.args.disable_preset_selection:
+#                    if preselector == 'Topbar Menu':
+ #                       preset_selection = gr.Radio(label='Preset',
+  #                          visible=True,
+   #                         choices=modules.config.available_presets,
+    #                        value=args_manager.args.preset,
+     #                       interactive=True)
+      #                  preset_selection = gr.Dropdown(label='Preset',
+       #                     visible=False,
+        #                    choices=modules.config.available_presets,
+         #                   value=args_manager.args.preset if args_manager.args.preset else "initial",
+#                            interactive=False)
+#                    else:
+#                        preset_selection = gr.Radio(label='Preset',
+#                            visible=False,
+#                            choices=modules.config.available_presets,
+#                            value=args_manager.args.preset,
+#                            interactive=False)
+#                        preset_selection = gr.Dropdown(label='Preset',
+#                            visible=True,
+#                            choices=modules.config.available_presets,
+#                            value=args_manager.args.preset if args_manager.args.preset else "initial",
+#                            interactive=True)
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                             choices=flags.Performance.list(),
