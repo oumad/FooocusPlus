@@ -666,7 +666,7 @@ with GRADIO_ROOT:
                     else:
                         args_manager.args.preselector='Dropdown Menu'
                 print()
-                print(f'Preselector: (args_manager.args.preselector)')
+                print(f'Preselector: {args_manager.args.preselector}')
                 print()
                 if not args_manager.args.disable_preset_selection:
                     if (args_manager.args.preselector) == 'Topbar Menu':
