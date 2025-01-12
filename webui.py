@@ -183,6 +183,36 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
         False, inpaint_engine_version, 1.0, 0.618
     ]
 
+def preset_selector()
+    print()
+    print(f'Preselector: {args_manager.args.preselector}')
+    print()
+    if not args_manager.args.disable_preset_selection:
+        if (args_manager.args.preselector) == 'Topbar Menu':
+            preset_selection = gr.Radio(label='Preset',
+                visible=True,
+                choices=modules.config.available_presets,
+                value=args_manager.args.preset,
+                interactive=True)
+            preset_selection = gr.Dropdown(label='Preset',
+                visible=False,
+                choices=modules.config.available_presets,
+                value=args_manager.args.preset if args_manager.args.preset else "initial",
+                interactive=False)
+        else:
+            preset_selection = gr.Radio(label='Preset',
+                visible=False,
+                choices=modules.config.available_presets,
+                value=args_manager.args.preset,
+                interactive=False)
+            preset_selection = gr.Dropdown(label='Preset',
+                visible=True,
+                choices=modules.config.available_presets,
+                value=args_manager.args.preset if args_manager.args.preset else "initial",
+                interactive=True)
+    return
+
+
 
 reload_javascript()
 
@@ -665,32 +695,7 @@ with GRADIO_ROOT:
                         args_manager.args.preselector='Topbar Menu'
                     else:
                         args_manager.args.preselector='Dropdown Menu'
-                print()
-                print(f'Preselector: {args_manager.args.preselector}')
-                print()
-                if not args_manager.args.disable_preset_selection:
-                    if (args_manager.args.preselector) == 'Topbar Menu':
-                        preset_selection = gr.Radio(label='Preset',
-                            visible=True,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset,
-                            interactive=True)
-                        preset_selection = gr.Dropdown(label='Preset',
-                            visible=False,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset if args_manager.args.preset else "initial",
-                            interactive=False)
-                    else:
-                        preset_selection = gr.Radio(label='Preset',
-                            visible=False,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset,
-                            interactive=False)
-                        preset_selection = gr.Dropdown(label='Preset',
-                            visible=True,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset if args_manager.args.preset else "initial",
-                            interactive=True)
+                preset_selector()
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                             choices=flags.Performance.list(),
@@ -1054,6 +1059,7 @@ with GRADIO_ROOT:
                         args_manager.args.preselector = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
                         args_manager.args.preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
+                    preset_selector()
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
@@ -1323,7 +1329,7 @@ with GRADIO_ROOT:
 
         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
         nav_bars = [bar_title] + bar_buttons
-        protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
+#        protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
         generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
             .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
             .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
