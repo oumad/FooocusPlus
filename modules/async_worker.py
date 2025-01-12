@@ -225,7 +225,7 @@ def worker():
     import random
     import copy
     import cv2
-    import launch
+    import common
     import modules.default_pipeline as pipeline
     import modules.core as core
     import modules.flags as flags
@@ -259,7 +259,7 @@ def worker():
     print(f'Started worker with PID {pid}')
 
     try:
-        async_gradio_app = launch.GRADIO_ROOT
+        async_gradio_app = common.GRADIO_ROOT
         flag = f'''App started successful. Use the app with {str(async_gradio_app.local_url)} or {str(async_gradio_app.server_name)}:{str(async_gradio_app.server_port)}'''
         if async_gradio_app.share:
             flag += f''' or {async_gradio_app.share_url}'''
