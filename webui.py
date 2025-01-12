@@ -669,7 +669,7 @@ with GRADIO_ROOT:
                 print(f'Preselector: (args_manager.args.preselector)')
                 print()
                 if not args_manager.args.disable_preset_selection:
-                    if (args_manager.agrs.preselector) == 'Topbar Menu':
+                    if (args_manager.args.preselector) == 'Topbar Menu':
                         preset_selection = gr.Radio(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
