@@ -5,11 +5,8 @@ import ldm_patched
 
 print('[System ARGV] ' + str(sys.argv))
 
-# These globals are imported by several functions
-# ROOT is used as a true constant but the others
-# are subject to change
-GRADIO_ROOT = None
-MODELS_INFO = None
+# ROOT is used as a constant and
+# referenced by several modules
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
