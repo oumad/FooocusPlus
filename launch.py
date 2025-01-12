@@ -5,11 +5,10 @@ import ldm_patched
 
 print('[System ARGV] ' + str(sys.argv))
 
-# these globals are imported to other modules
-# for example: from launch import GRADIO_ROOT
+# these constants are imported to other modules
+# for example: from launch import ROOT
 GRADIO_ROOT = None
 MODELSINFO = None
-# ROOT is a true constant, imported to other modules
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
