@@ -1329,7 +1329,7 @@ with GRADIO_ROOT:
 
         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
         nav_bars = [bar_title] + bar_buttons
-        protections = [background_theme]
+        protections = [prompt, random_button, translator_button, super_prompter, background_theme, image_tools_checkbox] + nav_bars[1:]
         generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
             .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
             .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
