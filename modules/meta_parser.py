@@ -12,7 +12,7 @@ import fooocusplus_version
 import enhanced.version
 import modules.config
 import modules.sdxl_styles
-from args_manager import modelsinfo
+from launch import MODELSINFO
 from modules.flags import MetadataScheme, Performance, Steps, task_class_mapping, get_taskclass_by_fullname, default_class_params, scheduler_list, sampler_list
 from modules.flags import SAMPLERS, CIVITAI_NO_KARRAS
 from modules.util import quote, unquote, extract_styles_from_prompt, is_json, sha256
@@ -345,7 +345,7 @@ def get_sha256(filepath):
     if not os.path.isfile(filepath):
         return ''
     if filepath not in hash_cache:
-        filehash = modelsinfo.get_file_muid(filepath)
+        filehash = MODELSINFO.get_file_muid(filepath)
         if not filehash:
             filehash = sha256(filepath)
         hash_cache[filepath] = filehash
@@ -427,19 +427,19 @@ class MetadataParser(ABC):
         self.base_model_name = Path(base_model_name).stem
 
         if base_model_name not in ['', 'None']:
-            base_model_path = modelsinfo.get_model_filepath('checkpoints', base_model_name)
-            self.base_model_hash = modelsinfo.get_file_muid(base_model_path)
+            base_model_path = MODELSINFO.get_model_filepath('checkpoints', base_model_name)
+            self.base_model_hash = MODELSINFO.get_file_muid(base_model_path)
 
         if refiner_model_name not in ['', 'None']:
             self.refiner_model_name = Path(refiner_model_name).stem
-            refiner_model_path = modelsinfo.get_model_filepath('checkpoints', refiner_model_name)
-            self.refiner_model_hash = modelsinfo.get_file_muid(refiner_model_path)
+            refiner_model_path = MODELSINFO.get_model_filepath('checkpoints', refiner_model_name)
+            self.refiner_model_hash = MODELSINFO.get_file_muid(refiner_model_path)
 
         self.loras = []
         for (lora_name, lora_weight) in loras:
             if lora_name != 'None':
-                lora_path = modelsinfo.get_model_filepath('loras', lora_name)
-                lora_hash = modelsinfo.get_file_muid(lora_path)
+                lora_path = MODELSINFO.get_model_filepath('loras', lora_name)
+                lora_hash = MODELSINFO.get_file_muid(lora_path)
                 self.loras.append((Path(lora_name).stem, lora_weight, lora_hash))
         self.vae_name = Path(vae_name).stem
         if styles_definition != 'None':
