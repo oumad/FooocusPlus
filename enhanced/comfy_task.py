@@ -40,6 +40,18 @@ def is_highlevel_device():
 
 default_base_SD15_name = 'realisticVisionV60B1_v51VAE.safetensors'
 default_base_SD3m_name_list = ['sd3_medium_incl_clips.safetensors', 'sd3_medium_incl_clips_t5xxlfp8.safetensors', 'sd3_medium_incl_clips_t5xxlfp16.safetensors']
+default_base_SD3x_name_list = ['stableDiffusion35_large.safetensors', 'sd3_medium_incl_clips_t5xxlfp8.safetensors', 'sd3_medium_incl_clips_t5xxlfp16.safetensors']
+
+def get_default_base_SD3x_name():
+    total_vram = ldm_patched.modules.model_management.get_vram()
+    total_ram = ldm_patched.modules.model_management.get_sysram()
+    dtype = 0 if total_vram<VRAM8G and total_ram<RAM16G\
+        else 1 if total_vram<VRAM16G and total_ram<RAM32G else 2
+    for i in range(dtype, -1 ,-1):
+        sd3name = default_base_SD3x_name_list[i]
+        if common.MODELS_INFO.exists_model_key(f'checkpoints/{sd3name}'):
+            return sd3name
+    return default_base_SD3x_name_list[0]
 
 def get_default_base_SD3m_name():
     total_vram = ldm_patched.modules.model_management.get_vram()
