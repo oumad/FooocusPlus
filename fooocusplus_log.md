@@ -1,3 +1,6 @@
+# 0.9.4
+
+
 # 0.9.1 to 0.9.3
 
 * Resolved all security issues except those associated with GroundingDINO and RemBG,
