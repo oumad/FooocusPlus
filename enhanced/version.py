@@ -18,7 +18,7 @@ def get_fooocusplus_ver():
                     line = log_file.readline().strip()                
         else:
             line = '0.9.0'
-        fooocusplus_ver = line
+        fooocusplus_ver = line.strip('# ')
         if commit_id:
             fooocusplus_ver += f'.{commit_id}'
     return fooocusplus_ver
