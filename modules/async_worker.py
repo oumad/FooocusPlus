@@ -185,7 +185,7 @@ class AsyncTask:
             self.task_method = self.layer_method
         self.task_class_full = task_class_mapping[self.task_class]
       
-        if self.task_class in ['Kolors+', 'Kolors', 'Flux', 'HyDiT+', 'SD3m'] and self.task_name not in ['Kolors+', 'Flux', 'HyDiT+', 'SD3m']:
+        if self.task_class in ['Kolors+', 'Kolors', 'Flux', 'HyDiT+', 'SD3x'] and self.task_name not in ['Kolors+', 'Flux', 'HyDiT+', 'SD3x']:
             self.task_name = self.task_class
         if len(self.loras) > 0:
             if self.task_name in ['Kolors+', 'Flux']:
@@ -237,8 +237,7 @@ def worker():
     import extras.ip_adapter as ip_adapter
     import extras.face_crop
     import fooocus_version
-    import fooocusplus_version
-    import enhanced.version
+    import enhanced.version as version
     import enhanced.wildcards as wildcards
     
     from extras.censor import default_censor
@@ -483,7 +482,7 @@ def worker():
             d.append(('Backend Engine', 'backend_engine', async_task.task_class_full))
             d.append(('Metadata Scheme', 'metadata_scheme',
                       async_task.metadata_scheme.value if async_task.save_metadata_to_images else async_task.save_metadata_to_images))
-            d.append(('Version', 'version', f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'))
+            d.append(('Version', 'version', f'Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}, FooocusPlus {version.get_fooocusplus_ver()}'))
             img_paths.append(log(x, d, metadata_parser, async_task.output_format, task, persist_image))
 
         return img_paths

@@ -23,8 +23,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 import platform
 import comfy.comfy_version
 import fooocus_version
-import fooocusplus_version
-import enhanced.version
+import enhanced.version as version
 
 from build_launcher import build_launcher
 from modules.launch_util import is_installed, run, python, run_pip, requirements_met, delete_folder_content
@@ -43,8 +42,8 @@ def prepare_environment():
     print(f"Python {sys.version}")
     print(f"Comfy version: {comfy.comfy_version.version}")    
     print(f"Fooocus version: {fooocus_version.version}")
-    print(f"SimpleSDXL2 version: {enhanced.version.get_simplesdxl_ver()}")
-    print(f"FooocusPlus version: {fooocusplus_version.version}")
+    print(f"SimpleSDXL2 version: {version.get_simplesdxl_ver()}")
+    print(f"FooocusPlus version: {version.get_fooocusplus_ver()}")
     print()
 
     if REINSTALL_ALL or not is_installed("torch") or not is_installed("torchvision"):
@@ -153,9 +152,9 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
 
 if ldm_patched.modules.model_management.get_vram()<4000:
     if  args_manager.args.language == 'cn':
-        print(f'系统GPU显存容量太小，无法正常运行Flux, SD3m, Kolors和HyDiT等最新模型，将自动禁用Comfyd引擎。请知晓，尽早升级硬件。')
+        print(f'系统GPU显存容量太小，无法正常运行Flux, SD3, Kolors和HyDiT等最新模型，将自动禁用Comfyd引擎。请知晓，尽早升级硬件。')
     else:
-        print(f'The GPU memory capacity of the system is too small to run the latest models such as Flux, SD3m, Kolors, and HyDiT properly, so the Comfyd engine will be automatically disabled.')
+        print(f'The GPU memory capacity of the system is too small to run the latest models such as Flux, SD3, Kolors, and HyDiT properly, so the Comfyd engine will be automatically disabled.')
     args.async_cuda_allocation = False
     args.disable_async_cuda_allocation = True
     args.disable_comfyd = True

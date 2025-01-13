@@ -1201,6 +1201,14 @@ def downloading_sd3_medium_model():
     )
     return os.path.join(paths_checkpoints[0], 'sd3_medium_incl_clips_t5xxlfp8.safetensors')
 
+def downloading_sd35_large_model():
+    load_file_from_url(
+        url='https://civitai.com/api/download/models/983309?type=Model&format=SafeTensor&size=full&fp=fp32',
+        model_dir=paths_checkpoints[0],
+        file_name='stableDiffusion35_large.safetensors'
+    )
+    return os.path.join(paths_checkpoints[0], 'stableDiffusion35_large.safetensors')
+
 def downloading_base_sd15_model():
     load_file_from_url(
         url='https://huggingface.co/metercai/SimpleSDXL2/resolve/main/ckpt/realisticVisionV60B1_v51VAE.safetensors',
