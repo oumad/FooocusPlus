@@ -150,7 +150,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
 
     elif task_name == 'SD3x':
         if not common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=default_params["base_model"]):
-            config.downloading_sd3_medium_model()
+            config.downloading_sd35_large_model()
         if 'base_model_dtype' in default_params:
             comfy_params.delete_params(['base_model_dtype'])
         return ComfyTask(task_method, comfy_params)
