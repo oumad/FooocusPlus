@@ -8,7 +8,7 @@ simplesdxl_ver = ''
 def get_fooocusplus_ver():
     global fooocusplus_ver, commit_id
     if not fooocusplus_ver:
-        fooocusplus_ver_log = os.path.abspath(f'./simplesdxl_log.md')
+        fooocusplus_log = os.path.abspath(f'./fooocusplus_log.md')
         if os.path.exists(fooocusplus_log):
             with open(fooocusplus_log, "r", encoding="utf-8") as log_file:
                 line = log_file.readline().strip()
