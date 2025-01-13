@@ -2,7 +2,21 @@ import os
 
 branch = ''
 commit_id = ''
+fooocusplus_ver = ''
 simplesdxl_ver = ''
+
+def get_fooocusplus_ver():
+    global fooocusplus_ver, commit_id
+    if not simplesdxl_ver:
+        simplesdxl_log = os.path.abspath(f'./simplesdxl_log.md')
+        if os.path.exists(fooocusplus_log):
+            with open(fooocusplus_log, "r", encoding="utf-8") as log_file:
+                fooocusplus_ver = log_file.readline().strip()
+        else:
+            fooocusplus_ver = '0.9.0'
+        if commit_id:
+            fooocusplus_ver += f'.{commit_id}'
+    return fooocusplus_ver
 
 def get_simplesdxl_ver():
     global simplesdxl_ver, commit_id
@@ -17,11 +31,9 @@ def get_simplesdxl_ver():
                         break
                     line = log_file.readline().strip()
         else:
-            line = '# 2023-12-20'
+            line = '# 2024-09-16'
         date = line.split(' ')[1].split('-')
         simplesdxl_ver = f'{date[0]}{date[1]}{date[2]}'
-        if commit_id:
-            simplesdxl_ver += f'.{commit_id}'
     return simplesdxl_ver
 
 def get_branch():
