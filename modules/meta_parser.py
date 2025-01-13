@@ -8,7 +8,6 @@ import gradio as gr
 from PIL import Image
 
 import fooocus_version
-import fooocusplus_version
 import enhanced.version
 import modules.config
 import modules.sdxl_styles
@@ -629,7 +628,6 @@ class A1111MetadataParser(MetadataParser):
             generation_params[self.fooocus_to_a1111['lora_hashes']] = lora_hashes_string
             generation_params[self.fooocus_to_a1111['lora_weights']] = lora_weights_string
 
-        #generation_params[self.fooocus_to_a1111['version']] = data[fooocusplus_version.version]
         generation_params[self.fooocus_to_a1111['version']] = data['version']        
 
         if modules.config.metadata_created_by != '':
@@ -852,7 +850,7 @@ def get_exif(metadata: str | None, metadata_scheme: str):
     # 0x9286 = UserComment
     exif[0x9286] = metadata
     # 0x0131 = Software
-    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {fooocusplus_version.version}'
+    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {enhanced.version.get_fooocusplus_ver()}'
     # 0x927C = MakerNote
     exif[0x927C] = metadata_scheme
     return exif
