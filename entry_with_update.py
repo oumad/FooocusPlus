@@ -39,7 +39,8 @@ try:
                 new_branch = repo.lookup_branch(branch_name)
             repo.checkout(new_branch)
             local_branch_ref = f'refs/heads/{branch_name}'
-    elif '--main' in (sys.argv):
+    #elif '--main' in (sys.argv):
+    else:
         if branch_name != origin_name:
             branch_name = origin_name
             print(f'Ready to checkout FooocusPlus')
@@ -53,13 +54,13 @@ try:
                 new_branch = repo.lookup_branch(branch_name)
             repo.checkout(new_branch)
             local_branch_ref = f'refs/heads/{branch_name}'
-    else:
-        if branch_name != main_name:
-            branch_name = main_name
-            print(f'Ready to checkout {branch_name}')
-            local_branch_ref = f'refs/heads/{branch_name}'
-            new_branch = repo.lookup_branch(branch_name)
-            repo.checkout(new_branch)
+#    else:
+#        if branch_name != main_name:
+#            branch_name = main_name
+#            print(f'Ready to checkout {branch_name}')
+ #           local_branch_ref = f'refs/heads/{branch_name}'
+#            new_branch = repo.lookup_branch(branch_name)
+#            repo.checkout(new_branch)
 
     local_branch = repo.lookup_reference(local_branch_ref)
     local_commit = repo.revparse_single(local_branch_ref)
