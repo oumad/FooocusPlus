@@ -1207,7 +1207,7 @@ def downloading_sd35_large_model():
         model_dir=paths_checkpoints[0],
         file_name='stableDiffusion35_large.safetensors'
     )
-    return os.path.join(paths_checkpoints[0], 'sd3_medium_incl_clips_t5xxlfp8.safetensors')
+    return os.path.join(paths_checkpoints[0], 'stableDiffusion35_large.safetensors')
 
 def downloading_base_sd15_model():
     load_file_from_url(
