@@ -11,9 +11,14 @@ def get_fooocusplus_ver():
         simplesdxl_log = os.path.abspath(f'./simplesdxl_log.md')
         if os.path.exists(fooocusplus_log):
             with open(fooocusplus_log, "r", encoding="utf-8") as log_file:
-                fooocusplus_ver = log_file.readline().strip()
+                line = log_file.readline().strip()
+                while line:
+                    if line.startswith("# "):
+                        break
+                    line = log_file.readline().strip()                
         else:
-            fooocusplus_ver = '0.9.0'
+            line = '0.9.0'
+        fooocusplus_ver = line
         if commit_id:
             fooocusplus_ver += f'.{commit_id}'
     return fooocusplus_ver
