@@ -1,7 +1,7 @@
-# 0.9.3
+# 0.9.1 to 0.9.3
 
 * Resolved all security issues except those associated with GroundingDINO and RemBG,
-  this involved a lot of recoding and it was the major work accomplished in this version
+  this involved a lot of recoding and it was the major work accomplished in these versions
 * sub-optimal overrides (such as disabling Smart Memory) to support VRAM sharing have been removed
 * coding has been made more streamlined and standardized
 * image parameters, including the prompt, can now be changed while waiting for image generation
