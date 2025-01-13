@@ -410,8 +410,8 @@ def reset_layout_params(prompt, negative_prompt, state_params, is_generating, in
     vae_downloads = preset_prepared.get('vae_downloads', {})
 
     model_dtype = preset_prepared.get('engine', {}).get('backend_params', {}).get('base_model_dtype', '')
-    if engine == 'SD3m' and  model_dtype == 'auto':
-        base_model = comfy_task.get_default_base_SD3m_name()
+    if engine == 'SD3x' and model_dtype == 'auto':
+        base_model = comfy_task.get_default_base_SD3x_name()
         if common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=base_model):
             default_model = base_model
             preset_prepared['base_model'] = base_model
