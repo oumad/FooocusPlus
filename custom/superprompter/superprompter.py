@@ -3,7 +3,7 @@ import random
 import torch
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 import modules.config as top_config
-import args_manager
+from launch import ROOT
 import shutil
 from enhanced.superprompter import *
 
@@ -12,7 +12,7 @@ def load_models():
 
     if tokenizer is None or model is None:
         if not os.path.exists(modelDir):
-            org_modelDir = os.path.join(args_manager.root, "models/llms/superprompt-v1")
+            org_modelDir = os.path.join(ROOT, "models/llms/superprompt-v1")
             shutil.copytree(org_modelDir, modelDir)
         if not os.path.exists(os.path.join(modelDir, "model.safetensors")):
             top_config.downloading_superprompter_model()
