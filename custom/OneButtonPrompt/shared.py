@@ -1,7 +1,7 @@
 import os
 import sys
-import custom.shared
-module_name, module_root = custom.shared.init_module(os.path.abspath(__file__))
+import custom.shared as shared
+module_name, module_root = shared.init_module(os.path.abspath(__file__))
 
 from .modules.path import PathManager
 path_manager = PathManager()
