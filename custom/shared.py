@@ -1,7 +1,7 @@
 import os
 import sys
 import modules.config as config
-from launch import ROOT
+from custom import ROOT
 
 paths_checkpoints = config.paths_checkpoints
 paths_loras = config.paths_loras
