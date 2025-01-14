@@ -1,7 +1,7 @@
 import os
 import sys
 import modules.config as config
-from custom import ROOT
+from launch import ROOT
 
 paths_checkpoints = config.paths_checkpoints
 paths_loras = config.paths_loras
@@ -20,6 +20,6 @@ def init_module(file_path):
     module_root = os.path.dirname(file_path)
     sys.path.append(module_root)
     module_name = os.path.relpath(module_root, os.path.dirname(os.path.abspath(__file__)))
-    print(f'[{module_name}] The customized module:{module_name} is initializing...') 
+    print(f'[{module_name}] The customized module:{module_name} is initializing...')
     return module_name, module_root
 
