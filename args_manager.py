@@ -5,7 +5,7 @@ args_parser.parser.add_argument("--preset", type=str, default='default', help="A
 args_parser.parser.add_argument("--disable-preset-selection", action='store_true',
                                 help="Disables preset selection in Gradio.")
 
-args_parser.parser.add_argument("--language", type=str, default='cn',
+args_parser.parser.add_argument("--language", type=str, default='en',
                                 help="Translate UI using json files in [language] folder. "
                                   "For example, [--language example] will use [language/example.json] for translation.")
 
@@ -19,7 +19,7 @@ args_parser.parser.add_argument("--disable-offload-from-vram", action="store_tru
 
 args_parser.parser.add_argument("--theme", type=str, help="Launches the UI with light or dark theme", default='dark')
 
-args_parser.parser.add_argument("--preselector", type=str, help="Location of Preset Selector", default='')
+args_parser.parser.add_argument("--presetmenu", type=str, help="preset menu style: topbar or dropdown", default='')
 
 args_parser.parser.add_argument("--disable-image-log", action='store_true',
                                 help="Prevent writing images and logs to the outputs folder.")
