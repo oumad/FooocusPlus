@@ -660,23 +660,23 @@ with common.GRADIO_ROOT:
                 else:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
 
-                if (args_manager.args.preselector==''):
+                if (args_manager.args.presetmenu==''):
                     if (args_manager.args.language=='cn'):
-                        args_manager.args.preselector=='Topbar Menu'
+                        args_manager.args.presetmenu=='Topbar Menu'
                     else:
-                        args_manager.args.preselector=='Dropdown Menu'
+                        args_manager.args.presetmenu=='Dropdown Menu'
 
-                if (args_manager.args.preselector==''):
+                if (args_manager.args.presetmenu==''):
                     if (args_manager.args.language=='cn'):
-                        args_manager.args.preselector=='Topbar Menu'
+                        args_manager.args.presetmenu=='Topbar Menu'
                     else:
-                        args_manager.args.preselector=='Dropdown Menu'
+                        args_manager.args.presetmenu=='Dropdown Menu'
 
                 print()
-                print(f'Preselector: (args_manager.args.preselector)')
+                print(f'presetmenu: (args_manager.args.presetmenu)')
                 print()
                 if not args_manager.args.disable_preset_selection:
-                    if (args_manager.args.preselector) == 'Topbar Menu':
+                    if (args_manager.args.presetmenu) == 'Topbar Menu':
                         preset_selection = gr.Radio(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
@@ -1058,9 +1058,9 @@ with common.GRADIO_ROOT:
                 with gr.Row():
                     language_ui=args_manager.args.language
                     if args_manager.args.disable_preset_selection:
-                        args_manager.args.preselector = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
+                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
-                        args_manager.args.preselector = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
+                        args_manager.args.presetmenu = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
