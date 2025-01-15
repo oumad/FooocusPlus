@@ -26,6 +26,8 @@ args_parser.parser.add_argument("--disable-image-log", action='store_true',
 
 args_parser.parser.add_argument("--disable-analytics", action='store_true',
                                 help="Disables analytics for Gradio.")
+args_parser.args.disable_analytics = True
+os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
 
 args_parser.parser.add_argument("--disable-metadata", action='store_true',
                                 help="Disables saving metadata to images.")
@@ -63,10 +65,6 @@ args_parser.args = args_parser.parser.parse_args()
 
 # (Disable by default because of issues like https://github.com/lllyasviel/Fooocus/issues/724)
 args_parser.args.always_offload_from_vram = not args_parser.args.disable_offload_from_vram
-
-if args_parser.args.disable_analytics:
-    import os
-    os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
 
 if args_parser.args.disable_in_browser:
     args_parser.args.in_browser = False
