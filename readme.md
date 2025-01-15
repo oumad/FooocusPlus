@@ -262,11 +262,6 @@ Then download the models: download [default models](#models) to the folder "Fooo
     conda activate fooocus
     python entry_with_update.py
 
-Or, if you want to open a remote port, use
-
-    conda activate fooocus
-    python entry_with_update.py --listen
-
 Use `python entry_with_update.py --preset anime` or `python entry_with_update.py --preset realistic` for Fooocus Anime/Realistic Edition.
 
 ### Linux (Using Python Venv)
@@ -284,11 +279,6 @@ See the above sections for model downloads. You can launch the software with:
     source fooocus_env/bin/activate
     python entry_with_update.py
 
-Or, if you want to open a remote port, use
-
-    source fooocus_env/bin/activate
-    python entry_with_update.py --listen
-
 Use `python entry_with_update.py --preset anime` or `python entry_with_update.py --preset realistic` for Fooocus Anime/Realistic Edition.
 
 ### Linux (Using native system Python)
@@ -302,10 +292,6 @@ If you know what you are doing, and your Linux already has **Python 3.10** insta
 See the above sections for model downloads. You can launch the software with:
 
     python3 entry_with_update.py
-
-Or, if you want to open a remote port, use
-
-    python3 entry_with_update.py --listen
 
 Use `python entry_with_update.py --preset anime` or `python entry_with_update.py --preset realistic` for Fooocus Anime/Realistic Edition.
 
@@ -405,13 +391,6 @@ Given different goals, the default models and configs of Fooocus are different:
 
 Note that the download is **automatic** - you do not need to do anything if the internet connection is okay. However, you can download them manually if you (or move them from somewhere else) have your own preparation.
 
-## UI Access and Authentication
-In addition to running on localhost, Fooocus can also expose its UI in two ways: 
-* Local UI listener: use `--listen` (specify port e.g. with `--port 8888`). 
-* API access: use `--share` (registers an endpoint at `.gradio.live`).
-
-In both ways the access is unauthenticated by default. You can add basic authentication by creating a file called `auth.json` in the main directory, which contains a list of JSON objects with the keys `user` and `pass` (see example in [auth-example.json](./auth-example.json)).
-
 ## List of "Hidden" Tricks
 <a name="tech_list"></a>
 
@@ -477,8 +456,7 @@ A safer way is just to try "run_anime.bat" or "run_realistic.bat" - they should 
 ### All CMD Flags
 
 ```
-entry_with_update.py  [-h] [--listen [IP]] [--port PORT]
-                      [--disable-header-check [ORIGIN]]
+entry_with_update.py  [-h] [--disable-header-check [ORIGIN]]
                       [--web-upload-size WEB_UPLOAD_SIZE]
                       [--hf-mirror HF_MIRROR]
                       [--external-working-path PATH [PATH ...]]
