@@ -1054,9 +1054,9 @@ with common.GRADIO_ROOT:
                     if args_manager.args.disable_preset_selection:
                         args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
-                        if args_manager.args.presetmenu==dropdown:
+                        if args_manager.args.presetmenu=='dropdown':
                             preselector_default = 'Dropdown Menu'
-                        elseif: args_manager.args.presetmenu==topbar:
+                        elseif: args_manager.args.presetmenu=='topbar':
                             preselector_default = 'Topbar Menu'
                         else:
                             preselector_default = ''
