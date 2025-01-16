@@ -682,7 +682,7 @@ with common.GRADIO_ROOT:
                             value=args_manager.args.preset if args_manager.args.preset else "initial",
                             interactive=False)
                     else:
-                        preset_selection = gr.Radio(label='Preset',
+                        gr.Radio(label='Preset',
                             visible=False,
                             choices=modules.config.available_presets,
                             value=args_manager.args.preset,
@@ -770,7 +770,7 @@ with common.GRADIO_ROOT:
                                 describe_image_size = gr.Textbox(label='Original Size / Recommended Size', elem_id='describe_image_size', visible=False)
                                 gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/1363" target="_blank">\U0001F4D4 Documentation</a>')
 
-                                def trigger_show_image_properties(image):
+                                def trigger_show_image_properties(image):https://github.com/DavidDragonsage/FooocusPlus/blob/FooocusPlus_dev/webui.py
                                     image_size = modules.util.get_image_size_info(image, modules.flags.available_aspect_ratios[0])
                                     return gr.update(value=image_size, visible=True)
 
