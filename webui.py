@@ -667,7 +667,7 @@ with common.GRADIO_ROOT:
                         args_manager.args.presetmenu=='dropdown'
 
                 print()
-                print(f'presetmenu: (args_manager.args.presetmenu)')
+                print(f'presetmenu: {args_manager.args.presetmenu}')
                 print()
                 if not args_manager.args.disable_preset_selection:
                     if (args_manager.args.presetmenu) == 'topbar':
@@ -676,7 +676,7 @@ with common.GRADIO_ROOT:
                             choices=modules.config.available_presets,
                             value=args_manager.args.preset,
                             interactive=True)
-                        preset_selection = gr.Dropdown(label='Preset',
+                        gr.Dropdown(label='Preset',
                             visible=False,
                             choices=modules.config.available_presets,
                             value=args_manager.args.preset if args_manager.args.preset else "initial",
