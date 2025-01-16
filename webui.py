@@ -662,21 +662,15 @@ with common.GRADIO_ROOT:
 
                 if (args_manager.args.presetmenu==''):
                     if (args_manager.args.language=='cn'):
-                        args_manager.args.presetmenu=='Topbar Menu'
+                        args_manager.args.presetmenu=='topbar'
                     else:
-                        args_manager.args.presetmenu=='Dropdown Menu'
-
-                if (args_manager.args.presetmenu==''):
-                    if (args_manager.args.language=='cn'):
-                        args_manager.args.presetmenu=='Topbar Menu'
-                    else:
-                        args_manager.args.presetmenu=='Dropdown Menu'
+                        args_manager.args.presetmenu=='dropdown'
 
                 print()
                 print(f'presetmenu: (args_manager.args.presetmenu)')
                 print()
                 if not args_manager.args.disable_preset_selection:
-                    if (args_manager.args.presetmenu) == 'Topbar Menu':
+                    if (args_manager.args.presetmenu) == 'topbar':
                         preset_selection = gr.Radio(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
@@ -924,99 +918,99 @@ with common.GRADIO_ROOT:
                                                      value=modules.config.default_vae, show_label=True)
 
                         generate_image_grid = gr.Checkbox(label='Generate Image Grid for Each Batch',
-                                                          info='(Experimental) This may cause performance problems on some computers and certain internet conditions.',
-                                                          value=False)
+                                                info='(Experimental) This may cause performance problems on some computers and certain internet conditions.',
+                                                value=False)
                         overwrite_switch = gr.Slider(label='Forced Overwrite of Refiner Switch Step',
-                                                     minimum=-1, maximum=200, step=1,
-                                                     value=modules.config.default_overwrite_switch,
-                                                     info='Set as -1 to disable. For developer debugging.')
+                                                minimum=-1, maximum=200, step=1,
+                                                value=modules.config.default_overwrite_switch,
+                                                info='Set as -1 to disable. For developer debugging.')
 
                         disable_preview = gr.Checkbox(label='Disable Preview', value=modules.config.default_black_out_nsfw,
-                                                      interactive=not modules.config.default_black_out_nsfw,
-                                                      info='Disable preview during generation.')
+                                                interactive=not modules.config.default_black_out_nsfw,
+                                                info='Disable preview during generation.')
                         disable_intermediate_results = gr.Checkbox(label='Disable Intermediate Results',
-                                                      value=flags.Performance.has_restricted_features(modules.config.default_performance),
-                                                      info='Disable intermediate results during generation, only show final gallery.')
+                                                value=flags.Performance.has_restricted_features(modules.config.default_performance),
+                                                info='Disable intermediate results during generation, only show final gallery.')
 
                         disable_seed_increment = gr.Checkbox(label='Disable Seed Increment',
-                                                             info='Disable automatic seed increment when image number is > 1.',
-                                                             value=False)
+                                                info='Disable automatic seed increment when image number is > 1.',
+                                                value=False)
                         read_wildcards_in_order = gr.Checkbox(label="Read Wildcards in Order", value=False, visible=False)
 
                         black_out_nsfw = gr.Checkbox(label='Black Out NSFW', value=modules.config.default_black_out_nsfw,
-                                                     interactive=not modules.config.default_black_out_nsfw,
-                                                     info='Use black image if NSFW is detected.')
+                                            interactive=not modules.config.default_black_out_nsfw,
+                                            info='Use black image if NSFW is detected.')
 
                         black_out_nsfw.change(lambda x: gr.update(value=x, interactive=not x),
-                                              inputs=black_out_nsfw, outputs=disable_preview, queue=False,
-                                              show_progress=False)
+                                            inputs=black_out_nsfw, outputs=disable_preview, queue=False,
+                                            show_progress=False)
 
                         if not args_manager.args.disable_image_log:
                             save_final_enhanced_image_only = gr.Checkbox(label='Save Only the Final Enhanced Image',
-                                                                         value=modules.config.default_save_only_final_enhanced_image)
+                                            value=modules.config.default_save_only_final_enhanced_image)
 
                         if not args_manager.args.disable_metadata:
                             save_metadata_to_images = gr.Checkbox(label='Save Metadata to Images', value=modules.config.default_save_metadata_to_images,
-                                                                  info='Adds parameters to generated images allowing manual regeneration.')
+                                            info='Adds parameters to generated images allowing manual regeneration.')
                             metadata_scheme = gr.Radio(label='Metadata Scheme', choices=flags.metadata_scheme, value=modules.config.default_metadata_scheme,
-                                                       info='Image Prompt parameters are not included. Use png and A1111 for compatibility with Civitai.',
-                                                       visible=modules.config.default_save_metadata_to_images)
+                                            info='Image Prompt parameters are not included. Use png and A1111 for compatibility with Civitai.',
+                                            visible=modules.config.default_save_metadata_to_images)
 
                             save_metadata_to_images.change(lambda x: [gr.update(visible=x)], inputs=[save_metadata_to_images], outputs=[metadata_scheme], queue=False, show_progress=False)
 
                     with gr.Tab(label='Control'):
                         debugging_cn_preprocessor = gr.Checkbox(label='Debug Preprocessors', value=False,
-                                                                info='See the results from preprocessors.')
+                                            info='See the results from preprocessors.')
                         skipping_cn_preprocessor = gr.Checkbox(label='Skip Preprocessors', value=False,
-                                                               info='Do not preprocess images. (Inputs are already canny/depth/cropped-face/etc.)')
+                                            info='Do not preprocess images. (Inputs are already canny/depth/cropped-face/etc.)')
 
 
                         controlnet_softness = gr.Slider(label='Softness of ControlNet', minimum=0.0, maximum=1.0,
-                                                        step=0.001, value=0.25,
-                                                        info='Similar to the Control Mode in A1111 (use 0.0 to disable). ')
+                                            step=0.001, value=0.25,
+                                            info='Similar to the Control Mode in A1111 (use 0.0 to disable). ')
 
                         with gr.Tab(label='Canny'):
                             canny_low_threshold = gr.Slider(label='Canny Low Threshold', minimum=1, maximum=255,
-                                                            step=1, value=64)
+                                            step=1, value=64)
                             canny_high_threshold = gr.Slider(label='Canny High Threshold', minimum=1, maximum=255,
-                                                             step=1, value=128)
+                                            step=1, value=128)
 
                     with gr.Tab(label='Inpaint'):
                         debugging_inpaint_preprocessor = gr.Checkbox(label='Debug Inpaint Preprocessing', value=False)
                         debugging_enhance_masks_checkbox = gr.Checkbox(label='Debug Enhance Masks', value=False,
-                                                                       info='Show enhance masks in preview and final results')
+                                            info='Show enhance masks in preview and final results')
                         debugging_dino = gr.Checkbox(label='Debug GroundingDINO', value=False,
-                                                     info='Use GroundingDINO boxes instead of more detailed SAM masks')
+                                            info='Use GroundingDINO boxes instead of more detailed SAM masks')
                         inpaint_disable_initial_latent = gr.Checkbox(label='Disable Initial Latent in Inpaint', value=False)
                         inpaint_engine = gr.Dropdown(label='Inpaint Engine',
-                                                     value=modules.config.default_inpaint_engine_version,
-                                                     choices=flags.inpaint_engine_versions,
-                                                     info='Version of Fooocus inpaint model. If set, use performance Quality or Speed (no performance LoRAs) for best results.')
+                                            value=modules.config.default_inpaint_engine_version,
+                                            choices=flags.inpaint_engine_versions,
+                                            info='Version of Fooocus inpaint model. If set, use performance Quality or Speed (no performance LoRAs) for best results.')
                         inpaint_erode_or_dilate = gr.Slider(label='Mask Erode or Dilate',
-                                                            minimum=-64, maximum=64, step=1, value=0,
-                                                            info='Positive value will make white area in the mask larger, '
-                                                                 'negative value will make white area smaller. '
-                                                                 '(default is 0, always processed before any mask invert)')
+                                            minimum=-64, maximum=64, step=1, value=0,
+                                            info='Positive value will make white area in the mask larger, '
+                                            'negative value will make white area smaller. '
+                                            '(default is 0, always processed before any mask invert)')
                         dino_erode_or_dilate = gr.Slider(label='GroundingDINO Box Erode or Dilate',
-                                                         minimum=-64, maximum=64, step=1, value=0,
-                                                         info='Positive value will make white area in the mask larger, '
-                                                              'negative value will make white area smaller. '
-                                                              '(default is 0, processed before SAM)')
+                                            minimum=-64, maximum=64, step=1, value=0,
+                                            info='Positive value will make white area in the mask larger, '
+                                            'negative value will make white area smaller. '
+                                            '(default is 0, processed before SAM)')
 
                         inpaint_mask_color = gr.ColorPicker(label='Inpaint brush color', value='#FFFFFF', elem_id='inpaint_brush_color')
 
                         inpaint_ctrls = [debugging_inpaint_preprocessor, inpaint_disable_initial_latent, inpaint_engine,
-                                         inpaint_strength, inpaint_respective_field,
-                                         inpaint_advanced_masking_checkbox, invert_mask_checkbox, inpaint_erode_or_dilate]
+                                            inpaint_strength, inpaint_respective_field,
+                                            inpaint_advanced_masking_checkbox, invert_mask_checkbox, inpaint_erode_or_dilate]
 
                         inpaint_advanced_masking_checkbox.change(lambda x: [gr.update(visible=x)] * 2,
-                                                                 inputs=inpaint_advanced_masking_checkbox,
-                                                                 outputs=[inpaint_mask_image, inpaint_mask_generation_col],
-                                                                 queue=False, show_progress=False)
+                                            inputs=inpaint_advanced_masking_checkbox,
+                                            outputs=[inpaint_mask_image, inpaint_mask_generation_col],
+                                            queue=False, show_progress=False)
 
                         inpaint_mask_color.change(lambda x: gr.update(brush_color=x), inputs=inpaint_mask_color,
-                                                  outputs=inpaint_input_image,
-                                                  queue=False, show_progress=False)
+                                            outputs=inpaint_input_image,
+                                            queue=False, show_progress=False)
 
                     with gr.Tab(label='FreeU'):
                         freeu_enabled = gr.Checkbox(label='Enabled', value=False)
@@ -1030,7 +1024,7 @@ with common.GRADIO_ROOT:
                     return gr.update(visible=r)
 
                 dev_mode.change(dev_mode_checked, inputs=[dev_mode], outputs=[dev_tools],
-                                queue=False, show_progress=False)
+                                        queue=False, show_progress=False)
 
                 def refresh_files_clicked(state_params):
                     engine = state_params.get('engine', 'Fooocus')
@@ -1060,7 +1054,18 @@ with common.GRADIO_ROOT:
                     if args_manager.args.disable_preset_selection:
                         args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
-                        args_manager.args.presetmenu = gr.Radio(label='Choose Preset Selector', choices=['Dropdown Menu', 'Topbar Menu'], value="", interactive=True)
+                        if args_manager.args.presetmenu==dropdown:
+                            preselector_default = 'Dropdown Menu'
+                        elseif: args_manager.args.presetmenu==topbar:
+                            preselector_default = 'Topbar Menu'
+                        else:
+                            preselector_default = ''
+                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
+                        if preselector == 'Dropdown Menu'
+                            args_manager.args.presetmenu = 'dropdown'
+                        elseif preselector == 'Topbar Menu'
+                            args_manager.args.presetmenu = 'topbar'
+
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
