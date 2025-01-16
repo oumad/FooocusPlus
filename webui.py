@@ -1056,14 +1056,14 @@ with common.GRADIO_ROOT:
                     else:
                         if args_manager.args.presetmenu=='dropdown':
                             preselector_default = 'Dropdown Menu'
-                        elseif: args_manager.args.presetmenu=='topbar':
+                        else if args_manager.args.presetmenu=='topbar':
                             preselector_default = 'Topbar Menu'
                         else:
                             preselector_default = ''
                         preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
                         if preselector == 'Dropdown Menu'
                             args_manager.args.presetmenu = 'dropdown'
-                        elseif preselector == 'Topbar Menu'
+                        else if preselector == 'Topbar Menu'
                             args_manager.args.presetmenu = 'topbar'
 
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
