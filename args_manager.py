@@ -19,7 +19,7 @@ args_parser.parser.add_argument("--disable-offload-from-vram", action="store_tru
 
 args_parser.parser.add_argument("--theme", type=str, help="Launches the UI with light or dark theme", default='dark')
 
-args_parser.parser.add_argument("--presetmenu", type=str, help="preset menu style: topbar or dropdown", default='')
+args_parser.parser.add_argument("--presetmenu", type=str, help="Preset menu style: specify topbar or dropdown", default='')
 
 args_parser.parser.add_argument("--disable-image-log", action='store_true',
                                 help="Prevent writing images and logs to the outputs folder.")
@@ -27,7 +27,7 @@ args_parser.parser.add_argument("--disable-image-log", action='store_true',
 args_parser.parser.add_argument("--disable-analytics", action='store_true',
                                 help="Disables analytics for Gradio.")
 args_parser.args.disable_analytics = True
-os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
+os.environ["GRADIO_ANALYTICS_ENABLED"] = "False" # Gradio is no longer allowed to call home
 
 args_parser.parser.add_argument("--disable-metadata", action='store_true',
                                 help="Disables saving metadata to images.")
