@@ -1,4 +1,4 @@
-{ 
+{
     "default_engine": {
 	"backend_engine": "SD3x",
 	"disvisible": ["backend_selection", "performance_selection"],
@@ -40,12 +40,12 @@
     "default_scheduler": "sgm_uniform",
     "default_performance": "Speed",
     "default_styles": [],
-    "default_aspect_ratio": "1152*896",
+    "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 28,
     "checkpoint_downloads": {},
     "embeddings_downloads": {},
     "lora_downloads": {},
     "model_list": [
         "checkpoints,sd3.5_large.safetensors,16460379262,0,"
-	]	
+	]
 }
