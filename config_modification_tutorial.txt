@@ -200,7 +200,7 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
     "default_enhance_inpaint_mask_model": "sam",
     "default_inpaint_mask_cloth_category": "full",
     "default_inpaint_mask_sam_model": "vit_b",
-    "default_preselector": "",
+    "default_presetmenu": "",
     "default_translation_methods": "Third APIs",
     "default_backfill_prompt": false,
     "default_comfyd_active_checkbox": false,
