@@ -1050,6 +1050,7 @@ with common.GRADIO_ROOT:
                             args_manager.args.presetmenu = 'dropdown'
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
+                        live=True
 
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
