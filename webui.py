@@ -210,7 +210,7 @@ with common.GRADIO_ROOT:
                     else:
                         preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
 
-                    if (args_manager.args.presetmenu==''):
+                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
                         if (args_manager.args.language=='cn'):
                             args_manager.args.presetmenu=='topbar'
                         else:
