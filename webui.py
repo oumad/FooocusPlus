@@ -202,7 +202,9 @@ with common.GRADIO_ROOT:
     with gr.Row():
         with gr.Column(scale=2):
             with gr.Group():
-                if not args_manager.args.disable_preset_selection:
+                if args_manager.args.disable_preset_selection:
+                    args_manager.args.presetmenu==''
+                else:
                     if (args_manager.args.language=='cn'):
                         preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                     else:
@@ -213,8 +215,6 @@ with common.GRADIO_ROOT:
                             args_manager.args.presetmenu=='topbar'
                         else:
                             args_manager.args.presetmenu=='dropdown'
-                else
-                    args_manager.args.presetmenu==''
                 
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=False, elem_id='bar_title', elem_classes='bar_title')
