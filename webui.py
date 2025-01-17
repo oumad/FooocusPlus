@@ -1031,9 +1031,10 @@ with common.GRADIO_ROOT:
                     try:
                         preset_selection
                     except:           #catch the error if a preset is not yet initialized
-                        preset_selection = ""
+                        preset_selection = ''
                     refresh_files_output += [preset_selection]
-                refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
+                if preset_selection != ''
+                    refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
 
             with gr.Tab(label='Extras', elem_id="scrollable-box"):
