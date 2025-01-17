@@ -202,8 +202,20 @@ with common.GRADIO_ROOT:
     with gr.Row():
         with gr.Column(scale=2):
             with gr.Group():
-                topbar_visible = (args_manager.args.presetmenu=='topbar')
-                print (topbar_visible)
+                if not args_manager.args.disable_preset_selection:
+                    if (args_manager.args.language=='cn'):
+                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
+                    else:
+                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+
+                    if (args_manager.args.presetmenu==''):
+                        if (args_manager.args.language=='cn'):
+                            args_manager.args.presetmenu=='topbar'
+                        else:
+                            args_manager.args.presetmenu=='dropdown'
+                else
+                    args_manager.args.presetmenu==''
+                
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=False, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
@@ -656,40 +668,11 @@ with common.GRADIO_ROOT:
             current_tab = gr.Textbox(value=modules.config.default_selected_image_input_tab_id.split('_')[0], visible=False)
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
-            with gr.Tab(label='Settings', elem_id="scrollable-box"):
-                if (args_manager.args.language=='cn'):
-                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                else:
-                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+            with gr.Tab(label='Settings', elem_id="scrollable-box"
 
-                if (args_manager.args.presetmenu==''):
-                    if (args_manager.args.language=='cn'):
-                        args_manager.args.presetmenu=='topbar'
-                    else:
-                        args_manager.args.presetmenu=='dropdown'
-
-                print()
-                print(f'presetmenu: {args_manager.args.presetmenu}')
-                print()
                 if not args_manager.args.disable_preset_selection:
-                    if (args_manager.args.presetmenu) == 'topbar':
-                        preset_selection = gr.Radio(label='Preset',
-                            visible=True,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset,
-                            interactive=True)
-                        gr.Dropdown(label='Preset',
-                            visible=False,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset if args_manager.args.preset else "initial",
-                            interactive=False)
-                    else:
-                        gr.Radio(label='Preset',
-                            visible=False,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset,
-                            interactive=False)
-                        preset_selection = gr.Dropdown(label='Preset',
+                    if (args_manager.args.presetmenu) == 'dropdown':
+                         preset_selection = gr.Dropdown(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
                             value=args_manager.args.preset if args_manager.args.preset else "initial",
@@ -880,12 +863,12 @@ with common.GRADIO_ROOT:
 
             with gr.Tab(label='Advanced', elem_id="scrollable-box"):
                 guidance_scale = gr.Slider(label='Guidance Scale (CFG)', minimum=0.01, maximum=30.0, step=0.01,
-                                           value=modules.config.default_cfg_scale,
-                                           info='Higher value means style is cleaner, vivider, and more artistic.')
-                overwrite_step = gr.Slider(label='Forced Overwrite of Sampling Step',
-                                                   minimum=-1, maximum=200, step=1,
-                                                   value=modules.config.default_overwrite_step,
-                                                   info='Set as -1 to disable. For developer debugging.')
+                                       value=modules.config.default_cfg_scale,
+                                       info='Higher value means style is cleaner, vivider, and more artistic.')
+            overwrite_step = gr.Slider(label='Forced Overwrite of Sampling Step',
+                                       minimum=-1, maximum=200, step=1,
+                                       value=modules.config.default_overwrite_step,
+                                       info='Set as -1 to disable. For developer debugging.')
                 sharpness = gr.Slider(label='Image Sharpness', minimum=0.0, maximum=30.0, step=0.001,
                                       value=modules.config.default_sample_sharpness,
                                       info='Higher value means image and texture are sharper.')
@@ -895,37 +878,37 @@ with common.GRADIO_ROOT:
                 with gr.Column(visible=modules.config.default_developer_debug_mode_checkbox) as dev_tools:
                     with gr.Tab(label='Expert Tools'):
                         sampler_name = gr.Dropdown(label='Sampler', choices=flags.sampler_list,
-                                                   value=modules.config.default_sampler)
+                                     value=modules.config.default_sampler)
                         scheduler_name = gr.Dropdown(label='Scheduler', choices=flags.scheduler_list,
-                                                     value=modules.config.default_scheduler)
+                                     value=modules.config.default_scheduler)
                         adm_scaler_positive = gr.Slider(label='Positive ADM Guidance Scaler', minimum=0.1, maximum=3.0,
-                                                        step=0.001, value=1.5, info='The scaler multiplied to positive ADM (use 1.0 to disable). ')
+                                    step=0.001, value=1.5, info='The scaler multiplied to positive ADM (use 1.0 to disable). ')
                         adm_scaler_negative = gr.Slider(label='Negative ADM Guidance Scaler', minimum=0.1, maximum=3.0,
-                                                        step=0.001, value=0.8, info='The scaler multiplied to negative ADM (use 1.0 to disable). ')
+                                    step=0.001, value=0.8, info='The scaler multiplied to negative ADM (use 1.0 to disable). ')
                         adm_scaler_end = gr.Slider(label='ADM Guidance End At Step', minimum=0.0, maximum=1.0,
-                                                   step=0.001, value=0.3,
-                                                   info='When to end the guidance from positive/negative ADM. ')
+                                   step=0.001, value=0.3,
+                                   info='When to end the guidance from positive/negative ADM. ')
 
                         refiner_swap_method = gr.Dropdown(label='Refiner Swap Method', value=flags.refiner_swap_method,
-                                                          choices=['joint', 'separate', 'vae'])
+                                  choices=['joint', 'separate', 'vae'])
 
                         adaptive_cfg = gr.Slider(label='CFG Mimicking from TSNR', minimum=1.0, maximum=30.0, step=0.01,
-                                                 value=modules.config.default_cfg_tsnr,
-                                                 info='Enabling Fooocus\'s implementation of CFG mimicking for TSNR '
-                                                      '(effective when real CFG > mimicked CFG).')
+                                 value=modules.config.default_cfg_tsnr,
+                                 info='Enabling Fooocus\'s implementation of CFG mimicking for TSNR '
+                                      '(effective when real CFG > mimicked CFG).')
                         clip_skip = gr.Slider(label='CLIP Skip', minimum=1, maximum=flags.clip_skip_max, step=1,
-                                                 value=modules.config.default_clip_skip,
-                                                 info='Bypass CLIP layers to avoid overfitting (use 1 to not skip any layers, 2 is recommended).')
+                                 value=modules.config.default_clip_skip,
+                                 info='Bypass CLIP layers to avoid overfitting (use 1 to not skip any layers, 2 is recommended).')
                         vae_name = gr.Dropdown(label='VAE', choices=[modules.flags.default_vae] + modules.config.vae_filenames,
-                                                     value=modules.config.default_vae, show_label=True)
+                                 value=modules.config.default_vae, show_label=True)
 
                         generate_image_grid = gr.Checkbox(label='Generate Image Grid for Each Batch',
-                                                info='(Experimental) This may cause performance problems on some computers and certain internet conditions.',
-                                                value=False)
+                                info='(Experimental) This may cause performance problems on some computers and certain internet conditions.',
+                                value=False)
                         overwrite_switch = gr.Slider(label='Forced Overwrite of Refiner Switch Step',
-                                                minimum=-1, maximum=200, step=1,
-                                                value=modules.config.default_overwrite_switch,
-                                                info='Set as -1 to disable. For developer debugging.')
+                                minimum=-1, maximum=200, step=1,
+                                value=modules.config.default_overwrite_switch,
+                                info='Set as -1 to disable. For developer debugging.')
 
                         disable_preview = gr.Checkbox(label='Disable Preview', value=modules.config.default_black_out_nsfw,
                                                 interactive=not modules.config.default_black_out_nsfw,
@@ -1337,7 +1320,7 @@ with common.GRADIO_ROOT:
 
         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
         nav_bars = [bar_title] + bar_buttons
-        protections = [background_theme]
+        protections = [preselector, background_theme]
         generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
             .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
             .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
@@ -1429,7 +1412,6 @@ with common.GRADIO_ROOT:
         .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, queue=False, show_progress=False) \
         .then(fn=lambda x: None, inputs=system_params, _js=topbar.refresh_topbar_status_js)
 
-    
 
     reset_layout_params = nav_bars + reset_preset_layout + reset_preset_func + load_data_outputs
     reset_preset_inputs = [prompt, negative_prompt, state_topbar, state_is_generating, inpaint_mode, comfyd_active_checkbox]
