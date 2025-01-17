@@ -668,7 +668,7 @@ with common.GRADIO_ROOT:
             current_tab = gr.Textbox(value=modules.config.default_selected_image_input_tab_id.split('_')[0], visible=False)
 
         with gr.Column(scale=1, visible=modules.config.default_advanced_checkbox, elem_id="scrollable-box-hidden") as advanced_column:
-            with gr.Tab(label='Settings', elem_id="scrollable-box"
+            with gr.Tab(label='Settings', elem_id="scrollable-box"):
 
                 if not args_manager.args.disable_preset_selection:
                     if (args_manager.args.presetmenu) == 'dropdown':
