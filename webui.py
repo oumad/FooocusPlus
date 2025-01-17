@@ -203,7 +203,7 @@ with common.GRADIO_ROOT:
         with gr.Column(scale=2):
             with gr.Group():
                 topbar_visible = (args_manager.args.presetmenu=='topbar')
-                print topbar_visible
+                print (topbar_visible)
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=False, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
