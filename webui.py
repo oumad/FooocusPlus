@@ -1027,6 +1027,10 @@ with common.GRADIO_ROOT:
 
                 refresh_files_output = [base_model, refiner_model, vae_name]
                 if not args_manager.args.disable_preset_selection:
+                    try
+                        preset_selection
+                    except            #catch the error if a preset is not yet initialized
+                        preset_selection = ""
                     refresh_files_output += [preset_selection]
                 refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
