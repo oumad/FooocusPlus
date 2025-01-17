@@ -724,7 +724,8 @@ with common.GRADIO_ROOT:
                             seed_value = int(seed_string)
                             if constants.MIN_SEED <= seed_value <= constants.MAX_SEED:
                                 return seed_value
-                        ValueError:
+#                        ValueError: orginal coding "ValueError" is not recognized
+                        except:
                             pass
                         return random.randint(constants.MIN_SEED, constants.MAX_SEED)
 
