@@ -1033,7 +1033,7 @@ with common.GRADIO_ROOT:
                     except:           #catch the error if a preset is not yet initialized
                         preset_selection = ''
                     refresh_files_output += [preset_selection]
-                if preset_selection != ''
+                if preset_selection != '':
                     refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
 
