@@ -20,11 +20,6 @@ args_parser.parser.add_argument("--disable-offload-from-vram", action="store_tru
 args_parser.parser.add_argument("--theme", type=str, help="Launches the UI with light or dark theme", default='dark')
 
 args_parser.parser.add_argument("--presetmenu", type=str, help="Preset menu style: specify topbar or dropdown", default='')
-if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
-    if (args_manager.args.language=='cn'):
-        args_manager.args.presetmenu=='topbar'
-    else:
-        args_manager.args.presetmenu=='dropdown'
 
 args_parser.parser.add_argument("--disable-image-log", action='store_true',
                                 help="Prevent writing images and logs to the outputs folder.")
@@ -54,7 +49,9 @@ args_parser.parser.add_argument("--rebuild-hash-cache", help="Generates missing 
 
 args_parser.parser.add_argument("--dev", action='store_true',
                                 help="launch the dev branch", default=False)
+
 args_parser.parser.add_argument("--models-root", type=str, help="Set the path root of models", default=None)
+
 args_parser.parser.add_argument("--config", type=str, help="Set the path of config.txt", default=None)
 
 args_parser.parser.add_argument("--disable-comfyd", action='store_true',
