@@ -42,6 +42,15 @@ from enhanced.simpleai import comfyd
 print()
 print('Initializing user interface...')
 
+if args_manager.args.disable_preset_selection:
+    args_manager.args.presetmenu==''
+else:   
+    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
+        if (args_manager.args.language=='cn'):
+            args_manager.args.presetmenu=='topbar'
+        else:
+            args_manager.args.presetmenu=='dropdown'
+
 def get_task(*args):
     args = list(args)
     args.pop(0)
@@ -187,7 +196,6 @@ reload_javascript()
 
 title = f'FooocusPlus {version.get_fooocusplus_ver()}'
 
-
 common.GRADIO_ROOT = gr.Blocks(
     title=title,
     css=topbar.css + toolbox.css).queue()
@@ -200,8 +208,8 @@ with common.GRADIO_ROOT:
     with gr.Row():
         with gr.Column(scale=2):
             with gr.Group():
-                if args_manager.args.disable_preset_selection:
-                    args_manager.args.presetmenu==''
+#                if args_manager.args.disable_preset_selection:
+#                    args_manager.args.presetmenu==''
 #                else:                    
 #                                   
 #                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
