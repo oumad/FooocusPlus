@@ -1036,7 +1036,7 @@ with common.GRADIO_ROOT:
                         preset_selection
                     except:           #catch the error if a preset is not yet initialized
                         preset_selection = ''
-                    set_presetmenu()
+#                    set_presetmenu()
                     refresh_files_output += [preset_selection]
                 if preset_selection != '':
                     refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
@@ -1186,7 +1186,7 @@ with common.GRADIO_ROOT:
 
             return result
 
-        if not args_manager.args.disable_preset_selection:
+        if not args_manager.args.disable_preset_selection and preset_selection != '':
             preset_selection.change(preset_selection_change, inputs=[preset_selection, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=True) \
                 .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
                 .then(lambda: None, _js='()=>{refresh_style_localization();}') \
