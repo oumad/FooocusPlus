@@ -202,13 +202,13 @@ with common.GRADIO_ROOT:
             with gr.Group():
                 if args_manager.args.disable_preset_selection:
                     args_manager.args.presetmenu==''
-                else:                    
-                                   
-                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
-                        if (args_manager.args.language=='cn'):
-                            args_manager.args.presetmenu=='topbar'
-                        else:
-                            args_manager.args.presetmenu=='dropdown'
+#                else:                    
+#                                   
+#                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
+#                        if (args_manager.args.language=='cn'):
+#                            args_manager.args.presetmenu=='topbar'
+#                        else:
+#                            args_manager.args.presetmenu=='dropdown'
                  
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
