@@ -187,8 +187,6 @@ reload_javascript()
 
 title = f'FooocusPlus {version.get_fooocusplus_ver()}'
 
-#if isinstance(args_manager.args.preset, str):
-#    title += ' ' + args_manager.args.preset
 
 common.GRADIO_ROOT = gr.Blocks(
     title=title,
@@ -218,10 +216,6 @@ with common.GRADIO_ROOT:
                     for i in range(topbar.topbar_limit):
                         bar_buttons.append(gr.Button(value='default' if i==0 else '', size='sm', visible=True, min_width=40, elem_id=f'bar{i}', elem_classes='bar_button'))
                     #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
-                    if (args_manager.args.language=='cn'):
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                    else:
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
 
                 with gr.Row():
                     progress_window = grh.Image(label='Preview', show_label=False, visible=True, height=768, elem_id='preview_generating',
@@ -678,6 +672,11 @@ with common.GRADIO_ROOT:
                             choices=modules.config.available_presets,
                             value=args_manager.args.preset if args_manager.args.preset else "initial",
                             interactive=True)
+                    else:
+                        if (args_manager.args.language=='cn'):
+                            preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
+                        else:
+                            preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                             choices=flags.Performance.list(),
