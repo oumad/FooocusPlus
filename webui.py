@@ -781,7 +781,7 @@ with common.GRADIO_ROOT:
                             return [results, gr.update(interactive=parameters is not None)]
 
                         metadata_input_image.upload(trigger_metadata_preview, inputs=metadata_input_image,
-                                                outputs=[metadata_json, metadata_import_button], queue=False, show_progress=True)
+                                        outputs=[metadata_json, metadata_import_button], queue=False, show_progress=True)
 
             with gr.Tab(label='Styles', elem_classes=['style_selections_tab']):
                 style_sorter.try_load_sorted_styles(
@@ -789,14 +789,14 @@ with common.GRADIO_ROOT:
                     default_selected=modules.config.default_styles)
 
                 style_search_bar = gr.Textbox(show_label=False, container=False,
-                                              placeholder="\U0001F50E Type here to search styles...",
-                                              value="",
-                                              label='Search Styles')
+                                        placeholder="\U0001F50E Type here to search styles...",
+                                        value="",
+                                        label='Search Styles')
                 style_selections = gr.CheckboxGroup(show_label=False, container=False,
-                                                    choices=copy.deepcopy(style_sorter.all_styles),
-                                                    value=copy.deepcopy(modules.config.default_styles),
-                                                    label='Selected Styles',
-                                                    elem_classes=['style_selections'])
+                                        choices=copy.deepcopy(style_sorter.all_styles),
+                                        value=copy.deepcopy(modules.config.default_styles),
+                                        label='Selected Styles',
+                                        elem_classes=['style_selections'])
                 gradio_receiver_style_selections = gr.Textbox(elem_id='gradio_receiver_style_selections', visible=False)
 
                 common.GRADIO_ROOT.load(lambda: gr.update(choices=copy.deepcopy(style_sorter.all_styles)),
@@ -810,10 +810,10 @@ with common.GRADIO_ROOT:
                     lambda: None, _js='()=>{refresh_style_localization();}')
 
                 gradio_receiver_style_selections.input(style_sorter.sort_styles,
-                                                       inputs=style_selections,
-                                                       outputs=style_selections,
-                                                       queue=False,
-                                                       show_progress=False).then(
+                                       inputs=style_selections,
+                                       outputs=style_selections,
+                                       queue=False,
+                                       show_progress=False).then(
                     lambda: None, _js='()=>{refresh_style_localization();}')
                 prompt.change(lambda x,y: calculateTokenCounter(x,y), inputs=[prompt, style_selections], outputs=prompt_token_counter)
 
@@ -824,15 +824,15 @@ with common.GRADIO_ROOT:
                         refiner_model = gr.Dropdown(label='Refiner (SDXL or SD 1.5)', choices=['None'] + modules.config.model_filenames, value=modules.config.default_refiner_model_name, show_label=True)
 
                     refiner_switch = gr.Slider(label='Refiner Switch At', minimum=0.1, maximum=1.0, step=0.0001,
-                                               info='Use 0.4 for SD1.5 realistic models; '
-                                                    'or 0.667 for SD1.5 anime models; '
-                                                    'or 0.8 for XL-refiners; '
-                                                    'or any value for switching two SDXL models.',
-                                               value=modules.config.default_refiner_switch,
-                                               visible=modules.config.default_refiner_model_name != 'None')
+                                info='Use 0.4 for SD1.5 realistic models; '
+                                     'or 0.667 for SD1.5 anime models; '
+                                     'or 0.8 for XL-refiners; '
+                                     'or any value for switching two SDXL models.',
+                                value=modules.config.default_refiner_switch,
+                                visible=modules.config.default_refiner_model_name != 'None')
 
                     refiner_model.change(lambda x: gr.update(visible=x != 'None'),
-                                         inputs=refiner_model, outputs=refiner_switch, show_progress=False, queue=False)
+                                inputs=refiner_model, outputs=refiner_switch, show_progress=False, queue=False)
 
                 with gr.Group():
                     lora_ctrls = []
@@ -1135,13 +1135,13 @@ with common.GRADIO_ROOT:
         state_is_generating = gr.State(False)
 
         load_data_outputs = [advanced_checkbox, image_number, prompt, negative_prompt, style_selections,
-                             performance_selection, overwrite_step, overwrite_switch, aspect_ratios_selection,
-                             overwrite_width, overwrite_height, guidance_scale, sharpness, adm_scaler_positive,
-                             adm_scaler_negative, adm_scaler_end, refiner_swap_method, adaptive_cfg, clip_skip,
-                             base_model, refiner_model, refiner_switch, sampler_name, scheduler_name, vae_name,
-                             seed_random, image_seed, inpaint_engine, inpaint_engine_state,
-                             inpaint_mode] + enhance_inpaint_mode_ctrls + [generate_button,
-                             load_parameter_button] + freeu_ctrls + lora_ctrls
+                 performance_selection, overwrite_step, overwrite_switch, aspect_ratios_selection,
+                 overwrite_width, overwrite_height, guidance_scale, sharpness, adm_scaler_positive,
+                 adm_scaler_negative, adm_scaler_end, refiner_swap_method, adaptive_cfg, clip_skip,
+                 base_model, refiner_model, refiner_switch, sampler_name, scheduler_name, vae_name,
+                 seed_random, image_seed, inpaint_engine, inpaint_engine_state,
+                 inpaint_mode] + enhance_inpaint_mode_ctrls + [generate_button,
+                 load_parameter_button] + freeu_ctrls + lora_ctrls
 
         if not args_manager.args.disable_preset_selection:
             def preset_selection_change(preset, is_generating, inpaint_mode):
@@ -1240,11 +1240,11 @@ with common.GRADIO_ROOT:
             ], show_progress=False, queue=False)
 
         generate_mask_button.click(fn=generate_mask,
-                                   inputs=[inpaint_input_image, inpaint_mask_model, inpaint_mask_cloth_category,
-                                           inpaint_mask_dino_prompt_text, inpaint_mask_sam_model,
-                                           inpaint_mask_box_threshold, inpaint_mask_text_threshold,
-                                           inpaint_mask_sam_max_detections, dino_erode_or_dilate, debugging_dino, params_backend],
-                                   outputs=inpaint_mask_image, show_progress=True, queue=True)
+               inputs=[inpaint_input_image, inpaint_mask_model, inpaint_mask_cloth_category,
+                       inpaint_mask_dino_prompt_text, inpaint_mask_sam_model,
+                       inpaint_mask_box_threshold, inpaint_mask_text_threshold,
+                       inpaint_mask_sam_max_detections, dino_erode_or_dilate, debugging_dino, params_backend],
+               outputs=inpaint_mask_image, show_progress=True, queue=True)
 
         ctrls = [currentTask, generate_image_grid]
         ctrls += [
@@ -1430,16 +1430,16 @@ with common.GRADIO_ROOT:
 
 
     common.GRADIO_ROOT.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
-                      .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
-                      .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
-                      .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
-                      .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
-                      .then(topbar.sync_message, inputs=state_topbar, outputs=[state_topbar]) \
-                      .then(lambda x: x, inputs=aspect_ratios_selections[0], outputs=aspect_ratios_selection, queue=False, show_progress=False) \
-                      .then(lambda x: None, inputs=aspect_ratios_selections[0], queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}') \
-                      .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
-                      .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
-                      .then(fn=lambda: None, _js='refresh_grid_delayed')
+              .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
+              .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
+              .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
+              .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
+              .then(topbar.sync_message, inputs=state_topbar, outputs=[state_topbar]) \
+              .then(lambda x: x, inputs=aspect_ratios_selections[0], outputs=aspect_ratios_selection, queue=False, show_progress=False) \
+              .then(lambda x: None, inputs=aspect_ratios_selections[0], queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}') \
+              .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
+              .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
+              .then(fn=lambda: None, _js='refresh_grid_delayed')
 
 def dump_default_english_config():
     from modules.localization import dump_english_config
@@ -1466,12 +1466,12 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
-#common.GRADIO_ROOT.launch(
-#    inbrowser=args_manager.args.in_browser,
-#    server_name=args_manager.args.listen,
-#    server_port=args_manager.args.port,
-#    root_path=args_manager.args.webroot,
-#    allowed_paths=[modules.config.path_outputs],
-#    blocked_paths=[constants.AUTH_FILENAME]
-#)
+common.GRADIO_ROOT.launch(
+    inbrowser=args_manager.args.in_browser,
+    server_name=args_manager.args.listen,
+    server_port=args_manager.args.port,
+    root_path=args_manager.args.webroot,
+    allowed_paths=[modules.config.path_outputs],
+    blocked_paths=[constants.AUTH_FILENAME]
+)
 
