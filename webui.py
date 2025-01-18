@@ -204,13 +204,13 @@ with common.GRADIO_ROOT:
             with gr.Group():
                 if args_manager.args.disable_preset_selection:
                     args_manager.args.presetmenu==''
-                else:
+                else:                    
                     if (args_manager.args.language=='cn'):
                         preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                     else:
                         preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-                        
-                   if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
+                                       
+                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
                         if (args_manager.args.language=='cn'):
                             args_manager.args.presetmenu=='topbar'
                         else:
