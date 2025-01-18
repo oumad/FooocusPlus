@@ -217,7 +217,7 @@ with common.GRADIO_ROOT:
                             args_manager.args.presetmenu=='dropdown'
                  
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
-                    bar_title = gr.Markdown('<b>Presets:</b>', visible=False, elem_id='bar_title', elem_classes='bar_title')
+                    bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
                     for i in range(topbar.topbar_limit):
                         bar_buttons.append(gr.Button(value='default' if i==0 else '', size='sm', visible=True, min_width=40, elem_id=f'bar{i}', elem_classes='bar_button'))
