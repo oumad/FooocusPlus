@@ -188,7 +188,7 @@ def set_presetmenu():
             args_manager.args.presetmenu=='topbar'
         else:
             args_manager.args.presetmenu=='dropdown'
-    return
+   return
 
 
 reload_javascript()
