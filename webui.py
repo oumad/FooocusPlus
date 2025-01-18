@@ -50,6 +50,7 @@ else:
             args_manager.args.presetmenu=='topbar'
         else:
             args_manager.args.presetmenu=='dropdown'
+print(f'Presetmenu {args_manager.args.presetmenu}) 
 
 def get_task(*args):
     args = list(args)
@@ -217,7 +218,8 @@ with common.GRADIO_ROOT:
 #                            args_manager.args.presetmenu=='topbar'
 #                        else:
 #                            args_manager.args.presetmenu=='dropdown'
-                 
+                print()
+                print(f'Presetmenu {args_manager.args.presetmenu}) 
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
