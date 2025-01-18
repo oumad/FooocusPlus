@@ -207,8 +207,7 @@ with common.GRADIO_ROOT:
                             args_manager.args.presetmenu='topbar'
                         else:
                             args_manager.args.presetmenu='dropdown'
-                print()
-                print(f'Presetmenu {args_manager.args.presetmenu}') 
+
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
@@ -1055,7 +1054,6 @@ with common.GRADIO_ROOT:
                             args_manager.args.presetmenu = 'dropdown'
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
-                        live=True
 
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
@@ -1227,7 +1225,7 @@ with common.GRADIO_ROOT:
             inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts,
             inpaint_disable_initial_latent, inpaint_engine,
             inpaint_strength, inpaint_respective_field
-        ], show_progress=False, queue=False)
+            ], show_progress=False, queue=False)
 
         # load configured default_inpaint_method
         # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
@@ -1468,12 +1466,12 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
-common.GRADIO_ROOT.launch(
-    inbrowser=args_manager.args.in_browser,
-    server_name=args_manager.args.listen,
-    server_port=args_manager.args.port,
-    root_path=args_manager.args.webroot,
-    allowed_paths=[modules.config.path_outputs],
-    blocked_paths=[constants.AUTH_FILENAME]
+#common.GRADIO_ROOT.launch(
+#    inbrowser=args_manager.args.in_browser,
+#    server_name=args_manager.args.listen,
+#    server_port=args_manager.args.port,
+#    root_path=args_manager.args.webroot,
+#    allowed_paths=[modules.config.path_outputs],
+#    blocked_paths=[constants.AUTH_FILENAME]
 )
 
