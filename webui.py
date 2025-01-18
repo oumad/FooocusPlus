@@ -665,8 +665,9 @@ with common.GRADIO_ROOT:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
 
                 if not args_manager.args.disable_preset_selection:
+                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
                     if (args_manager.args.presetmenu) == 'dropdown':
-                         preset_selection = gr.Dropdown(label='Preset',
+                        preset_selection = gr.Dropdown(label='Preset',
                             visible=True,
                             choices=modules.config.available_presets,
                             value=args_manager.args.preset if args_manager.args.preset else "initial",
@@ -674,8 +675,7 @@ with common.GRADIO_ROOT:
                     else:
                         if (args_manager.args.language=='cn'):
                             preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                        else:
-                            preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                             choices=flags.Performance.list(),
@@ -1055,7 +1055,7 @@ with common.GRADIO_ROOT:
                             args_manager.args.presetmenu = 'dropdown'
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
-#                        live=True
+                        live=True
 
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
