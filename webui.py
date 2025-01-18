@@ -205,11 +205,7 @@ with common.GRADIO_ROOT:
                 if args_manager.args.disable_preset_selection:
                     args_manager.args.presetmenu==''
                 else:                    
-                    if (args_manager.args.language=='cn'):
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                    else:
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-                                       
+                                   
                     if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
                         if (args_manager.args.language=='cn'):
                             args_manager.args.presetmenu=='topbar'
@@ -222,6 +218,11 @@ with common.GRADIO_ROOT:
                     for i in range(topbar.topbar_limit):
                         bar_buttons.append(gr.Button(value='default' if i==0 else '', size='sm', visible=True, min_width=40, elem_id=f'bar{i}', elem_classes='bar_button'))
                     #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
+                    if (args_manager.args.language=='cn'):
+                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
+                    else:
+                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+
                 with gr.Row():
                     progress_window = grh.Image(label='Preview', show_label=False, visible=True, height=768, elem_id='preview_generating',
                                             elem_classes=['main_view'], value="enhanced/attached/welcome.png")
