@@ -1473,5 +1473,5 @@ if not args_manager.args.disable_comfyd:
 #    root_path=args_manager.args.webroot,
 #    allowed_paths=[modules.config.path_outputs],
 #    blocked_paths=[constants.AUTH_FILENAME]
-)
+#)
 
