@@ -182,14 +182,6 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
         False, inpaint_engine_version, 1.0, 0.618
     ]
 
-def set_presetmenu():
-   if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
-        if (args_manager.args.language=='cn'):
-            args_manager.args.presetmenu=='topbar'
-        else:
-            args_manager.args.presetmenu=='dropdown'
-   return
-
 
 reload_javascript()
 
@@ -217,8 +209,12 @@ with common.GRADIO_ROOT:
                         preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                     else:
                         preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-
-                    set_presetmenu()
+                        
+                   if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
+                        if (args_manager.args.language=='cn'):
+                            args_manager.args.presetmenu=='topbar'
+                        else:
+                            args_manager.args.presetmenu=='dropdown'
                  
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=False, elem_id='bar_title', elem_classes='bar_title')
@@ -1036,7 +1032,6 @@ with common.GRADIO_ROOT:
                         preset_selection
                     except:           #catch the error if a preset is not yet initialized
                         preset_selection = ''
-#                    set_presetmenu()
                     refresh_files_output += [preset_selection]
                 if preset_selection != '':
                     refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
