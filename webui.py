@@ -44,6 +44,7 @@ print('Initializing user interface...')
 
 if args_manager.args.disable_preset_selection:
     args_manager.args.presetmenu==''
+    print('!!!!')
 else:   
     if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
         if (args_manager.args.language=='cn'):
