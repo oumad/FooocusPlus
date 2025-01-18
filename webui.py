@@ -182,7 +182,7 @@ def enhance_inpaint_mode_change(mode, inpaint_engine_version):
         False, inpaint_engine_version, 1.0, 0.618
     ]
 
-def set_presetmenu()
+def set_presetmenu():
    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
         if (args_manager.args.language=='cn'):
             args_manager.args.presetmenu=='topbar'
