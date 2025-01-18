@@ -42,17 +42,6 @@ from enhanced.simpleai import comfyd
 print()
 print('Initializing user interface...')
 
-if args_manager.args.disable_preset_selection:
-    args_manager.args.presetmenu==''
-    print('!!!!')
-else:   
-    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
-        if (args_manager.args.language=='cn'):
-            args_manager.args.presetmenu=='topbar'
-        else:
-            args_manager.args.presetmenu=='dropdown'
-print(f'Presetmenu {args_manager.args.presetmenu}') 
-
 def get_task(*args):
     args = list(args)
     args.pop(0)
@@ -210,15 +199,14 @@ with common.GRADIO_ROOT:
     with gr.Row():
         with gr.Column(scale=2):
             with gr.Group():
-#                if args_manager.args.disable_preset_selection:
-#                    args_manager.args.presetmenu==''
-#                else:                    
-#                                   
-#                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
-#                        if (args_manager.args.language=='cn'):
-#                            args_manager.args.presetmenu=='topbar'
-#                        else:
-#                            args_manager.args.presetmenu=='dropdown'
+                if args_manager.args.disable_preset_selection:
+                    args_manager.args.presetmenu=''
+                else:                                                    
+                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
+                        if (args_manager.args.language='cn'):
+                            args_manager.args.presetmenu='topbar'
+                        else:
+                            args_manager.args.presetmenu='dropdown'
                 print()
                 print(f'Presetmenu {args_manager.args.presetmenu}') 
                 with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
