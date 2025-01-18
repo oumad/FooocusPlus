@@ -203,7 +203,7 @@ with common.GRADIO_ROOT:
                     args_manager.args.presetmenu=''
                 else:                                                    
                     if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
-                        if (args_manager.args.language='cn'):
+                        if (args_manager.args.language=='cn'):
                             args_manager.args.presetmenu='topbar'
                         else:
                             args_manager.args.presetmenu='dropdown'
