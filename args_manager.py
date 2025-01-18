@@ -20,6 +20,11 @@ args_parser.parser.add_argument("--disable-offload-from-vram", action="store_tru
 args_parser.parser.add_argument("--theme", type=str, help="Launches the UI with light or dark theme", default='dark')
 
 args_parser.parser.add_argument("--presetmenu", type=str, help="Preset menu style: specify topbar or dropdown", default='')
+      if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
+          if (args_manager.args.language=='cn'):
+              args_manager.args.presetmenu=='topbar'
+          else:
+              args_manager.args.presetmenu=='dropdown'
 
 args_parser.parser.add_argument("--disable-image-log", action='store_true',
                                 help="Prevent writing images and logs to the outputs folder.")
