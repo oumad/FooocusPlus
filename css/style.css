@@ -4,7 +4,7 @@
   display: flex; /* Use flex to align items horizontally */
   align-items: center; /* Center items vertically within the container */
   white-space: nowrap; /* Prevent line breaks within the container */
-  margin-right: 20px;
+  margin-right: 20px; /* this addition looks so much better at all browser widths */
 }
 
 .loader {
@@ -497,11 +497,11 @@ iframe::-webkit-scrollbar {
 }
 
 .bar_button {
-    min-width: 30px;
+    min-width: 30px !important;
     /* the padding shorthand is top-right-bottom-left
        it goes around like a clock
        (since *some* people always forget!) */
-    padding: 0px 5px 0px 5px;
+    padding: 0px 5px 0px 5px !important;
     white-space: nowrap;
     overflow: hidden;
 }
