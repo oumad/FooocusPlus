@@ -4,6 +4,7 @@
   display: flex; /* Use flex to align items horizontally */
   align-items: center; /* Center items vertically within the container */
   white-space: nowrap; /* Prevent line breaks within the container */
+  margin-right: 20px;
 }
 
 .loader {
@@ -452,7 +453,7 @@ div:has(> #positive_prompt) {
     z-index: 1002;
     top: 0%;
     left: 0%;
-    right: 5%;
+    right: 0%;
     height: 45px;
     overflow: auto;
     user-select: none;
@@ -496,10 +497,10 @@ iframe::-webkit-scrollbar {
 }
 
 .bar_button {
-    min-width: 10px;
-    # the padding shorthand is top-right-bottom-left
-    # it goes around like a clock
-    # (since *some* people always forget!)
+    min-width: 30px;
+    /* the padding shorthand is top-right-bottom-left
+       it goes around like a clock
+       (since *some* people always forget!) */
     padding: 0px 5px 0px 5px;
     white-space: nowrap;
     overflow: hidden;
