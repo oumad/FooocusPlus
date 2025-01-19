@@ -664,7 +664,7 @@ with common.GRADIO_ROOT:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
 
                 if not args_manager.args.disable_preset_selection:
-                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction()) # this disables the iFrame display of preset help
                     if (args_manager.args.presetmenu) == 'dropdown':
                         preset_selection = gr.Dropdown(label='Preset',
                             visible=True,
@@ -673,6 +673,7 @@ with common.GRADIO_ROOT:
                             interactive=True)
                     else:
                         if (args_manager.args.language=='cn'):
+                            # in Chinese mode, enable the preset instructions that go with topbar style preset selection
                             preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
 
                 with gr.Group():
@@ -1058,6 +1059,9 @@ with common.GRADIO_ROOT:
 #                            args_manager.args.presetmenu = 'topbar'
 
                     language_ui=args_manager.args.language
+                    # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
+                    # once the UI has started. It was also strange that you could switch to Chinese but you could not switch
+                    # to English. Language support is determined by the --language command line argument
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
