@@ -497,7 +497,7 @@ iframe::-webkit-scrollbar {
 }
 
 .bar_button {
-    margin: 0px 5px 0px 5px;
+    margin: 0px 5px 0px 5px !important;
     min-width: 40px !important;
     /* the padding shorthand is top-right-bottom-left
        it goes around like a clock
