@@ -152,7 +152,7 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
 
 launch_vram = ldm_patched.modules.model_management.get_vram()
 if launch_vram<16000:
-    if args_manager.args.language == 'cn':
+    if args.language == 'cn':
         print(f'系统GPU显存容量太小，无法正常运行Flux, SD3, Kolors和HyDiT等最新模型，将自动禁用Comfyd引擎。请知晓，尽早升级硬件。')
     else:
         print(f'The video card appears to have ',(launch_vram),'GB of memory (VRAM).')
