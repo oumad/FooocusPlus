@@ -78,7 +78,7 @@ def get_wildcards_samples(path="root"):
             set_wildcard_path_list(wildcard_path[0], wildcard_path[1])
             #set_wildcard_path_list("root", wildcard_path[0])
         else:
-            print(f'[Wildcards] The level of wildcards is too depth: {wildcards_path}.')
+            print(f'[Wildcards] The level of wildcards is too deep: {wildcards_path}.')
     #print(f'wildcards_list:{wildcards_list}')
     if wildcards_list_all:
         load_words_translation(True)
@@ -222,10 +222,9 @@ def compile_arrays(text, rng):
             if delimiter == ';':
                 seed_fixed = False
     else:
-        mult = 0
-    
+        mult = 0 
 
-    print(f'[Wildcards] Copmile text in prompt to arrays: {text} -> arrays:{arrays}, mult:{mult}')
+    print(f'[Wildcards] Compile text in prompt to arrays: {text} -> arrays:{arrays}, mult:{mult}')
     return text, arrays, mult, seed_fixed
 
 def replace_wildcard(text, rng):
@@ -320,10 +319,10 @@ def add_wildcards_and_array_to_prompt(wildcard, prompt, state_params):
     else:
         state_params["array_wildcards_mode"] = '['
     
-    if state_params["array_wildcards_mode"] == '[':
-        new_tag = f'[__{wildcard}__]'
-    else:
-        new_tag = f'__{wildcard}__'
+#    if state_params["array_wildcards_mode"] == '[':
+#        new_tag = f'[__{wildcard}__]'
+#    else:
+    new_tag = f'__{wildcard}__'
     prompt = f'{prompt.strip()} {new_tag}'
     return gr.update(value=prompt), gr.Dataset.update(label=f'{get_wildcard_translation(wildcard)}:', samples=get_words_of_wildcard_samples(wildcard)), gr.update(open=True)
 
