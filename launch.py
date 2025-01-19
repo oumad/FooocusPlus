@@ -6,7 +6,7 @@ import ldm_patched
 print('[System ARGV] ' + str(sys.argv))
 
 # ROOT is used as a constant and
-# referenced by several modules
+# is referenced by several modules
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
@@ -150,11 +150,12 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
 
     return default_model, checkpoint_downloads
 
-if ldm_patched.modules.model_management.get_vram()<4000:
-    if  args_manager.args.language == 'cn':
+launch_vram = ldm_patched.modules.model_management.get_vram()
+if launch_vram()<16000:
+    if args_manager.args.language == 'cn':
         print(f'系统GPU显存容量太小，无法正常运行Flux, SD3, Kolors和HyDiT等最新模型，将自动禁用Comfyd引擎。请知晓，尽早升级硬件。')
     else:
-        print(f'The GPU memory capacity of the system is too small to run the latest models such as Flux, SD3, Kolors, and HyDiT properly, so the Comfyd engine will be automatically disabled.')
+        print(f'The video card appears to have '{launch_vram}'GB of memory (VRAM). The system is too small to run the larger models such as Flux, SD3, Kolors, and HyDiT properly, so the Comfyd engine will be automatically disabled.')
     args.async_cuda_allocation = False
     args.disable_async_cuda_allocation = True
     args.disable_comfyd = True
