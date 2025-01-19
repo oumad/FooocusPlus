@@ -1039,22 +1039,25 @@ with common.GRADIO_ROOT:
                 with gr.Row(visible=False):
                     binding_id_button = gr.Button(value='Binding Identity', visible=False)
                 with gr.Row():
-                    language_ui=args_manager.args.language
-                    if args_manager.args.disable_preset_selection:
-                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
-                    else:
-                        if args_manager.args.presetmenu=='dropdown':
-                            preselector_default = 'Dropdown Menu'
-                        elif args_manager.args.presetmenu=='topbar':
-                            preselector_default = 'Topbar Menu'
-                        else:
-                            preselector_default = ''
-                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
-                        if preselector == 'Dropdown Menu':
-                            args_manager.args.presetmenu = 'dropdown'
-                        elif preselector == 'Topbar Menu':
-                            args_manager.args.presetmenu = 'topbar'
 
+#                This routine works fine for changing the value of args.presetmenu
+#                but it does not actually hide or reveal the topbar and dropdown menus
+#                    if args_manager.args.disable_preset_selection:
+#                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
+#                    else:
+#                        if args_manager.args.presetmenu=='dropdown':
+#                            preselector_default = 'Dropdown Menu'
+#                        elif args_manager.args.presetmenu=='topbar':
+#                            preselector_default = 'Topbar Menu'
+#                        else:
+#                            preselector_default = ''
+#                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
+#                        if preselector == 'Dropdown Menu':
+#                            args_manager.args.presetmenu = 'dropdown'
+#                        elif preselector == 'Topbar Menu':
+#                            args_manager.args.presetmenu = 'topbar'
+
+                    language_ui=args_manager.args.language
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
