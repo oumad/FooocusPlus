@@ -89,14 +89,14 @@ div:has(> #positive_prompt) {
 }
 
 .type_row_half{
-  height: 48px !important;
+  height: 50% !important;
   font-size: 14px !important;
   white-space: nowrap;
   overflow: hidden;
 }
 
 .type_row_third{
-  height: 32px !important;
+  height: 33% !important;
   font-size: 14px !important; 
   white-space: nowrap;
   overflow: hidden;
@@ -487,9 +487,10 @@ iframe::-webkit-scrollbar {
 }
 
 .bar_title {
+    min-width: 50px !important;
     position: absolute;
-    left: 2px;
-    top: 5px;
+    left: 8px;
+    top: 2px;
     white-space: nowrap;
     overflow: hidden;
 }
