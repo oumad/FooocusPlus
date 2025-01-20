@@ -1046,20 +1046,20 @@ with common.GRADIO_ROOT:
 
 #                This routine works fine for changing the value of args.presetmenu
 #                but it does not actually hide or reveal the topbar and dropdown menus
-                     if args_manager.args.disable_preset_selection:
-                         args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
-                     else:
-                         if args_manager.args.presetmenu=='dropdown':
-                             preselector_default = 'Dropdown Menu'
-                         elif args_manager.args.presetmenu=='topbar':
-                             preselector_default = 'Topbar Menu'
-                         else:
-                             preselector_default = ''
-                         preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
-                         if preselector == 'Dropdown Menu':
-                             args_manager.args.presetmenu = 'dropdown'
-                         elif preselector == 'Topbar Menu':
-                             args_manager.args.presetmenu = 'topbar'
+                    if args_manager.args.disable_preset_selection:
+                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
+                    else:
+                        if args_manager.args.presetmenu=='dropdown':
+                            preselector_default = 'Dropdown Menu'
+                        elif args_manager.args.presetmenu=='topbar':
+                            preselector_default = 'Topbar Menu'
+                        else:
+                            preselector_default = ''
+                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
+                        if preselector == 'Dropdown Menu':
+                            args_manager.args.presetmenu = 'dropdown'
+                        elif preselector == 'Topbar Menu':
+                            args_manager.args.presetmenu = 'topbar'
 
                     language_ui=args_manager.args.language
                     # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
