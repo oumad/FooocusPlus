@@ -487,19 +487,14 @@ iframe::-webkit-scrollbar {
 }
 
 .bar_title {
-    /* the margin shorthand is top-right-bottom-left
-       it goes around like a clock
-       (since *some* people always forget!)  
-    margin: 5px, 0, 0, 8px; */ 
     position: absolute;
-    left: 8px;
+    left: 2px;
     top: 5px;
     white-space: nowrap;
     overflow: hidden;
 }
 
 .bar_button {
-    /* margin: 0px 5px 0px 5px !important; */
     min-width: 90px !important;
     padding-bottom: 5px !important;
     white-space: nowrap;
