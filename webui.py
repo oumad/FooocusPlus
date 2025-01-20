@@ -259,12 +259,14 @@ with common.GRADIO_ROOT:
                         if isinstance(default_prompt, str) and default_prompt != '':
                             common.GRADIO_ROOT.load(lambda: default_prompt, outputs=prompt)
                     with gr.Column(scale=2, min_width=0):
-                        random_button = gr.Button(value="Random Prompt", elem_classes='type_row_third', size="sm", min_width = 70)
                         if (args_manager.args.language=='cn'):
-                            translator_button = gr.Button(visible=True, value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
+                            random_button = gr.Button(value=" Random Prompt ", elem_classes='type_row_third', size="sm", min_width = 70)
+                            translator_button = gr.Button(visible=True, value=" Translator ", elem_classes='type_row_third', size='sm', min_width = 70)
+                            super_prompter = gr.Button(value=" SuperPrompt ", elem_classes='type_row_third', size="sm", min_width = 70)                            
                         else:
-                            translator_button = gr.Button(visible=False, value="Translator", elem_classes='type_row_third', size='sm', min_width = 70)
-                        super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_third', size="sm", min_width = 70)
+                            random_button = gr.Button(value=" Random Prompt ", elem_classes='type_row_half', size="sm", min_width = 70)                            
+                            translator_button = gr.Button(visible=False, value=" Translator ", elem_classes='type_row_third', size='sm', min_width = 70)
+                            super_prompter = gr.Button(value=" SuperPrompt ", elem_classes='type_row_half', size="sm", min_width = 70)
                     with gr.Column(scale=2, min_width=0):
                         generate_button = gr.Button(label="Generate", value="Generate", elem_classes='type_row', elem_id='generate_button', visible=True, min_width = 70)
                         reset_button = gr.Button(label="Reconnect", value="Reconnect", elem_classes='type_row', elem_id='reset_button', visible=False)
