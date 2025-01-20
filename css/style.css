@@ -497,7 +497,6 @@ iframe::-webkit-scrollbar {
 
 .bar_button {
     max-width: 90px !important;  
-    min-width: 90px !important;
     padding-bottom: 5px !important;
     white-space: nowrap;
     overflow: hidden;
