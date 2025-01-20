@@ -260,19 +260,19 @@ with common.GRADIO_ROOT:
                             common.GRADIO_ROOT.load(lambda: default_prompt, outputs=prompt)
                     with gr.Column(scale=2, min_width=0):
                         if (args_manager.args.language=='cn'):
-                            random_button = gr.Button(value=" Random Prompt ", elem_classes='type_row_third', size="sm", min_width = 70)
-                            translator_button = gr.Button(visible=True, value=" Translator ", elem_classes='type_row_third', size='sm', min_width = 70)
-                            super_prompter = gr.Button(value=" SuperPrompt ", elem_classes='type_row_third', size="sm", min_width = 70)                            
+                            random_button = gr.Button(value="Random Prompt", elem_classes='type_row_third', size="sm", min_width = 75)
+                            translator_button = gr.Button(visible=True, value="Translator", elem_classes='type_row_third', size='sm', min_width = 75)
+                            super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_third', size="sm", min_width = 75)
                         else:
-                            random_button = gr.Button(value=" Random Prompt ", elem_classes='type_row_half', size="sm", min_width = 70)                            
-                            translator_button = gr.Button(visible=False, value=" Translator ", elem_classes='type_row_third', size='sm', min_width = 70)
-                            super_prompter = gr.Button(value=" SuperPrompt ", elem_classes='type_row_half', size="sm", min_width = 70)
+                            random_button = gr.Button(value="Random Prompt", elem_classes='type_row_half', size="sm", min_width = 75)                            
+                            translator_button = gr.Button(visible=False, value="Translator", elem_classes='type_row_third', size='sm', min_width = 75)
+                            super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_half', size="sm", min_width = 75)
                     with gr.Column(scale=2, min_width=0):
-                        generate_button = gr.Button(label="Generate", value="Generate", elem_classes='type_row', elem_id='generate_button', visible=True, min_width = 70)
+                        generate_button = gr.Button(label="Generate", value="Generate", elem_classes='type_row', elem_id='generate_button', visible=True, min_width = 75)
                         reset_button = gr.Button(label="Reconnect", value="Reconnect", elem_classes='type_row', elem_id='reset_button', visible=False)
-                        load_parameter_button = gr.Button(label="Load Parameters", value="Load Parameters", elem_classes='type_row', elem_id='load_parameter_button', visible=False, min_width = 70)
-                        skip_button = gr.Button(label="Skip", value="Skip", elem_classes='type_row_half', elem_id='skip_button', visible=False, min_width = 70)
-                        stop_button = gr.Button(label="Stop", value="Stop", elem_classes='type_row_half', elem_id='stop_button', visible=False, min_width = 70)
+                        load_parameter_button = gr.Button(label="Load Parameters", value="Load Parameters", elem_classes='type_row', elem_id='load_parameter_button', visible=False, min_width = 75)
+                        skip_button = gr.Button(label="Skip", value="Skip", elem_classes='type_row_half', elem_id='skip_button', visible=False, min_width = 75)
+                        stop_button = gr.Button(label="Stop", value="Stop", elem_classes='type_row_half', elem_id='stop_button', visible=False, min_width = 75)
 
                         def stop_clicked(currentTask):
                             import ldm_patched.modules.model_management as model_management
