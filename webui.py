@@ -212,7 +212,7 @@ with common.GRADIO_ROOT:
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
                     for i in range(topbar.topbar_limit):
-                        bar_buttons.append(gr.Button(value='default' if i==0 else '', size='sm', visible=True, min_width=40, elem_id=f'bar{i}', elem_classes='bar_button'))
+                        bar_buttons.append(gr.Button(value='Default' if i==0 else '', size='sm', visible=True, min_width=90, elem_id=f'bar{i}', elem_classes='bar_button'))
                     #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
 
                 with gr.Row():
@@ -666,17 +666,18 @@ with common.GRADIO_ROOT:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
 
                 if not args_manager.args.disable_preset_selection:
-                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction()) # this disables the iFrame display of preset help
-                    if (args_manager.args.presetmenu) == 'dropdown':
-                        preset_selection = gr.Dropdown(label='Preset',
-                            visible=True,
-                            choices=modules.config.available_presets,
-                            value=args_manager.args.preset if args_manager.args.preset else "initial",
-                            interactive=True)
+                    if (args_manager.args.language=='cn') and (args_manager.args.presetmenu == 'topbar'):
+                        # in Chinese language mode, enable the help information that goes with topbar style preset selection:
+                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
                     else:
-                        if (args_manager.args.language=='cn'):
-                            # in Chinese mode, enable the preset instructions that go with topbar style preset selection
-                            preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
+                        # otherwise disable the iFrame display of help for preset selections:
+                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+                    
+                    preset_selection = gr.Dropdown(label='Preset',
+                        visible=(args_manager.args.presetmenu=='dropdown'),
+                        choices=modules.config.available_presets,
+                        value=args_manager.args.preset if args_manager.args.preset else "initial",
+                        interactive=True)
 
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
@@ -1045,20 +1046,20 @@ with common.GRADIO_ROOT:
 
 #                This routine works fine for changing the value of args.presetmenu
 #                but it does not actually hide or reveal the topbar and dropdown menus
-#                    if args_manager.args.disable_preset_selection:
-#                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
-#                    else:
-#                        if args_manager.args.presetmenu=='dropdown':
-#                            preselector_default = 'Dropdown Menu'
-#                        elif args_manager.args.presetmenu=='topbar':
-#                            preselector_default = 'Topbar Menu'
-#                        else:
-#                            preselector_default = ''
-#                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
-#                        if preselector == 'Dropdown Menu':
-#                            args_manager.args.presetmenu = 'dropdown'
-#                        elif preselector == 'Topbar Menu':
-#                            args_manager.args.presetmenu = 'topbar'
+                     if args_manager.args.disable_preset_selection:
+                         args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
+                     else:
+                         if args_manager.args.presetmenu=='dropdown':
+                             preselector_default = 'Dropdown Menu'
+                         elif args_manager.args.presetmenu=='topbar':
+                             preselector_default = 'Topbar Menu'
+                         else:
+                             preselector_default = ''
+                         preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
+                         if preselector == 'Dropdown Menu':
+                             args_manager.args.presetmenu = 'dropdown'
+                         elif preselector == 'Topbar Menu':
+                             args_manager.args.presetmenu = 'topbar'
 
                     language_ui=args_manager.args.language
                     # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
