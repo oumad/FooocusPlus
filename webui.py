@@ -208,8 +208,7 @@ with common.GRADIO_ROOT:
                         else:
                             args_manager.args.presetmenu='dropdown'
 
-                with gr.Row(visible=(args_manager.args.presetmenu=='topbar')):
-                    gr.update(visible=(args_manager.args.presetmenu=='topbar'))
+                with gr.Row(visible=(args_manager.args.presetmenu=='topbar')) as topbar_menu:
                     bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
                     bar_buttons = []
                     for i in range(topbar.topbar_limit):
@@ -678,7 +677,7 @@ with common.GRADIO_ROOT:
                         visible=(args_manager.args.presetmenu=='dropdown'),
                         choices=modules.config.available_presets,
                         value=args_manager.args.preset if args_manager.args.preset else "initial",
-                        interactive=True)
+                        interactive=True) as dropdown_menu
 
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
@@ -1061,6 +1060,7 @@ with common.GRADIO_ROOT:
                             args_manager.args.presetmenu = 'dropdown'
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
+                    gr.update(visible=(args_manager.args.presetmenu=='topbar'))
 
                     language_ui=args_manager.args.language
                     # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
