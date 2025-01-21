@@ -498,7 +498,7 @@ with common.GRADIO_ROOT:
                             with gr.Column():
                                 with gr.Row(visible=True) as enhance_input_panel:
                                     with gr.Tabs():
-                                        with gr.Tab(label='Upscale  or  Variation'):
+                                        with gr.Tab(label='Upscale or Variation'):
                                             with gr.Row():
                                                 with gr.Column():
                                                     enhance_uov_method = gr.Radio(label='Upscale or Variation:', choices=flags.uov_list,
@@ -678,7 +678,7 @@ with common.GRADIO_ROOT:
                         choices=modules.config.available_presets,
                         value=args_manager.args.preset if args_manager.args.preset else "initial",
                         interactive=True) as dropdown_menu
-
+                
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                             choices=flags.Performance.list(),
@@ -1031,11 +1031,11 @@ with common.GRADIO_ROOT:
                 refresh_files_output = [base_model, refiner_model, vae_name]
                 if not args_manager.args.disable_preset_selection:
                     try:
-                        preset_selection
+                        
                     except:           #catch the error if a preset is not yet initialized
-                        preset_selection = ''
-                    refresh_files_output += [preset_selection]
-                if preset_selection != '':
+                         = ''
+                    refresh_files_output += []
+                if  != '':
                     refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
 
@@ -1055,12 +1055,18 @@ with common.GRADIO_ROOT:
                             preselector_default = 'Topbar Menu'
                         else:
                             preselector_default = ''
-                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'], value=preselector_default, interactive=True)
+
+                        preselector_old = args_manager.args.presetmenu
+                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'],\
+                            value=preselector_default, interactive=True)
                         if preselector == 'Dropdown Menu':
                             args_manager.args.presetmenu = 'dropdown'
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
-                    gr.update(visible=(args_manager.args.presetmenu=='topbar'))
+
+                        if preselector != preselector_old:
+                            topbar_menu.visible=(args_manager.args.presetmenu)
+                            dropdown_menu.visible=(args_manager.args.presetmenu)
 
                     language_ui=args_manager.args.language
                     # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
@@ -1155,7 +1161,7 @@ with common.GRADIO_ROOT:
                  load_parameter_button] + freeu_ctrls + lora_ctrls
 
         if not args_manager.args.disable_preset_selection:
-            def preset_selection_change(preset, is_generating, inpaint_mode):
+            def _change(preset, is_generating, inpaint_mode):
                 preset_content = modules.config.try_get_preset_content(preset) if preset != 'initial' else {}
                 preset_prepared = modules.meta_parser.parse_meta_from_preset(preset_content)
 
@@ -1190,7 +1196,7 @@ with common.GRADIO_ROOT:
             return result
 
         if not args_manager.args.disable_preset_selection and preset_selection != '':
-            preset_selection.change(preset_selection_change, inputs=[preset_selection, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=True) \
+            .change(_change, inputs=[, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=True) \
                 .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
                 .then(lambda: None, _js='()=>{refresh_style_localization();}') \
                 .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
