@@ -1044,40 +1044,38 @@ with common.GRADIO_ROOT:
                     binding_id_button = gr.Button(value='Binding Identity', visible=False)
                 with gr.Row():
 
-#                This routine works fine for changing the value of args.presetmenu
-#                but it does not actually hide or reveal the topbar and dropdown menus
+#                These routines worked fine for changing the value of args.presetmenu
+#                but they did not actually hide or reveal the topbar and dropdown menus
 
-                    def preselector_change():
-                        print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
-                        webui = ''
-                        webui = webui.reload(webui)
-                        return # gr.Row(visible=args_manager.args.presetmenu=='topbar')
+#                    def preselector_change():
+#                        print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
+#                        return # gr.Row(visible=args_manager.args.presetmenu=='topbar')
                     
-                    if args_manager.args.disable_preset_selection:
-                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
-                    else:
-                        if args_manager.args.presetmenu=='dropdown':
-                            preselector_default = 'Dropdown Menu'
-                        elif args_manager.args.presetmenu=='topbar':
-                            preselector_default = 'Topbar Menu'
-                        else:
-                            preselector_default = ''
+#                    if args_manager.args.disable_preset_selection:
+#                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
+#                    else:
+#                        if args_manager.args.presetmenu=='dropdown':
+#                            preselector_default = 'Dropdown Menu'
+#                        elif args_manager.args.presetmenu=='topbar':
+#                            preselector_default = 'Topbar Menu'
+#                        else:
+#                            preselector_default = ''
 
-                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'],\
-                            value=preselector_default, interactive=True)
-                        if preselector == 'Dropdown Menu':
-                            args_manager.args.presetmenu = 'dropdown'
-                        elif preselector == 'Topbar Menu':
-                            args_manager.args.presetmenu = 'topbar'
+#                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'],\
+#                            value=preselector_default, interactive=True)
+#                        if preselector == 'Dropdown Menu':
+#                            args_manager.args.presetmenu = 'dropdown'
+#                        elif preselector == 'Topbar Menu':
+#                            args_manager.args.presetmenu = 'topbar'
 
-                        if preselector.input(fn=preselector_change,inputs=None,outputs=[topbar_menu]):
-                            from webui import *
+#                        if preselector.input(fn=preselector_change,inputs=None,outputs=[topbar_menu]):
 #                            dropdown_menu.visible=(args_manager.args.presetmenu)
                   
                     language_ui=args_manager.args.language
-                    # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
-                    # once the UI has started. It was also strange that you could switch to Chinese but you could not switch
-                    # to English. Language support is determined by the --language command line argument
+                    # the language_ui Radio button was removed as being redundant. It was strange that
+                    # you could switch to Chinese but you could not switch to English. Language support
+                    # is currently determined by the --language command line argument. If language
+                    # selection is later restored to the UI it needs to be more universal.
                     language_ui = gr.Radio(visible=False, label='Language of UI', choices=['En', '中文'], value=modules.flags.language_radio(args_manager.args.language), interactive=False)
                     background_theme = gr.Radio(label='Background Theme', choices=['light', 'dark'], value=args_manager.args.theme, interactive=True)
                 with gr.Group():
