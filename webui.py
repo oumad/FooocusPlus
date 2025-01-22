@@ -1063,7 +1063,7 @@ with common.GRADIO_ROOT:
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
 
-                        if preselector.change:
+                        if preselector.click:
                             print('Topbar variable: ',topbar_menu,' ',topbar_menu.visible)
                             topbar_menu.visible=(args_manager.args.presetmenu)
 #                            dropdown_menu.visible=(args_manager.args.presetmenu)
