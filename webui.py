@@ -1049,7 +1049,8 @@ with common.GRADIO_ROOT:
 
                     def preselector_change():
                         print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
-                        return gr.Row(visible=args_manager.args.presetmenu=='topbar')
+                        gradio webui.py
+                        return # gr.Row(visible=args_manager.args.presetmenu=='topbar')
                     
                     if args_manager.args.disable_preset_selection:
                         args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
