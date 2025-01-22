@@ -1063,10 +1063,14 @@ with common.GRADIO_ROOT:
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
 
-                        if preselector.click:
-                            print('Topbar variable: ',topbar_menu,' ',topbar_menu.visible)
-                            topbar_menu.visible=(args_manager.args.presetmenu)
+                        preselector.input(fn=preselector_change,None,None)
+
 #                            dropdown_menu.visible=(args_manager.args.presetmenu)
+                    
+                        def preselector_change():
+                            print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
+                            topbar_menu.visible=(args_manager.args.presetmenu)
+                            return
 
                     language_ui=args_manager.args.language
                     # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
