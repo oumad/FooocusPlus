@@ -1069,8 +1069,8 @@ with common.GRADIO_ROOT:
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
 
-                        preselector.input(fn=preselector_change,inputs=None,outputs=[topbar_menu])
-
+                        if preselector.input(fn=preselector_change,inputs=None,outputs=[topbar_menu]):
+                            from webui import *
 #                            dropdown_menu.visible=(args_manager.args.presetmenu)
                   
                     language_ui=args_manager.args.language
