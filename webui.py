@@ -1196,7 +1196,7 @@ with common.GRADIO_ROOT:
             return result
 
         if not args_manager.args.disable_preset_selection and preset_selection != '':
-            preset_selection.change(_change, inputs=[, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=True) \
+            preset_selection.change(_change, inputs=[preset_selection, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=True) \
                 .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
                 .then(lambda: None, _js='()=>{refresh_style_localization();}') \
                 .then(inpaint_engine_state_change, inputs=[inpaint_engine_state] + enhance_inpaint_mode_ctrls, outputs=enhance_inpaint_engine_ctrls, queue=False, show_progress=False)
