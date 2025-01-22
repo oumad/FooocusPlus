@@ -1066,7 +1066,7 @@ with common.GRADIO_ROOT:
 
                         if preselector != preselector_old:
                             print('Topbar variable: ',topbar_menu,' ',topbar_menu.visible)
-                            gr.topbar_menu.visible=(args_manager.args.presetmenu)
+                            topbar_menu.visible=(args_manager.args.presetmenu)
 #                            dropdown_menu.visible=(args_manager.args.presetmenu)
 
                     language_ui=args_manager.args.language
