@@ -1049,6 +1049,7 @@ with common.GRADIO_ROOT:
 
                     def preselector_change():
                         print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
+                        webui = None
                         webui = webui.reload(webui)
                         return # gr.Row(visible=args_manager.args.presetmenu=='topbar')
                     
