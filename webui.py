@@ -1046,6 +1046,11 @@ with common.GRADIO_ROOT:
 
 #                This routine works fine for changing the value of args.presetmenu
 #                but it does not actually hide or reveal the topbar and dropdown menus
+
+                    def preselector_change():
+                        print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
+                        return gr.Row(visible=args_manager.args.presetmenu=='topbar')
+                    
                     if args_manager.args.disable_preset_selection:
                         args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
                     else:
@@ -1066,11 +1071,7 @@ with common.GRADIO_ROOT:
                         preselector.input(fn=preselector_change,inputs=None,outputs=[topbar_menu])
 
 #                            dropdown_menu.visible=(args_manager.args.presetmenu)
-                    
-                    def preselector_change():
-                        print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
-                        return gr.Row(visible=args_manager.args.presetmenu=='topbar')
-
+                  
                     language_ui=args_manager.args.language
                     # the language_ui Radio button was removed as being redundant. I do not see the need for switching languages
                     # once the UI has started. It was also strange that you could switch to Chinese but you could not switch
