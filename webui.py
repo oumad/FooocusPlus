@@ -1056,7 +1056,6 @@ with common.GRADIO_ROOT:
                         else:
                             preselector_default = ''
 
-                        preselector_old = args_manager.args.presetmenu
                         preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'],\
                             value=preselector_default, interactive=True)
                         if preselector == 'Dropdown Menu':
@@ -1064,7 +1063,7 @@ with common.GRADIO_ROOT:
                         elif preselector == 'Topbar Menu':
                             args_manager.args.presetmenu = 'topbar'
 
-                        if preselector != preselector_old:
+                        if preselector.change:
                             print('Topbar variable: ',topbar_menu,' ',topbar_menu.visible)
                             topbar_menu.visible=(args_manager.args.presetmenu)
 #                            dropdown_menu.visible=(args_manager.args.presetmenu)
