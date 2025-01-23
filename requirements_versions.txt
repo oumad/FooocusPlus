@@ -47,7 +47,7 @@ tokenizers==0.19.1 #
 packaging==24.1 #
 translators==5.8.9
 websocket-client
-rembg==2.0.57 #./enhanced/libs/rembg-2.0.57-py3-none-any.whl
+rembg==2.0.58 #./enhanced/libs/rembg-2.0.57-py3-none-any.whl
 groundingdino-py==0.4.0 #./enhanced/libs/groundingdino_py-0.4.1-py2.py3-none-any.whl
 cpm_kernels
 lark-parser
