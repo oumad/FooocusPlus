@@ -61,11 +61,10 @@ def generate_mask_from_image(image: np.ndarray, mask_model: str = 'sam', extras=
     if mask_model != 'sam' or sam_options is None:
         result = remove(
             image,
-            session=new_session(mask_model, **extras),
+            session=new_session(mask_model, providers=["CPUExecutionProvider"], **extras),
             only_mask=True,
             **extras
         )
-
         return result, dino_detection_count, sam_detection_count, sam_detection_on_mask_count
 
     detections, boxes, logits, phrases = default_groundingdino(
