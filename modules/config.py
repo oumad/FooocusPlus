@@ -8,7 +8,6 @@ import modules.flags
 import modules.sdxl_styles
 import enhanced.all_parameters as ads
 
-from launch import ROOT
 from modules.model_loader import load_file_from_url
 from modules.extra_utils import makedirs_with_log, get_files_from_folder, try_eval_env_var
 from modules.flags import OutputFormat, Performance, MetadataScheme
@@ -154,16 +153,16 @@ def get_path_output() -> str:
     print('Loading support files...')
     return path_output
 
-def get_path_models_root() -> str:
+def get_path_models_() -> str:
     global config_dict
-    models_root = 'models'
-    if args_manager.args.models_root:
-        models_root = args_manager.args.models_root
-        path_models_root = os.path.abspath(models_root)
-        config_dict['path_models_root'] = path_models_root
-    path_models_root = get_dir_or_set_default('path_models_root', f'../{models_root}')
-    print(f'The path_models_root: {path_models_root}')
-    return path_models_root
+    models_ = 'models'
+    if args_manager.args.models_:
+        models_ = args_manager.args.models_
+        path_models_ = os.path.abspath(models_)
+        config_dict['path_models_'] = path_models_
+    path_models_ = get_dir_or_set_default('path_models_', f'../{models_}')
+    print(f'The path_models_: {path_models_}')
+    return path_models_
 
 def get_dir_or_set_default(key, default_value, as_array=False, make_directory=False):
     global config_dict, visited_keys, always_save_keys
@@ -209,30 +208,30 @@ def get_dir_or_set_default(key, default_value, as_array=False, make_directory=Fa
     config_dict[key] = dp
     return dp
 
-path_models_root = get_path_models_root()
-paths_checkpoints = get_dir_or_set_default('path_checkpoints', [f'{path_models_root}/checkpoints/', '../models/checkpoints/'], True)
-paths_loras = get_dir_or_set_default('path_loras', [f'{path_models_root}/loras/', '../models/loras/'], True)
-path_embeddings = get_dir_or_set_default('path_embeddings', f'{path_models_root}/embeddings/')
-path_vae_approx = get_dir_or_set_default('path_vae_approx', f'{path_models_root}/vae_approx/')
-path_vae = get_dir_or_set_default('path_vae', f'{path_models_root}/vae/')
-path_upscale_models = get_dir_or_set_default('path_upscale_models', f'{path_models_root}/upscale_models/')
-paths_inpaint = get_dir_or_set_default('path_inpaint', [f'{path_models_root}/inpaint/', '../models/inpaint/'], True)
-paths_controlnet = get_dir_or_set_default('path_controlnet', [f'{path_models_root}/controlnet/', '../models/controlnet/'], True)
-path_clip = get_dir_or_set_default('path_clip', f'{path_models_root}/clip/')
-path_clip_vision = get_dir_or_set_default('path_clip_vision', f'{path_models_root}/clip_vision/')
-path_fooocus_expansion = get_dir_or_set_default('path_fooocus_expansion', f'{path_models_root}/prompt_expansion/fooocus_expansion')
-paths_llms = get_dir_or_set_default('path_llms', [f'{path_models_root}/llms/'], True)
+path_models_ = get_path_models_()
+paths_checkpoints = get_dir_or_set_default('path_checkpoints', [f'{path_models_}/checkpoints/', '../models/checkpoints/'], True)
+paths_loras = get_dir_or_set_default('path_loras', [f'{path_models_}/loras/', '../models/loras/'], True)
+path_embeddings = get_dir_or_set_default('path_embeddings', f'{path_models_}/embeddings/')
+path_vae_approx = get_dir_or_set_default('path_vae_approx', f'{path_models_}/vae_approx/')
+path_vae = get_dir_or_set_default('path_vae', f'{path_models_}/vae/')
+path_upscale_models = get_dir_or_set_default('path_upscale_models', f'{path_models_}/upscale_models/')
+paths_inpaint = get_dir_or_set_default('path_inpaint', [f'{path_models_}/inpaint/', '../models/inpaint/'], True)
+paths_controlnet = get_dir_or_set_default('path_controlnet', [f'{path_models_}/controlnet/', '../models/controlnet/'], True)
+path_clip = get_dir_or_set_default('path_clip', f'{path_models_}/clip/')
+path_clip_vision = get_dir_or_set_default('path_clip_vision', f'{path_models_}/clip_vision/')
+path_fooocus_expansion = get_dir_or_set_default('path_fooocus_expansion', f'{path_models_}/prompt_expansion/fooocus_expansion')
+paths_llms = get_dir_or_set_default('path_llms', [f'{path_models_}/llms/'], True)
 path_wildcards = get_dir_or_set_default('path_wildcards', '../wildcards/')
-path_safety_checker = get_dir_or_set_default('path_safety_checker', f'{path_models_root}/safety_checker/')
+path_safety_checker = get_dir_or_set_default('path_safety_checker', f'{path_models_}/safety_checker/')
 path_sam = paths_inpaint[0]
 path_outputs = get_path_output()
-path_unet = get_dir_or_set_default('path_unet', f'{path_models_root}/unet')
-path_rembg = get_dir_or_set_default('path_rembg', f'{path_models_root}/rembg')
-path_layer_model = get_dir_or_set_default('path_layer_model', f'{path_models_root}/layer_model')
-paths_diffusers = get_dir_or_set_default('path_diffusers', [f'{path_models_root}/diffusers/'], True)
+path_unet = get_dir_or_set_default('path_unet', f'{path_models_}/unet')
+path_rembg = get_dir_or_set_default('path_rembg', f'{path_models_}/rembg')
+path_layer_model = get_dir_or_set_default('path_layer_model', f'{path_models_}/layer_model')
+paths_diffusers = get_dir_or_set_default('path_diffusers', [f'{path_models_}/diffusers/'], True)
 
 from enhanced.simpleai import init_modelsinfo
-modelsinfo = init_modelsinfo(path_models_root, dict(
+modelsinfo = init_modelsinfo(path_models_, dict(
     checkpoints=paths_checkpoints,
     loras=paths_loras,
     embeddings=[path_embeddings],
@@ -933,7 +932,7 @@ with open(config_example_path, "w", encoding="utf-8") as json_file:
                       'and there is no "," before the last "}". \n\n\n')
     json.dump({k: config_dict[k] for k in visited_keys}, json_file, indent=4)
 
-config_comfy_path = os.path.join(ROOT, 'comfy/extra_model_paths.yaml')
+config_comfy_path = os.path.join(, 'comfy/extra_model_paths.yaml')
 config_comfy_formatted_text = '''
 comfyui:
      models_root: {models_root}
@@ -956,24 +955,10 @@ config_comfy_text = config_comfy_formatted_text.format(models_root=path_models_r
 with open(config_comfy_path, "w", encoding="utf-8") as comfy_file:
     comfy_file.write(config_comfy_text)
 
-
-#config_controlnet_aux_path = os.path.join(shared.root, 'comfy/custom_nodes/comfyui_controlnet_aux/config.yaml')
-#config_controlnet_aux_formatted_text = '''
-#annotator_ckpts_path: {controlnets}
-#custom_temp_path:
-#USE_SYMLINKS: False
-#EP_list: ["CUDAExecutionProvider", "DirectMLExecutionProvider", "OpenVINOExecutionProvider", "ROCMExecutionProvider", "CPUExecutionProvider"]
-#'''
-#config_controlnet_aux_text = config_controlnet_aux_formatted_text.format(controlnets=paths_controlnet[0])
-#with open(config_controlnet_aux_path, "w", encoding="utf-8") as controlnet_file:
-#    controlnet_file.write(config_controlnet_aux_text)
-
-
 model_filenames = []
 lora_filenames = []
 vae_filenames = []
 wildcard_filenames = []
-
 
 def get_model_filenames(folder_paths, extensions=None, name_filter=None):
     if extensions is None:

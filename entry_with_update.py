@@ -1,9 +1,9 @@
 import os
 import sys
+from common import ROOT
 
-root = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(root)
-os.chdir(root)
+sys.path.append(ROOT)
+os.chdir(ROOT)
 
 print('Welcome to FooocusPlus...')
 

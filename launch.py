@@ -2,15 +2,12 @@ import os
 import ssl
 import sys
 import ldm_patched
+from common import ROOT
 
 print('[System ARGV] ' + str(sys.argv))
 
-# ROOT is used as a constant and
-# is referenced by several modules
-ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
-
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
