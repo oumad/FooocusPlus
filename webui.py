@@ -208,12 +208,13 @@ with common.GRADIO_ROOT:
                         else:
                             args_manager.args.presetmenu='dropdown'
 
-                with gr.Row(visible=(args_manager.args.presetmenu=='topbar')) as topbar_menu:
-                    bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
-                    bar_buttons = []
-                    for i in range(topbar.topbar_limit):
-                        bar_buttons.append(gr.Button(value='Default' if i==0 else '', size='sm', visible=True, min_width=90, elem_id=f'bar{i}', elem_classes='bar_button'))
-                    #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
+                with gr.Row:
+                    if not args_manager.args.disable_preset_selection:
+                        bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
+                        bar_buttons = []
+                        for i in range(topbar.topbar_limit):
+                            bar_buttons.append(gr.Button(value='Default' if i==0 else '', size='sm', visible=True, min_width=90, elem_id=f'bar{i}', elem_classes='bar_button'))
+                        #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
 
                 with gr.Row():
                     progress_window = grh.Image(label='Preview', show_label=False, visible=True, height=768, elem_id='preview_generating',
