@@ -1043,34 +1043,6 @@ with common.GRADIO_ROOT:
                 with gr.Row(visible=False):
                     binding_id_button = gr.Button(value='Binding Identity', visible=False)
                 with gr.Row():
-
-#                These routines worked fine for changing the value of args.presetmenu
-#                but they did not actually hide or reveal the topbar and dropdown menus
-
-#                    def preselector_change():
-#                        print('Topbar variable: ',args_manager.args.presetmenu,' ',topbar_menu.visible)
-#                        return # gr.Row(visible=args_manager.args.presetmenu=='topbar')
-                    
-#                    if args_manager.args.disable_preset_selection:
-#                        args_manager.args.presetmenu = gr.Radio(label='Presets Disabled in the Command Line', interactive=False)
-#                    else:
-#                        if args_manager.args.presetmenu=='dropdown':
-#                            preselector_default = 'Dropdown Menu'
-#                        elif args_manager.args.presetmenu=='topbar':
-#                            preselector_default = 'Topbar Menu'
-#                        else:
-#                            preselector_default = ''
-
-#                        preselector = gr.Radio(label='Choose Preset Menu Style', choices=['Dropdown Menu', 'Topbar Menu'],\
-#                            value=preselector_default, interactive=True)
-#                        if preselector == 'Dropdown Menu':
-#                            args_manager.args.presetmenu = 'dropdown'
-#                        elif preselector == 'Topbar Menu':
-#                            args_manager.args.presetmenu = 'topbar'
-
-#                        if preselector.input(fn=preselector_change,inputs=None,outputs=[topbar_menu]):
-#                            dropdown_menu.visible=(args_manager.args.presetmenu)
-                  
                     language_ui=args_manager.args.language
                     # the language_ui Radio button was removed as being redundant. It was strange that
                     # you could switch to Chinese but you could not switch to English. Language support
@@ -1151,8 +1123,6 @@ with common.GRADIO_ROOT:
             gallery.select(gallery_util.select_gallery, inputs=[gallery_index, state_topbar, backfill_prompt], outputs=[prompt_info_box, prompt, negative_prompt, params_note_info, params_note_input_name, params_note_regen_button, params_note_preset_button, state_topbar], show_progress=False)
             progress_gallery.select(gallery_util.select_gallery_progress, inputs=state_topbar, outputs=[prompt_info_box, params_note_info, params_note_input_name, params_note_regen_button, params_note_preset_button, state_topbar], show_progress=False)
 
-            #with gr.Row():
-            #    manual_link = gr.HTML(value='<a href="https://github.com/metercai/UseCaseGuidance/blob/main/UseCaseGuidanceForSimpleSDXL.md">SimpleSDXL创意生图场景应用指南</a>')
         state_is_generating = gr.State(False)
 
         load_data_outputs = [advanced_checkbox, image_number, prompt, negative_prompt, style_selections,
