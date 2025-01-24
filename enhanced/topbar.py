@@ -475,7 +475,7 @@ import shutil
 
 cur_clip_path = os.path.join(config.path_clip_vision, "clip-vit-large-patch14")
 if not os.path.exists(cur_clip_path):
-    org_clip_path = os.path.join(root, 'models/clip_vision/clip-vit-large-patch14')
+    org_clip_path = os.path.join(common.ROOT, 'models/clip_vision/clip-vit-large-patch14')
     shutil.copytree(org_clip_path, cur_clip_path)
 tokenizer = CLIPTokenizer.from_pretrained(cur_clip_path)
  
