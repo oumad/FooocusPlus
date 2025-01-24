@@ -5,7 +5,7 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
 
 
 {
-    "path_models_root": "..\\",
+    "path_models_root": "..\\..\\",
     "path_checkpoints": ["models\\checkpoints"],
     "path_loras": ["models\\loras"],
     "path_embeddings": "models\\embeddings",
