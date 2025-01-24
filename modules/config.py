@@ -31,10 +31,10 @@ always_save_keys = []
 visited_keys = []
 
 try:
-    with open(os.path.abspath(f'./presets/default.json'), "r", encoding="utf-8") as json_file:
+    with open(os.path.abspath(f'./presets/Default.json'), "r", encoding="utf-8") as json_file:
         config_dict.update(json.load(json_file))
 except Exception as e:
-    print(f'Load default preset failed.')
+    print(f'Loading Default preset failed.')
     print(e)
 
 try:
