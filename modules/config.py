@@ -196,14 +196,12 @@ def get_dir_or_set_default(key, default_value, as_array=False, make_directory=Fa
     if v is not None:
         print(f'Failed to load config key: {json.dumps({key:v})} is invalid or does not exist; will use {json.dumps({key:default_value})} instead.')
     if isinstance(default_value, list):
-        print('ROUTE A')
         dp = []
         for path in default_value:
             abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), path))
             dp.append(abs_path)
             os.makedirs(abs_path, exist_ok=True)
     else:
-        print('ROUTE B')
         dp = os.path.abspath(os.path.join(os.path.dirname(__file__), default_value))
         os.makedirs(dp, exist_ok=True)
         if as_array:
