@@ -1,6 +1,6 @@
 import os
 import sys
-from FooocusPlusAI\common import ROOT
+from FooocusPlusAI//common import ROOT
 
 sys.path.append(ROOT)
 os.chdir(ROOT)
