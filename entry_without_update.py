@@ -1,7 +1,7 @@
 import os
 import sys
-from common import ROOT
 
+ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(ROOT)
 os.chdir(ROOT)
 
