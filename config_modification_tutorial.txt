@@ -53,7 +53,7 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
         ]
     ],
     "default_max_lora_number": 5,
-    "temp_path": "C:\\Users\\buyer\\AppData\\Local\\Temp\\fooocus",
+    "temp_path": "",
     "temp_path_cleanup_on_launch": true,
     "default_engine": {},
     "default_model": "Elsewhere XL.safetensors",
@@ -76,7 +76,7 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
     "default_performance": "Speed",
     "default_image_prompt_checkbox": false,
     "default_enhance_checkbox": false,
-    "default_advanced_checkbox": true,
+    "default_advanced_checkbox": false,
     "default_developer_debug_mode_checkbox": false,
     "default_image_prompt_advanced_checkbox": false,
     "default_max_image_number": 50,
