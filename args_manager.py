@@ -50,7 +50,7 @@ args_parser.parser.add_argument("--rebuild-hash-cache", help="Generates missing 
 args_parser.parser.add_argument("--dev", action='store_true',
                                 help="launch the dev branch", default=False)
 
-args_parser.parser.add_argument("--models-root", type=str, help="Set the path root of models", default=os.listdir('.'))
+args_parser.parser.add_argument("--models-root", type=str, help="Set the path root of models", default="..\\")
 
 args_parser.parser.add_argument("--config", type=str, help="Set the path of config.txt", default=None)
 
