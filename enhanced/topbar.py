@@ -302,7 +302,8 @@ def refresh_nav_bars(state_params):
     else:
         results += [gr.update(visible=True)]
     for i in range(len(preset_name_list)):
-        name = (preset_name_list[i]).title
+        name = preset_name_list[i]
+        if name=='default': name='Default'
         name += '\u2B07' if is_models_file_absent(name) else ''
         visible_flag = i<(7 if state_params["__is_mobile"] else topbar_limit)
         if name:
