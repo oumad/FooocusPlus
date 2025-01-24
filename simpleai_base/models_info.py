@@ -595,13 +595,13 @@ class ModelsInfo:
         try:
             with open(self.info_path, "w", encoding="utf-8") as json_file:
                 json.dump(self.m_info, json_file, indent=4)
-                #print(f'[SimpleAI] Models info update and saved to {self.info_path}.')
+                #print(f'[ModelInfo] Models info update and saved to {self.info_path}.')
         except PermissionError:
-            print(f'[SimpleAI] Models info update and save failed: Permission denied, {self.info_path}.')
+            print(f'[ModelInfo] Models info update and save failed: Permission denied, {self.info_path}.')
         except json.JSONDecodeError:
-            print(f'[SimpleAI] Models info update and save failed: JSON decode error, {self.info_path}.')
+            print(f'[ModelInfo] Models info update and save failed: JSON decode error, {self.info_path}.')
         except Exception as e:
-            print(f'[SimpleAI] Models info update and save failed: {e}, {self.info_path}.')
+            print(f'[ModelInfo Models info update and save failed: {e}, {self.info_path}.')
 
     def refresh_file(self, action, file_path, url=None):
         if action not in ['add', 'delete']:
