@@ -5,36 +5,26 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
 
 
 {
-    "path_models_root": "F:\\SimpleAI\\SimpleModels",
-    "path_checkpoints": "E:\\stable-diffusion-webui\\models\\Stable-diffusion",
-    "path_loras": "E:\\stable-diffusion-webui\\models\\Lora",
-    "path_embeddings": "E:\\stable-diffusion-webui\\embeddings",
-    "path_vae_approx": "F:\\SimpleAI\\SimpleModels\\vae_approx",
-    "path_vae": "F:\\SimpleAI\\SimpleModels\\vae",
-    "path_upscale_models": "F:\\SimpleAI\\SimpleModels\\upscale_models",
-    "path_inpaint": [
-        "F:\\SimpleAI\\SimpleModels\\inpaint",
-        "F:\\SimpleAI\\SimpleSDXL2_win_0916\\SimpleSDXL\\models\\inpaint"
-    ],
-    "path_controlnet": [
-        "F:\\SimpleAI\\SimpleModels\\controlnet",
-        "F:\\SimpleAI\\SimpleSDXL2_win_0916\\SimpleSDXL\\models\\controlnet"
-    ],
-    "path_clip": "F:\\SimpleAI\\SimpleModels\\clip",
-    "path_clip_vision": "F:\\SimpleAI\\SimpleModels\\clip_vision",
-    "path_fooocus_expansion": "F:\\SimpleAI\\SimpleModels\\prompt_expansion\\fooocus_expansion",
-    "path_llms": [
-        "F:\\SimpleAI\\SimpleModels\\llms"
-    ],
-    "path_wildcards": "F:\\RuinedFooocus_win64_1-25-2\\RuinedFooocus\\wildcards",
-    "path_safety_checker": "F:\\SimpleAI\\SimpleModels\\safety_checker",
-    "path_outputs": "E:\\Outputs",
-    "path_unet": "F:\\SimpleAI\\SimpleModels\\unet",
-    "path_rembg": "F:\\SimpleAI\\SimpleModels\\rembg",
-    "path_layer_model": "F:\\SimpleAI\\SimpleModels\\layer_model",
-    "path_diffusers": [
-        "F:\\SimpleAI\\SimpleModels\\diffusers"
-    ],
+    "path_models_root": "models",
+    "path_checkpoints": ["models\\checkpoints"],
+    "path_loras": ["models\\loras"],
+    "path_embeddings": "models\\embeddings",
+    "path_vae_approx": "models\\vae_approx",
+    "path_vae": "models\\vae",
+    "path_upscale_models": "models\\upscale_models",
+    "path_inpaint": ["models\\inpaint"],
+    "path_controlnet": models\\controlnet",
+    "path_clip": "models\\clip",
+    "path_clip_vision": "models\\clip_vision",
+    "path_fooocus_expansion": "models\\prompt_expansion\\fooocus_expansion",
+    "path_llms": [models\\llms"],
+    "path_wildcards": "\\wildcards",
+    "path_safety_checker": "models\\safety_checker",
+    "path_outputs": "..\\Outputs",
+    "path_unet": "models\\unet",
+    "path_rembg": "models\\rembg",
+    "path_layer_model": "models\\layer_model",
+    "path_diffusers": ["models\\diffusers"],
     "default_loras": [
         [
             false,
@@ -63,7 +53,7 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
         ]
     ],
     "default_max_lora_number": 5,
-    "temp_path": "C:\\Users\\buyer\\AppData\\Local\\Temp\\fooocus",
+    "temp_path": "",
     "temp_path_cleanup_on_launch": true,
     "default_engine": {},
     "default_model": "Elsewhere XL.safetensors",
@@ -86,7 +76,7 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
     "default_performance": "Speed",
     "default_image_prompt_checkbox": false,
     "default_enhance_checkbox": false,
-    "default_advanced_checkbox": true,
+    "default_advanced_checkbox": false,
     "default_developer_debug_mode_checkbox": false,
     "default_image_prompt_advanced_checkbox": false,
     "default_max_image_number": 50,
