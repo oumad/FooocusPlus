@@ -275,7 +275,7 @@ def init_nav_bars(state_params, request: gr.Request):
     results += [gr.update(value=modules.flags.language_radio(state_params["__lang"])), gr.update(value=state_params["__theme"])]
     results += [gr.update(choices=state_params["__output_list"], value=None), gr.update(visible=len(state_params["__output_list"])>0, open=False)]
     results += [gr.update(value=False if state_params["__is_mobile"] else config.default_inpaint_advanced_masking_checkbox)]
-    preset = 'Default'
+    preset = 'default'
     preset_url = get_preset_inc_url(preset)
     state_params.update({"__preset_url":preset_url})
     results += [gr.update(visible=True if 'blank.inc.html' not in preset_url else False)]
@@ -302,7 +302,7 @@ def refresh_nav_bars(state_params):
     else:
         results += [gr.update(visible=True)]
     for i in range(len(preset_name_list)):
-        name = preset_name_list[i]
+        name = (preset_name_list[i]).title
         name += '\u2B07' if is_models_file_absent(name) else ''
         visible_flag = i<(7 if state_params["__is_mobile"] else topbar_limit)
         if name:
