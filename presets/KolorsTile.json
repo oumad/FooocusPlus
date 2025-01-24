@@ -1,4 +1,5 @@
 {
+    "preset category": "Alternative",
     "default_engine": {
         "backend_engine": "Comfy",
         "disvisible": ["backend_selection", "performance_selection"],

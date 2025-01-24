@@ -1,4 +1,5 @@
 {
+    "preset category": "Fantasy",
     "default_model": "ponyFaetality_v11.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
