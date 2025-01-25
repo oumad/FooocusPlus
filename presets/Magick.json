@@ -1,6 +1,6 @@
 {
-    "preset category": "Favorite",
-    "default_model": "Elsewhere XL.safetensors",
+    "preset category": "Fantasy",
+    "default_model": "Magick XL.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_loras": [
@@ -30,7 +30,7 @@
             1.0
         ]
     ],
-    "default_cfg_scale": 4.5,
+    "default_cfg_scale": 6.0,
     "default_sample_sharpness": 6.0,
     "default_sampler": "dpmpp_2m_sde_gpu",
     "default_scheduler": "karras",
@@ -39,11 +39,11 @@
     "default_prompt_negative": "",
     "default_styles": [
         "Fooocus V2",
-        "Fooocus Enhance"
+        "Fooocus Semi Realistic"
     ],
     "default_aspect_ratio": "1024*1024",
     "checkpoint_downloads": {
-        "Elsewhere XL.safetensors": "https://civitai.com/api/download/models/1126742?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+        "Magick XL.safetensors": "https://civitai.com/api/download/models/1110155?type=Model&format=SafeTensor&size=pruned&fp=fp16"
     },
     "embeddings_downloads": {},
     "lora_downloads": {
