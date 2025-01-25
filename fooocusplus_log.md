@@ -11,6 +11,7 @@
 * Comfy lockout now occurs when VRAM<6GB instead of VRAM<4GB
 * when wildcards are inserted into the prompts they are no longer surrounded by square brackets
 * the ROOT constant and two pseudo globals are now located in common.py
+* by default, the Outputs folder is now located in the FooocusPlus folder
 * when the Translator is disabled, the Random Prompt and SuperPrompt buttons are reformatted
 * FooocusPlus is now an independent fork, no longer dependent on SimpleSDXL2 or mainline Fooocus
 * the file structure of FooocusPlus is now self-contained, containing all models within FooocusPlusAI
