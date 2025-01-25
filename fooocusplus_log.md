@@ -9,10 +9,11 @@
 * the default base model is changed from JuggernautXL XI to Elsewhere XL which works better as a general
   purpose model
 * Comfy lockout now occurs when VRAM<6GB instead of VRAM<4GB
-* wildcard inserts into the main prompt are no longer surrounded by square brackets
-* the formatting of the Random Prompt and SuperPrompt are now improved when the Translator is disabled
+* when wildcards are inserted into the prompts they are no longer surrounded by square brackets
+* the ROOT constant and two pseudo globals are now located in common.py
+* when the Translator is disabled, the Random Prompt and SuperPrompt buttons are reformatted
 * FooocusPlus is now an independent fork, no longer dependent on SimpleSDXL2 or mainline Fooocus
-* the file structure of FooocusPlus is now self-contained, no longer relying on a SimpleModels folder
+* the file structure of FooocusPlus is now self-contained, containing all models within FooocusPlusAI
 
 
 # 0.9.1 to 0.9.3
