@@ -1,6 +1,7 @@
 import argparse
 import enum
 import ldm_patched.modules.options
+import os
 
 class EnumAction(argparse.Action):
     """
