@@ -38,6 +38,7 @@
 * preliminary work on supporting Stable Diffusion 3.5 has been initiated
 * the FooocusPlus version number is now tied to this log rather than being hard coded
 
+
 # 0.9.0
 
 * (2024-12-24) Forked FooocusPlus from SimpleSDXL2
