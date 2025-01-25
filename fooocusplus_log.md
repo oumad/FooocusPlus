@@ -1,5 +1,21 @@
 # 0.9.4
 
+* the GroundingDINO and RemBG security issues are now resolved
+* Gradio analytics are now permanently disabled (no more calling home)
+* Gradio share is disabled for security reasons
+* the UI is temporily coded to only display topbar preset menu selection
+* in preparation for a categorized dropdown preset menu, all presets now contain a "preset category"
+  parameter. Once the preset dropdown is working the topbar preset menu will be removed.
+* the default base model is changed from JuggernautXL XI to Elsewhere XL which works better as a general
+  purpose model
+* Comfy lockout now occurs when VRAM<6GB instead of VRAM<4GB
+* when wildcards are inserted into the prompts they are no longer surrounded by square brackets
+* the ROOT constant and two pseudo globals are now located in common.py
+* by default, the Outputs folder is now located in the FooocusPlus folder
+* when the Translator is disabled, the Random Prompt and SuperPrompt buttons are reformatted
+* FooocusPlus is now an independent fork, no longer dependent on SimpleSDXL2 or mainline Fooocus
+* the file structure of FooocusPlus is now self-contained, containing all models within FooocusPlusAI
+
 
 # 0.9.1 to 0.9.3
 
@@ -16,11 +32,12 @@
 * the mixed language preset tooltips, the Chinese only preset frame under the Settings tab, the
   Translator button and Translation Methods selector are all removed unless the command line
    argument "--language cn" (i.e. Chinese language) is present
-* the "Big Model" translation method is removed since it did not work in SDXL2
+* the "Big Model" translation method is removed since it did not work in SimpleSDXL2 or in FooocusPlus
 * the UI Language selector is removed since it was redundant and only partially functional
 * the system information displayed at the bottom of the Extras (formerly Enhanced) pane has been improved
 * preliminary work on supporting Stable Diffusion 3.5 has been initiated
 * the FooocusPlus version number is now tied to this log rather than being hard coded
+
 
 # 0.9.0
 
