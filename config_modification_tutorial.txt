@@ -34,7 +34,7 @@ Remember to split the paths with "\\" rather than "\", and there is no "," befor
     ],
     "path_wildcards": "F:\\FooocusPlusDev\\FooocusPlusAI\\wildcards",
     "path_safety_checker": "F:\\FooocusPlusDev\\FooocusPlusAI\\models\\safety_checker",
-    "path_outputs": "F:\\FooocusPlusDev\\FooocusPlusAI\\outputs",
+    "path_outputs": "F:\\FooocusPlusDev\\Outputs",
     "path_unet": "F:\\FooocusPlusDev\\FooocusPlusAI\\models\\unet",
     "path_rembg": "F:\\FooocusPlusDev\\FooocusPlusAI\\models\\rembg",
     "path_layer_model": "F:\\FooocusPlusDev\\FooocusPlusAI\\models\\layer_model",
