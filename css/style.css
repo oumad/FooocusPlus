@@ -4,6 +4,7 @@
   display: flex; /* Use flex to align items horizontally */
   align-items: center; /* Center items vertically within the container */
   white-space: nowrap; /* Prevent line breaks within the container */
+  margin-right: 20px; /* this addition looks so much better at all browser widths */
 }
 
 .loader {
@@ -88,14 +89,14 @@ div:has(> #positive_prompt) {
 }
 
 .type_row_half{
-  height: 48px !important;
+  height: 49% !important;
   font-size: 14px !important;
   white-space: nowrap;
   overflow: hidden;
 }
 
 .type_row_third{
-  height: 32px !important;
+  height: 32% !important;
   font-size: 14px !important; 
   white-space: nowrap;
   overflow: hidden;
@@ -486,18 +487,17 @@ iframe::-webkit-scrollbar {
 }
 
 .bar_title {
-    width: 50px !important;
-    padding: 0px, 5px, 0px, 0px;
+    min-width: 50px !important;
     position: absolute;
-    left: 4px;
+    left: 8px;
     top: 2px;
     white-space: nowrap;
     overflow: hidden;
 }
 
 .bar_button {
-    width: 40px !important;
-    padding: 0px;
+    max-width: 90px !important;  
+    padding-bottom: 5px !important;
     white-space: nowrap;
     overflow: hidden;
 }

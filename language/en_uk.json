@@ -43,7 +43,7 @@
     "Upscale (1.5x)": "Upscale (1.5x)",
     "Upscale (2x)": "Upscale (2x)",
     "Upscale (Fast 2x)": "Upscale (Fast 2x)",
-    "Processing Order": "Processing Order"
+    "Processing Order": "Processing Order",
     "\ud83d\udcd4 Documentation": "\uD83D\uDCD4 Documentation",
     "Image": "Image",
     "Stop At": "Stop At",
@@ -425,14 +425,14 @@
 
   "SuperPrompter": "SuperPrompter",
   "SuperPrompt": "SuperPrompt",
-  "Prompt prefix": "Prompt prefix",
+  "Prompt prefix": "Prompt Prefix",
   "OneButtonPrompt": "OneButtonPrompt",
   "Random Prompt": "Random Prompt",
   "+More": "+Plus",
-  "Random Prompt Preset": "Préréglage en un clic",
-  "HYPERPROMPTING": "Hyper invite",
-  "hyperprompt": "Hyper invite",
-  "Model type": "Type de modèle",
+  "Random Prompt Preset": "Random Prompt Preset",
+  "HYPERPROMPTING": "Hyperprompter",
+  "hyperprompt": "Hyperprompt",
+  "Model type": "Model Type",
   "Standard": "Standard",
 
     "B1": "B1",

@@ -26,7 +26,7 @@ from modules.model_loader import load_file_from_url
 # hard-coded limit to topbar preset display
 # the value inherited from SimpeSDXL2 was 14
 # use preset dropdown for no limits
-topbar_limit = 16
+topbar_limit = 24
 
 css = '''
 '''
@@ -232,7 +232,7 @@ function(system_params) {
 
 
 def init_nav_bars(state_params, request: gr.Request):
-#    print(f'request.headers:{request.headers}')
+#   print(f'request.headers:{request.headers}')
     if "__lang" not in state_params.keys():
 #        if 'accept-language' in request.headers and 'zh-CN' in request.headers['accept-language']:
 #            args_manager.args.language = 'cn'
@@ -303,6 +303,7 @@ def refresh_nav_bars(state_params):
         results += [gr.update(visible=True)]
     for i in range(len(preset_name_list)):
         name = preset_name_list[i]
+        if name=='default': name='Default'
         name += '\u2B07' if is_models_file_absent(name) else ''
         visible_flag = i<(7 if state_params["__is_mobile"] else topbar_limit)
         if name:
@@ -474,7 +475,7 @@ import shutil
 
 cur_clip_path = os.path.join(config.path_clip_vision, "clip-vit-large-patch14")
 if not os.path.exists(cur_clip_path):
-    org_clip_path = os.path.join(root, 'models/clip_vision/clip-vit-large-patch14')
+    org_clip_path = os.path.join(common.ROOT, 'models/clip_vision/clip-vit-large-patch14')
     shutil.copytree(org_clip_path, cur_clip_path)
 tokenizer = CLIPTokenizer.from_pretrained(cur_clip_path)
  
