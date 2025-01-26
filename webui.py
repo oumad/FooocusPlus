@@ -938,14 +938,18 @@ with common.GRADIO_ROOT:
                             save_final_enhanced_image_only = gr.Checkbox(label='Save Only the Final Enhanced Image',
                                             value=modules.config.default_save_only_final_enhanced_image)
 
-                        if not args_manager.args.disable_metadata:
-                            save_metadata_to_images = gr.Checkbox(label='Save Metadata to Images', value=modules.config.default_save_metadata_to_images,
-                                            info='Adds parameters to generated images allowing manual regeneration.')
-                            metadata_scheme = gr.Radio(label='Metadata Scheme', choices=flags.metadata_scheme, value=modules.config.default_metadata_scheme,
-                                            info='Image Prompt parameters are not included. Use png and A1111 for compatibility with Civitai.',
-                                            visible=modules.config.default_save_metadata_to_images)
+                        # the following conditional statement was inherited from mainline Fooocus, but it means if
+                        # metadata was off, clicking it on here will not allow a scheme to be selected.
+                        # I am at least temporarily allowing the UI to override this command line switch to see
+                        # if users will find this workable
+                        #if not args_manager.args.disable_metadata:
+                        save_metadata_to_images = gr.Checkbox(label='Save Metadata to Images', value=modules.config.default_save_metadata_to_images,
+                                        info='Adds parameters to generated images allowing manual regeneration.')
+                        metadata_scheme = gr.Radio(label='Metadata Scheme', choices=flags.metadata_scheme, value=modules.config.default_metadata_scheme,
+                                        info='Use "simple" for compatibility with Fooocus and "a1111" for compatibility with Civitai.',
+                                        visible=modules.config.default_save_metadata_to_images)
 
-                            save_metadata_to_images.change(lambda x: [gr.update(visible=x)], inputs=[save_metadata_to_images], outputs=[metadata_scheme], queue=False, show_progress=False)
+                        save_metadata_to_images.change(lambda x: [gr.update(visible=x)], inputs=[save_metadata_to_images], outputs=[metadata_scheme], queue=False, show_progress=False)
 
                     with gr.Tab(label='Control'):
                         debugging_cn_preprocessor = gr.Checkbox(label='Debug Preprocessors', value=False,
