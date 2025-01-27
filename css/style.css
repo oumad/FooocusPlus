@@ -91,12 +91,14 @@ div:has(> #positive_prompt) {
 .type_row_half{
   height: 49% !important;
   font-size: 14px !important;
+  min-width: 75px !important;
   overflow: hidden;
 }
 
 .type_row_third{
   height: 32% !important;
   font-size: 14px !important;
+  min-width: 75px !important;  
   overflow: hidden;
 }
 
