@@ -5,6 +5,7 @@
 
 FooocusPlus is a community-developed AI image generation application that makes creating stunning works of art easier than ever. FooocusPlus runs offline on your computer and is completely free! Now you can have your very own Stable Diffusion or Midjourney that helps turn your creative ideas into beautiful images without any technical skills.
 
+
 **Features**
 
 - Generate stunning images with meticulously prepared presets – just describe your new masterpiece and watch it come to life
@@ -14,6 +15,7 @@ FooocusPlus is a community-developed AI image generation application that makes 
 - Full control at your fingertips – simple one-click access to advanced generation options, letting you use custom settings like a pro without ever leaving our friendly user interface
 - Multilingual – full support for English, French, and Chinese out of the box
 - Private – runs on your computer and does not send information about your identity or AI art generation to third parties without your consent
+
 
 **Supported Models**
 
@@ -25,32 +27,36 @@ FooocusPlus gives you access to all of the latest AI image generation models, in
 - Kwai Kolors
 - Playground 2.5
 - Hunyuan-DiT
-- Stable Diffusion 3.5
+- Stable Diffusion 3.5 (temporarily disabled)
 
 If you’re new to AI art, don’t worry! Our simple preset selectors, located either in a bar at the top of the FooocusPlus window or as a dropdown menu to the right of the main canvas (your choice), will give you one-click access to all of these exciting AI image generation models without any prior knowledge required. You'll be able to choose your own favorite model in no time.
+
 
 **System Requirements**
 
 To run FooocusPlus, you will need a computer with a graphics card capable of running advanced AI software, including at least:
 
-- 6Gb of video RAM (8Gb recommended)
-- 16Gb of system RAM (32Gb recommended)
-- 50Gb of hard drive space
+- 6GB of video RAM (8GB recommended)
+- 16GB of system RAM (32GB recommended)
+- 50GB of hard drive space
 
 FooocusPlus supports NVIDIA graphics cards on Windows and Linux, macOS on Silicon, and many AMD graphics cards on Linux. We also support using AMD graphics cards on Windows at a reduced speed, and provide limited support for macOS on Intel.
+
 
 **Installing FooocusPlus Preview**
 
 FooocusPlus is currently in preview, which means we are still working on ways to make the installation process even easier. However, you can get a sneak peak of FooocusPlus right now by downloading:
 
-- The FooocusPlus for Windows program archive
-- The FooocusPlus AI Model Pack
+- The [FooocusPlus](https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/FooocusPlus.7z) for Windows program archive
+- The FooocusPlus Model [Model Starter Pack](https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/StarterPack.7z) (the Starter Pack is optional but will save you a lot of time later)
 
-After your downloads have completed, run the Windows program archive to create a FooocusPlus folder, and then unzip the AI Model Pack to the same folder. Run the start_fooocus.bat file to load FooocusPlus for the first time. We’ll download some additional components automatically on the first run.
+After your downloads have completed, run the Windows program archive to create a FooocusPlus folder, and then unzip the Model Starter Pack to the same folder. Double-click on the run_FooocusPlus.bat file (or the Chinese version, 常规启动.bat) to load FooocusPlus for the first time. We’ll download some additional components automatically on the first run.
+
 
 **Getting Help**
 
 Have a question or concern? Visit the Discussions page to join our friendly community here at GitHub or join the Facebook [Pure Fooocus](https://www.facebook.com/groups/fooocus) group. If you think you have found a bug or want to suggest a missing feature, visit the Issues page to file a report so that we can investigate.
+
 
 **Licensing**
 
@@ -65,6 +71,7 @@ You also agree that you will not use FooocusPlus to:
 - Create non-consensual or illegal pornographic content
 - Create material that may be used to harm or harass others
 - Violate the license agreements of included software packages or AI models
+
 
 **Credits**
 
