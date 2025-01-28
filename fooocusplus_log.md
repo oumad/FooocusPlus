@@ -1,3 +1,10 @@
+# 0.9.5
+
+* rebuilt .git folder for inclusion in PureFooocus release versions
+* confirmed that Hunyuan-DiT (HyDiT) is working
+* 
+
+
 # 0.9.4
 
 * the GroundingDINO and RemBG security issues are now resolved
