@@ -288,7 +288,7 @@ def check_download_kolors_model(path_root):
         with zipfile.ZipFile(downfile, 'r') as zipf:
             print(f'extractall: {downfile}')
             zipf.extractall(path_root)
-        shutil.move(os.path.join(path_temp, 'SimpleModels/diffusers/Kolors'), config.paths_diffusers[0])
+        shutil.move(os.path.join(path_temp, 'models/diffusers/Kolors'), config.paths_diffusers[0])
         os.remove(downfile)
         shutil.rmtree(path_temp)
     
