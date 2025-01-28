@@ -280,11 +280,11 @@ def check_download_kolors_model(path_root):
         os.makedirs(path_temp)
     if not common.MODELS_INFO.exists_model_key(check_model_file[0]):
         load_file_from_url(
-            url='https://huggingface.co/metercai/SimpleSDXL2/resolve/main/models_kolors_fp16_simpleai_0909.zip',
+            url='https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/KwaiKolors.zip',
             model_dir=path_temp,
-            file_name='models_kolors_fp16_simpleai_0909.zip'
+            file_name='KwaiKolors.zip'
         )
-        downfile = os.path.join(path_temp, 'models_kolors_fp16_simpleai_0909.zip')
+        downfile = os.path.join(path_temp, 'KwaiKolors.zip')
         with zipfile.ZipFile(downfile, 'r') as zipf:
             print(f'extractall: {downfile}')
             zipf.extractall(path_root)
