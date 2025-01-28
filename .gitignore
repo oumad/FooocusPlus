@@ -1,8 +1,10 @@
-__pycache__
+__pycache__/
 *.ckpt
 *.safetensors
 *.pth
 *.pt
+*.pyc
+*.pyo
 *.bin
 *.patch
 *.backup
