@@ -279,18 +279,18 @@ def check_download_kolors_model(path_root):
     if not os.path.exists(path_temp):
         os.makedirs(path_temp)
     if not common.MODELS_INFO.exists_model_key(check_model_file[0]):
-#        load_file_from_url(
-#            url='https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/KwaiKolors.zip',
-#            model_dir=path_temp,
-#            file_name='KwaiKolors.zip'
-#        )
+        load_file_from_url(
+            url='https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/KwaiKolors.zip',
+            model_dir=path_temp,
+            file_name='KwaiKolors.zip'
+        )
         downfile = os.path.join(path_temp, 'KwaiKolors.zip')
         with zipfile.ZipFile(downfile, 'r') as zipf:
             print(f'Extracting: {downfile} to {path_root}')
             zipf.extractall(path_root)
-#        shutil.move(os.path.join(path_temp, 'models/diffusers/Kolors'), config.paths_diffusers[0])
-        os.remove(downfile)
-        shutil.rmtree(path_temp)
+        if os.path.exists(downfile): os.remove(downfile)
+        if os.path.exists(path_temp) and os.path.isdir(path_temp):
+            shutil.rmtree(path_temp)
     
     if not common.MODELS_INFO.exists_model_key(check_model_file[1]):
         path_dst = os.path.join(config.paths_diffusers[0], 'Kolors/unet/diffusion_pytorch_model.fp16.safetensors')
