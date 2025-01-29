@@ -667,12 +667,8 @@ with common.GRADIO_ROOT:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
 
                 if not args_manager.args.disable_preset_selection:
-                    if (args_manager.args.language=='cn') and (args_manager.args.presetmenu == 'topbar'):
-                        # in Chinese language mode, enable the help information that goes with topbar style preset selection:
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                    else:
-                        # otherwise disable the iFrame display of help for preset selections:
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+                    # disable the iFrame display of help for preset selections:
+                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
                     
                     preset_selection = gr.Dropdown(label='Preset',
                         visible=(args_manager.args.presetmenu=='dropdown'),
