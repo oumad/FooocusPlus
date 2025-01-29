@@ -5,8 +5,7 @@ root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 os.chdir(root)
 
-print('Welcome to FooocusPlus!')
-print('Checking for updates...')
+print('Welcome to FooocusPlus: checking for updates...')
 print()
 
 try:
