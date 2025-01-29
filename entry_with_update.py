@@ -7,6 +7,7 @@ os.chdir(root)
 
 print('Welcome to FooocusPlus!')
 print('Checking for updates...')
+print()
 
 try:
     import pygit2
