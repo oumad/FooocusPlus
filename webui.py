@@ -199,15 +199,6 @@ with common.GRADIO_ROOT:
     with gr.Row():
         with gr.Column(scale=2):
             with gr.Group():
-#                if args_manager.args.disable_preset_selection:
-#                    args_manager.args.presetmenu=''
-#                else:                                                    
-#                    if (args_manager.args.presetmenu!='topbar') and (args_manager.args.presetmenu!='dropdown'):
-#                        if (args_manager.args.language=='cn'):
-#                            args_manager.args.presetmenu='topbar'
-#                        else:
-#                            args_manager.args.presetmenu='dropdown'
-
                 with gr.Row():
                     if not args_manager.args.disable_preset_selection:
                         bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
@@ -667,12 +658,8 @@ with common.GRADIO_ROOT:
             with gr.Tab(label='Settings', elem_id="scrollable-box"):
 
                 if not args_manager.args.disable_preset_selection:
-                    if (args_manager.args.language=='cn') and (args_manager.args.presetmenu == 'topbar'):
-                        # in Chinese language mode, enable the help information that goes with topbar style preset selection:
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_instruction())
-                    else:
-                        # otherwise disable the iFrame display of help for preset selections:
-                        preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
+                    # disable the iFrame display of help for preset selections:
+                    preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
                     
                     preset_selection = gr.Dropdown(label='Preset',
                         visible=(args_manager.args.presetmenu=='dropdown'),
@@ -1318,7 +1305,7 @@ with common.GRADIO_ROOT:
 
         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
         nav_bars = [bar_title] + bar_buttons
-        protections = [background_theme]
+        protections = [random_button, translator_button, super_prompter, background_theme, image_tools_checkbox]
         generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
             .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
             .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
