@@ -140,20 +140,6 @@ def get_system_message():
             json.dump(config_ext, config_file)
     return body if body else ''
 
-
-def preset_instruction():
-    head = "<div style='max-width:100%; max-height:86px; overflow:hidden'>"
-    foot = "</div>"
-    body = '预置包简介:<span style="position: absolute;right: 0;"><a href="https://gitee.com/metercai/SimpleSDXL/blob/SimpleSDXL/presets/readme.md">\U0001F4DD 什么是预置包</a></span>'
-    body += f'<iframe id="instruction" src="{get_preset_inc_url()}" frameborder="0" scrolling="no" width="100%"></iframe>'
-    return head + body + foot
-
-def preset_no_instruction():
-    head = "<div style='max-width:0px; max-height:0px; overflow:hidden'>"
-    foot = "</div>"
-    body = ''
-    return head + body + foot
-
 get_system_params_js = '''
 function(system_params) {
     const params = new URLSearchParams(window.location.search);
@@ -219,13 +205,6 @@ function(system_params) {
     if (lang!=null) {
         set_language(lang);
     }
-    if (lang=="cn") {
-        _js=initPresetPreviewOverlay(lang);
-        let preset_url = system_params["__preset_url"];
-        if (preset_url!=null) {
-            set_iframe_src(theme,lang,preset_url);
-        }
-    }
     return {}
 }
 '''
@@ -234,10 +213,6 @@ function(system_params) {
 def init_nav_bars(state_params, request: gr.Request):
 #   print(f'request.headers:{request.headers}')
     if "__lang" not in state_params.keys():
-#        if 'accept-language' in request.headers and 'zh-CN' in request.headers['accept-language']:
-#            args_manager.args.language = 'cn'
-#        else:
-#            print(f'[Topbar] No accept-language in request.headers:{request.headers}')
         state_params.update({"__lang": args_manager.args.language}) 
     if "__theme" not in state_params.keys():
         state_params.update({"__theme": args_manager.args.theme})
