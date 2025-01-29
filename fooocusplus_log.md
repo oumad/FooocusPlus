@@ -1,8 +1,15 @@
 # 0.9.5
 
-* rebuilt .git folder for inclusion in PureFooocus release versions
+* rebuilt the .git folder for inclusion in PureFooocus release versions
+* fixed the bug with inconsistent "default" preset capitalization
 * confirmed that Hunyuan-DiT (HyDiT) is working
-* 
+* rebuilt a new Kolors zip archive and unploaded it to the Hugging Face repo.
+* recoded comfy_task.py to support this new archive and tested the three Kolors presets
+* slightly improved the three Kolors presets and named them more logically
+* disabled the topbar preset tooltips and iFrame Instruction pane in all languages
+* removed the presets html and samples folder and reduced the image folder to just one image
+* simplified the Javascript tooltip code down to just a return statement
+* balanced entry_with_update.py to include only the best features from Fooocus & SimpleSDXL2
 
 
 # 0.9.4
