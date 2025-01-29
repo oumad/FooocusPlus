@@ -195,7 +195,7 @@ def get_dir_or_set_default(key, default_value, as_array=False, make_directory=Fa
 
     if v is not None:
         if 'Outputs' in v:
-            print('Creating the "Outputs" folder...')
+            print('Creating the {v} folder...')
         else:
             print(f'Failed to load config key: {json.dumps({key:v})} is invalid or does not exist; will use {json.dumps({key:default_value})} instead.')
     if isinstance(default_value, list):
