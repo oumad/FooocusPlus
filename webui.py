@@ -1303,7 +1303,7 @@ with common.GRADIO_ROOT:
                 print('Could not find metadata in the image!')
             return toolbox.reset_params_by_image_meta(parameters, state_params, state_is_generating, inpaint_mode)
 
-        reset_preset_layout = [params_backend, performance_selection, scheduler_name, sampler_name, input_image_checkbox, enhance_checkbox, base_model, refiner_model, overwrite_step, guidance_scale, negative_prompt, preset_instruction] + lora_ctrls
+        reset_preset_layout = [params_backend, performance_selection, scheduler_name, sampler_name, input_image_checkbox, enhance_checkbox, base_model, refiner_model, overwrite_step, guidance_scale, negative_prompt] + lora_ctrls
         reset_preset_func = [output_format, inpaint_advanced_masking_checkbox, mixing_image_prompt_and_vary_upscale, mixing_image_prompt_and_inpaint, backfill_prompt, translation_methods, input_image_checkbox, state_topbar]
 
         metadata_import_button.click(trigger_metadata_import, inputs=[metadata_input_image, state_is_generating, state_topbar], outputs=reset_preset_layout + reset_preset_func + load_data_outputs, queue=False, show_progress=True) \
@@ -1311,7 +1311,7 @@ with common.GRADIO_ROOT:
 
         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
         nav_bars = [bar_title] + bar_buttons
-        protections = [background_theme]
+        protections = [random_button, translator_button, super_prompter, background_theme, image_tools_checkbox]
         generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
             .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
             .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
@@ -1417,7 +1417,7 @@ with common.GRADIO_ROOT:
 
 
     common.GRADIO_ROOT.load(fn=lambda x: x, inputs=system_params, outputs=state_topbar, _js=topbar.get_system_params_js, queue=False, show_progress=False) \
-              .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox, preset_instruction], show_progress=False) \
+              .then(topbar.init_nav_bars, inputs=state_topbar, outputs=nav_bars + [progress_window, language_ui, background_theme, gallery_index, index_radio, inpaint_advanced_masking_checkbox], show_progress=False) \
               .then(topbar.reset_layout_params, inputs=reset_preset_inputs, outputs=reset_layout_params, show_progress=False) \
               .then(fn=lambda x: x, inputs=state_topbar, outputs=system_params, show_progress=False) \
               .then(fn=lambda x: {}, inputs=system_params, outputs=system_params, _js=topbar.refresh_topbar_status_js) \
