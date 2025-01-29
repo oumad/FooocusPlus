@@ -110,70 +110,7 @@ function showSysMsg(message, theme) {
 }
 
 function initPresetPreviewOverlay(language) {
-    if (language != "cn") return;
-    let overlayVisible = false;
-    const samplesPath = document.querySelector("meta[name='preset-samples-path']").getAttribute("content")
-    const overlay = document.createElement('div');
-    const tooltip = document.createElement('div');
-    tooltip.className = 'preset-tooltip';
-    overlay.appendChild(tooltip);
-    overlay.id = 'presetPreviewOverlay';
-    document.body.appendChild(overlay);
-    
-    document.addEventListener('mouseover', async function (e) {
-        const label = e.target.closest('.bar_button');
-        if (!label) return;
-        label.removeEventListener("mouseout", onMouseLeave);
-        label.addEventListener("mouseout", onMouseLeave);
-        const originalText = label.getAttribute("data-original-text");
-        let name = originalText || label.textContent;
-	name = name.trim();
-	if (name!=" " && name!='') {
-	    let download = false;
-	    if (name.endsWith('\u2B07')) {
-    	   	name = name.slice(0, -1);
-    		download = true;
-	    }
-	    const img = new Image();
-            img.src = samplesPath.replace(
-                "default",
-                name.toLowerCase().replaceAll(" ", "_")
-            ).replaceAll("\\", "\\\\");
-            img.onerror = async () => {
-                overlay.style.height = '54px';
-		let text = "模型资源"
-		text += await fetchPresetDataFor(name);
-                if (download) text += ' '+'\u2B07'+"未就绪要下载";
-		else text += ' '+"已准备好";
-                tooltip.textContent = text;
-            };
-	    img.onload = async () => {
-                overlay.style.height = '128px'; 
-		let text = await fetchPresetDataFor(name);
-                if (download) text += ' '+'\u2B07'+"要下载资源";
-                tooltip.textContent = text;
-		overlay.style.backgroundImage = `url("${samplesPath.replace(
-                    "default",
-                    name.toLowerCase().replaceAll(" ", "_")
-                ).replaceAll("\\", "\\\\")}")`;
-            };
-
-	    overlayVisible = true;
-	    overlay.style.opacity = "1";
-	}
-        function onMouseLeave() {
-            overlayVisible = false;
-            overlay.style.opacity = "0";
-            overlay.style.backgroundImage = "";
-            label.removeEventListener("mouseout", onMouseLeave);
-        }
-    });
-    document.addEventListener('mousemove', function (e) {
-        if (!overlayVisible) return;
-        overlay.style.left = `${e.clientX}px`;
-        overlay.style.top = `${e.clientY}px`;
-        overlay.className = e.clientY > window.innerHeight / 2 ? "lower-half" : "upper-half";
-    });
+    return;
 }
 
 async function fetchPresetDataFor(name) {
