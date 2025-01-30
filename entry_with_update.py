@@ -1,6 +1,6 @@
 import os
 import sys
-import fooocus_version
+import enhanced.version as version
 
 root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
