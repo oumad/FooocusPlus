@@ -58,6 +58,7 @@ except Exception as e:
 
 new_version = version.get_fooocusplus_ver()
 if new_version != old_version:
-    print('Updated FooocusPlus from ,old_version, to ,newversion')
+    print('Updated FooocusPlus from ,old_version, to ,new_version')
+    print()
 
 from launch import *
