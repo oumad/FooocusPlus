@@ -39,9 +39,9 @@
     "default_prompt_negative": "",
     "default_styles": [
         "Fooocus V2",
-        "Fooocus Cinematic"
+        "Fooocus Enhance"
     ],
-    "default_aspect_ratio": "1152*896",
+    "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": -1,
     "checkpoint_downloads": {
         "sd_xl_base_1.0_0.9vae.safetensors": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0_0.9vae.safetensors",
