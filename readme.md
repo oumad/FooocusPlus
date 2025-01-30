@@ -44,7 +44,7 @@ FooocusPlus supports NVIDIA graphics cards on Windows and Linux, macOS on Silico
 FooocusPlus is currently in preview, which means we are still working on ways to make the installation process even easier. However, you can get a sneak peak of FooocusPlus right now by downloading:
 
 - The _latest_ version of [7-Zip](https://7-zip.org/) (the installation may fail if the version is not current)
-- The [FooocusPlus][(https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/FooocusPlus.zip)] for Windows program archive
+- The [FooocusPlus](https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/FooocusPlus.zip) Windows program archive
 - The FooocusPlus [Model Starter Pack](https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/StarterPack.7z) (the Starter Pack is optional but will save you a lot of time later)
 
 After your downloads have completed, first install 7-Zip. Next, install the Windows program archive to create a FooocusPlus folder, and then install the Model Starter Pack to the models folder. Double-click on the run_FooocusPlus.bat file (or the Chinese version, 常规启动.bat) to load FooocusPlus for the first time. We’ll download some additional components automatically on the first run.
