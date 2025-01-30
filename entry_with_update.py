@@ -1,9 +1,12 @@
 import os
 import sys
+import fooocus_version
 
 root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 os.chdir(root)
+
+old_version = version.get_fooocusplus_ver()
 
 print('Welcome to FooocusPlus: checking for updates...')
 print()
@@ -52,5 +55,9 @@ try:
 except Exception as e:
     print(f'{branch_name if branch_name!="main" else "FooocusPlus"}: Update failed.')
     print(str(e))
+
+new_version = version.get_fooocusplus_ver()
+if new_version != old_version:
+    print('Updated FooocusPlus from ,old_version, to ,newversion')
 
 from launch import *
