@@ -153,9 +153,10 @@ if launch_vram<6000:
     if args.language == 'cn':
         print(f'系统GPU显存容量太小，无法正常运行Flux, SD3, Kolors和HyDiT等最新模型，将自动禁用Comfyd引擎。请知晓，尽早升级硬件。')
     else:
-        print(f'The video card appears to have about',(launch_vram),'MB of memory (VRAM).')
-        print('This value is too small to run Comfy based models such as Flux, SD3, Kolors, and HyDiT')
-        print('so Comfy will be disabled.')
+        print(f'The video card has about',(launch_vram),'MB of memory (VRAM)')
+        print('and will not be able to run large models such as Flux, SD3, Kolors and HyDiT')
+        print('but FooocusPlus will give you access to models that are optimized')
+        print('for Low VRAM systems.')
     print()
     args.async_cuda_allocation = False
     args.disable_async_cuda_allocation = True
