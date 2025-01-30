@@ -1,3 +1,9 @@
+# 0.9.6
+
+* introduced support for 4GB SDXL compatible models
+* system defaults to a 4GB version of SAI SDXL if VRAM<6GB
+
+
 # 0.9.5
 
 * rebuilt the .git folder for inclusion in PureFooocus release versions
