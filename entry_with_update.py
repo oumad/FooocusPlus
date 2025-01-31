@@ -21,7 +21,6 @@ def get_fooocusplus_version():
 
 old_version = get_fooocusplus_version()
 print(f'Welcome to FooocusPlus {old_version}: checking for updates...')
-print()
 
 try:
     import pygit2
@@ -71,6 +70,6 @@ except Exception as e:
 new_version = get_fooocusplus_version()
 if new_version != old_version:
     print(f'Updated FooocusPlus from {old_version} to {new_version}')
-    print()
+print()
 
 from launch import *
