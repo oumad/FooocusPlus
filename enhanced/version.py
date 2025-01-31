@@ -2,26 +2,7 @@ import os
 
 branch = ''
 commit_id = ''
-fooocusplus_ver = ''
 simplesdxl_ver = ''
-
-def get_fooocusplus_ver():
-    global fooocusplus_ver, commit_id
-    if not fooocusplus_ver:
-        fooocusplus_log = os.path.abspath(f'./fooocusplus_log.md')
-        if os.path.exists(fooocusplus_log):
-            with open(fooocusplus_log, "r", encoding="utf-8") as log_file:
-                line = log_file.readline().strip()
-                while line:
-                    if line.startswith("# "):
-                        break
-                    line = log_file.readline().strip()                
-        else:
-            line = '0.9.0'
-        fooocusplus_ver = line.strip('# ')
-        if commit_id:
-            fooocusplus_ver += f'.{commit_id}'
-    return fooocusplus_ver
 
 def get_simplesdxl_ver():
     global simplesdxl_ver, commit_id
