@@ -2,6 +2,7 @@
 
 * introduced support for 4GB SDXL compatible models
 * system defaults to a 4GB version of SAI SDXL if VRAM<6GB
+* improved FooocusPlus version messaging: updates are specifically identified
 
 
 # 0.9.5
