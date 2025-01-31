@@ -7,7 +7,7 @@
             "task_method": "flux_base2_gguf"
             }
     	},
-    "default_model": "Flux\\flux-hyp16-Q8_0.gguf",
+    "default_model": "Flux\\flux-hyp16-Q6_K.gguf",
     "default_refiner": "None",
     "default_refiner_switch": 0.5,
     "default_loras": [
@@ -41,10 +41,13 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 25,
     "checkpoint_downloads": {
-        "flux-hyp8-Q5_K_M.gguf": "https://huggingface.co/mhnakif/flux-hyp8-gguf-k/resolve/main/flux-hyp8-Q5_K_M.gguf"
+        "flux-hyp16-Q6_K.gguf": "https://huggingface.co/mhnakif/flux-hyp16-gguf-k/resolve/main/flux-hyp16-Q6_K.gguf"
     },
     "embeddings_downloads": {},
-    "lora_downloads": {},
+    "lora_downloads": {
+        "Flux\\FluxDFaeTasticDetails.safetensors": "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor",
+        "Flux\\Flux_BlackColor_SaMay.safetensors": "https://civitai.com/api/download/models/789575?type=Model&format=SafeTensor"
+    },
     "vae_downloads": {
         "ae.safetensors": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/ae.safetensors"
     }
