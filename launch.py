@@ -1,7 +1,6 @@
 import os
 import ssl
 import sys
-import entry_with_update as update
 import ldm_patched
 from common import ROOT
 
