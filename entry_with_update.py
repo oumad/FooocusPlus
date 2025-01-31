@@ -5,24 +5,21 @@ root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 os.chdir(root)
 
-fooocusplus_ver = ''
-def get_fooocusplus_ver():
-    global fooocusplus_ver
-    if not fooocusplus_ver:
-        fooocusplus_log = os.path.abspath(f'./fooocusplus_log.md')
-        if os.path.exists(fooocusplus_log):
-            with open(fooocusplus_log, "r", encoding="utf-8") as log_file:
-                line = log_file.readline().strip()
-                while line:
-                    if line.startswith("# "):
-                        break
-                    line = log_file.readline().strip()                
-        else:
-            line = '0.9.0'
-        fooocusplus_ver = line.strip('# ')
+def get_fooocusplus_version():
+    fooocusplus_log = os.path.abspath(f'./fooocusplus_log.md')
+    if os.path.exists(fooocusplus_log):
+        with open(fooocusplus_log, "r", encoding="utf-8") as log_file:
+            line = log_file.readline().strip()
+            while line:
+                if line.startswith("# "):
+                    break
+                line = log_file.readline().strip()                
+    else:
+        line = '0.9.0'
+    fooocusplus_ver = line.strip('# ')
     return fooocusplus_ver
 
-old_version = get_fooocusplus_ver()
+old_version = get_fooocusplus_version()
 print(f'Welcome to FooocusPlus {old_version}: checking for updates...')
 print()
 
@@ -71,8 +68,8 @@ except Exception as e:
     print(f'{branch_name if branch_name!="main" else "FooocusPlus"}: Update failed.')
     print(str(e))
 
-new_version = get_fooocusplus_ver()
-if new_version != fooocusplus_ver:
+new_version = get_fooocusplus_version()
+if new_version != old_version:
     print(f'Updated FooocusPlus from {old_version} to {new_version}')
     print()
 
