@@ -1,6 +1,6 @@
 {
     "preset category": "Favorite",
-    "default_model": "Elsewhere XL.safetensors",
+    "default_model": "elsewhereXL_v10.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_loras": [
@@ -43,7 +43,7 @@
     ],
     "default_aspect_ratio": "1024*1024",
     "checkpoint_downloads": {
-        "Elsewhere XL.safetensors": "https://civitai.com/api/download/models/1126742?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+        "elsewhereXL_v10.safetensors": "https://civitai.com/api/download/models/1110155?type=Model&format=SafeTensor&size=pruned&fp=fp16"
     },
     "embeddings_downloads": {},
     "lora_downloads": {

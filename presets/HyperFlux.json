@@ -8,19 +8,19 @@
             "task_method": "flux_base2_gguf"
             }
     	},
-    "default_model": "flux-hyp8-Q5_K_M.gguf",
+    "default_model": "Flux\\hyperfluxDiversity_q5KS.gguf",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_loras": [
         [
-            true,
-            "None",
-            1.0
+            false,
+            "Flux\\FluxDFaeTasticDetails.safetensors",
+            0.8
         ],
         [
-            true,
-            "None",
-            1.0
+            false,
+            "Flux\\Flux_BlackColor_SaMay.safetensors",
+            0.7
         ],
         [
             true,
@@ -43,11 +43,13 @@
     "default_sampler": "euler",
     "default_scheduler": "simple",
     "default_performance": "Speed",
-    "default_styles": [],
+    "default_styles": [
+        "Fooocus V2"
+    ],
     "default_aspect_ratio": "1024*1024",
-    "default_overwrite_step": 12,
+    "default_overwrite_step": 20,
     "checkpoint_downloads": {
-        "flux-hyp8-Q5_K_M.gguf": "https://huggingface.co/mhnakif/flux-hyp8-gguf-k/resolve/main/flux-hyp8-Q5_K_M.gguf"
+        "hyperfluxDiversity_q5KS.gguf": "https://civitai.com/api/download/models/1147912?type=Model&format=GGUF&size=pruned&fp=fp8"
     },
     "embeddings_downloads": {},
     "lora_downloads": {},

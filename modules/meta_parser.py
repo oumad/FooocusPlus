@@ -7,7 +7,6 @@ from pathlib import Path
 import gradio as gr
 from PIL import Image
 
-import entry_with_update as update
 import fooocus_version
 import enhanced.version
 import modules.config
@@ -851,7 +850,7 @@ def get_exif(metadata: str | None, metadata_scheme: str):
     # 0x9286 = UserComment
     exif[0x9286] = metadata
     # 0x0131 = Software
-    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {update.version.get_fooocusplus_ver()}'
+    exif[0x0131] = f'Fooocus {fooocus_version.version}, SimpleSDXL2 {enhanced.version.get_simplesdxl_ver()}, FooocusPlus {enhanced.version.get_fooocusplus_ver()}'
     # 0x927C = MakerNote
     exif[0x927C] = metadata_scheme
     return exif

@@ -238,7 +238,6 @@ def worker():
     import extras.face_crop
     import fooocus_version
     import enhanced.version as version
-    import entry_with_update as update
     import enhanced.wildcards as wildcards
     
     from extras.censor import default_censor
@@ -483,7 +482,7 @@ def worker():
             d.append(('Backend Engine', 'backend_engine', async_task.task_class_full))
             d.append(('Metadata Scheme', 'metadata_scheme',
                       async_task.metadata_scheme.value if async_task.save_metadata_to_images else async_task.save_metadata_to_images))
-            d.append(('Version', 'version', f'Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}, FooocusPlus {update.get_fooocusplus_ver()}'))
+            d.append(('Version', 'version', f'Fooocus {fooocus_version.version}, SimpleSDXL2 {version.get_simplesdxl_ver()}, FooocusPlus {version.get_fooocusplus_ver()}'))
             img_paths.append(log(x, d, metadata_parser, async_task.output_format, task, persist_image))
 
         return img_paths

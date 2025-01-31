@@ -20,7 +20,6 @@ ssl._create_default_https_context = ssl._create_unverified_context
 import platform
 import comfy.comfy_version
 import enhanced.version as version
-import entry_with_update as update
 import fooocus_version
 
 from build_launcher import build_launcher
@@ -41,7 +40,7 @@ def prepare_environment():
     print(f"Comfy version: {comfy.comfy_version.version}")    
     print(f"Fooocus version: {fooocus_version.version}")
     print(f"SimpleSDXL2 version: {version.get_simplesdxl_ver()}")
-    print(f"FooocusPlus version: {update.get_fooocusplus_ver()}")
+    print(f"FooocusPlus version: {version.get_fooocusplus_ver()}")
     print()
 
     if REINSTALL_ALL or not is_installed("torch") or not is_installed("torchvision"):
