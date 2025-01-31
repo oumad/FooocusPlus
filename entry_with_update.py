@@ -22,7 +22,7 @@ def get_fooocusplus_ver():
         fooocusplus_ver = line.strip('# ')
     return fooocusplus_ver
 
-print('Welcome to FooocusPlus ',fooocusplus_ver,': checking for updates...')
+print('Welcome to FooocusPlus {get_fooocusplus_ver()}: checking for updates...')
 print()
 
 try:
