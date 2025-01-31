@@ -7,7 +7,7 @@ os.chdir(root)
 
 fooocusplus_ver = ''
 def get_fooocusplus_ver():
-    global fooocusplus_ver, commit_id
+    global fooocusplus_ver
     if not fooocusplus_ver:
         fooocusplus_log = os.path.abspath(f'./fooocusplus_log.md')
         if os.path.exists(fooocusplus_log):
@@ -24,7 +24,7 @@ def get_fooocusplus_ver():
             fooocusplus_ver += f'.{commit_id}'
     return fooocusplus_ver
 
-print('Welcome to FooocusPlus ,fooocusplus_ver,: checking for updates...')
+print('Welcome to FooocusPlus ',fooocusplus_ver,': checking for updates...')
 print()
 
 try:
