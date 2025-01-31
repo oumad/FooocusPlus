@@ -1,4 +1,4 @@
-# 0.9.6a
+# 0.9.6
 
 * introduced support for 4GB SDXL compatible models
 * system defaults to a 4GB version of SAI SDXL if VRAM<6GB
