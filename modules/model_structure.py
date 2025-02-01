@@ -17,4 +17,4 @@ def create_model_structure():
   os.makedirs(config.paths_loras[0] + '\SD1.5', exist_ok=True)
   os.makedirs(config.paths_loras[0] + '\SD3x', exist_ok=True)
 
-return
+  return
