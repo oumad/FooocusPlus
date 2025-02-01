@@ -94,9 +94,12 @@ if args.hf_mirror is not None:
 
 from modules import config
 from modules.hash_cache import init_cache
+from modules.model_structure import create_model_structure
 os.environ["U2NET_HOME"] = config.paths_inpaint[0]
 os.environ["BERT_HOME"] = config.paths_llms[0]
 os.environ['GRADIO_TEMP_DIR'] = config.temp_path
+
+create_model_structure()
 
 if config.temp_path_cleanup_on_launch:
     print(f'[Cleanup] Attempting to delete content of temp dir {config.temp_path}')
@@ -105,8 +108,6 @@ if config.temp_path_cleanup_on_launch:
         print("[Cleanup] Cleanup successful")
     else:
         print(f"[Cleanup] Failed to delete content of temp dir.")
-
-modules.model_structure.create_model_structure()
 
 def download_models(default_model, previous_default_models, checkpoint_downloads, embeddings_downloads, lora_downloads, vae_downloads):
     from modules.util import get_file_from_folder_list
