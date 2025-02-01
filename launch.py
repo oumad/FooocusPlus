@@ -138,6 +138,7 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         model_dir = os.path.dirname(get_file_from_folder_list(file_name, config.paths_checkpoints))
         print(f'model_dir {model_dir}')
         print(f'config.paths_checkpoints {config.paths_checkpoints}')
+        print(f'config.paths_checkpoints[0] {config.paths_checkpoints[0]}')        
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
     for file_name, url in embeddings_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_embeddings, file_name=file_name)
