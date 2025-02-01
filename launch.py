@@ -140,6 +140,7 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         os.makedirs(config.paths_checkpoints[0] + '\Alternative', exist_ok=True)
         os.makedirs(config.paths_checkpoints[0] + '\Flux', exist_ok=True)
         os.makedirs(config.paths_checkpoints[0] + '\LowVRAM', exist_ok=True)
+        os.makedirs(config.paths_checkpoints[0] + '\Pony', exist_ok=True)
         os.makedirs(config.paths_checkpoints[0] + '\SD1.5', exist_ok=True)
         os.makedirs(config.paths_checkpoints[0] + '\SD3x', exist_ok=True)
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
@@ -152,6 +153,7 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         # ensure that the special LoRA directories exist
         os.makedirs(config.paths_loras[0] + '\Alternative', exist_ok=True)        
         os.makedirs(config.paths_loras[0] + '\Flux', exist_ok=True)
+        os.makedirs(config.paths_loras[0] + '\Pony', exist_ok=True)
         os.makedirs(config.paths_loras[0] + '\SD1.5', exist_ok=True)
         os.makedirs(config.paths_loras[0] + '\SD3x', exist_ok=True)
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
