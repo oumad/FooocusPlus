@@ -106,6 +106,7 @@ if config.temp_path_cleanup_on_launch:
     else:
         print(f"[Cleanup] Failed to delete content of temp dir.")
 
+modules.model_structure.create_model_structure()
 
 def download_models(default_model, previous_default_models, checkpoint_downloads, embeddings_downloads, lora_downloads, vae_downloads):
     from modules.util import get_file_from_folder_list
@@ -136,13 +137,6 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
 
     for file_name, url in checkpoint_downloads.items():
         model_dir = os.path.dirname(get_file_from_folder_list(file_name, config.paths_checkpoints))
-        # ensure that all the special model directories exist
-        os.makedirs(config.paths_checkpoints[0] + '\Alternative', exist_ok=True)
-        os.makedirs(config.paths_checkpoints[0] + '\Flux', exist_ok=True)
-        os.makedirs(config.paths_checkpoints[0] + '\LowVRAM', exist_ok=True)
-        os.makedirs(config.paths_checkpoints[0] + '\Pony', exist_ok=True)
-        os.makedirs(config.paths_checkpoints[0] + '\SD1.5', exist_ok=True)
-        os.makedirs(config.paths_checkpoints[0] + '\SD3x', exist_ok=True)
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
     
     for file_name, url in embeddings_downloads.items():
@@ -150,12 +144,6 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         
     for file_name, url in lora_downloads.items():
         model_dir = os.path.dirname(get_file_from_folder_list(file_name, config.paths_loras))
-        # ensure that the special LoRA directories exist
-        os.makedirs(config.paths_loras[0] + '\Alternative', exist_ok=True)        
-        os.makedirs(config.paths_loras[0] + '\Flux', exist_ok=True)
-        os.makedirs(config.paths_loras[0] + '\Pony', exist_ok=True)
-        os.makedirs(config.paths_loras[0] + '\SD1.5', exist_ok=True)
-        os.makedirs(config.paths_loras[0] + '\SD3x', exist_ok=True)
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
         
     for file_name, url in vae_downloads.items():
