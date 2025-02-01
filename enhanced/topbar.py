@@ -454,7 +454,7 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
 
     for file_name, url in checkpoint_downloads.items():
         model_dir = os.path.dirname(common.MODELS_INFO.get_file_path_by_name('checkpoints', file_name))
-        model_temp = default_model.lower
+        model_temp = default_model.lower()
         print(f'model_temp {model_temp}')
         if (model_temp.find('flux')) and not(model_dir.endswith('\Flux')):
             model_dir = model_dir + '\Flux'
