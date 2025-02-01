@@ -136,14 +136,19 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
 
     for file_name, url in checkpoint_downloads.items():
         model_dir = os.path.dirname(get_file_from_folder_list(file_name, config.paths_checkpoints))
-        print(f'model_dir {model_dir}')
-        print(f'config.paths_checkpoints {config.paths_checkpoints}')
-        os.makedirs(config.paths_checkpoints[0] + '\Flux')        
+        # ensure that all the special model directories exist
+        os.makedirs(config.paths_checkpoints[0] + '\Alternative')
+        os.makedirs(config.paths_checkpoints[0] + '\Flux')
+        os.makedirs(config.paths_checkpoints[0] + '\LowVRAM')
+        os.makedirs(config.paths_checkpoints[0] + '\SD1.5')
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
     for file_name, url in embeddings_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_embeddings, file_name=file_name)
     for file_name, url in lora_downloads.items():
         model_dir = os.path.dirname(get_file_from_folder_list(file_name, config.paths_loras))
+        # ensure that the special LoRA directories exist
+        os.makedirs(config.paths_loras[0] + '\Flux')
+        os.makedirs(config.paths_loras[0] + '\SD1.5')
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
     for file_name, url in vae_downloads.items():
         load_file_from_url(url=url, model_dir=config.path_vae, file_name=file_name)
