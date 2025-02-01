@@ -141,6 +141,7 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         os.makedirs(config.paths_checkpoints[0] + '\Flux', exist_ok=True)
         os.makedirs(config.paths_checkpoints[0] + '\LowVRAM', exist_ok=True)
         os.makedirs(config.paths_checkpoints[0] + '\SD1.5', exist_ok=True)
+        os.makedirs(config.paths_checkpoints[0] + '\SD3x', exist_ok=True)
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
     
     for file_name, url in embeddings_downloads.items():
@@ -152,6 +153,7 @@ def download_models(default_model, previous_default_models, checkpoint_downloads
         os.makedirs(config.paths_loras[0] + '\Alternative', exist_ok=True)        
         os.makedirs(config.paths_loras[0] + '\Flux', exist_ok=True)
         os.makedirs(config.paths_loras[0] + '\SD1.5', exist_ok=True)
+        os.makedirs(config.paths_loras[0] + '\SD3x', exist_ok=True)
         load_file_from_url(url=url, model_dir=model_dir, file_name=file_name)
         
     for file_name, url in vae_downloads.items():
