@@ -38,9 +38,9 @@ def is_lowlevel_device():
 def is_highlevel_device():
     return ldm_patched.modules.model_management.get_vram()>VRAM16G
 
-default_base_SD15_name = 'realisticVisionV60B1_v51VAE.safetensors'
-default_base_SD3m_name_list = ['sd3_medium_incl_clips.safetensors', 'sd3_medium_incl_clips_t5xxlfp8.safetensors', 'sd3_medium_incl_clips_t5xxlfp16.safetensors']
-default_base_SD3x_name_list = ['stableDiffusion35_large.safetensors', 'sd3_medium_incl_clips_t5xxlfp8.safetensors', 'sd3_medium_incl_clips_t5xxlfp16.safetensors']
+default_base_SD15_name = 'SD1.5\realisticVisionV60B1_v51VAE.safetensors'
+default_base_SD3m_name_list = ['SD3x\sd3_medium_incl_clips.safetensors', 'SD3x\sd3_medium_incl_clips_t5xxlfp8.safetensors', 'SD3x\sd3_medium_incl_clips_t5xxlfp16.safetensors']
+default_base_SD3x_name_list = ['SD3x\stableDiffusion35_large.safetensors', 'SD3x\sd3_medium_incl_clips_t5xxlfp8.safetensors', 'SD3x\sd3_medium_incl_clips_t5xxlfp16.safetensors']
 
 def get_default_base_SD3x_name():
     total_vram = ldm_patched.modules.model_management.get_vram()
@@ -70,7 +70,7 @@ flux_model_urls = {
     "flux1-dev-bnb-nf4-v2.safetensors": "https://huggingface.co/lllyasviel/flux1-dev-bnb-nf4/resolve/main/flux1-dev-bnb-nf4-v2.safetensors",
     "flux1-schnell.safetensors": "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors",
     "flux1-schnell-bnb-nf4.safetensors": "https://huggingface.co/silveroxides/flux1-nf4-weights/resolve/main/flux1-schnell-bnb-nf4.safetensors",
-    "flux-hyp8-Q5_K_M.gguf": "https://huggingface.co/mhnakif/flux-hyp8-gguf-k/resolve/main/flux-hyp8-Q5_K_M.gguf"
+    "Flux\\hyperfluxDiversity_q5KS.gguf": "https://civitai.com/api/download/models/1147912?type=Model&format=GGUF&size=pruned&fp=fp8"
     }
 
 def get_default_base_Flux_name(plus=False):
@@ -193,7 +193,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
         if base_model == 'auto':
             model_dev = 'flux1-dev.safetensors'
             model_nf4 = 'flux1-dev-bnb-nf4-v2.safetensors'
-            model_hyp8 = 'flux-hyp8-Q5_K_M.gguf'
+            model_hyp8 = 'Flux\\hyperfluxDiversity_q5KS.gguf'
             base_model = model_nf4 if total_vram<=VRAM8G1 else model_dev
             if not common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=base_model) and common.MODELS_INFO.exists_model(catalog="checkpoints", model_path=model_hyp8):
                 base_model = model_hyp8
