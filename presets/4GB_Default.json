@@ -1,7 +1,7 @@
 {
     "preset category": "LowVRAM",
     "backend_params": {"task_method": "sdxl_gguf"}    
-    "default_model": "LowVRAM\elsewhereXL_v10-Q4_0.gguf",
+    "default_model": "LowVRAM\\elsewhereXL_v10-Q4_0.gguf",
     "default_refiner": "None",
     "default_refiner_switch": 0.75,
     "default_loras": [
@@ -45,7 +45,7 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": -1,
 #    "checkpoint_downloads": {
-#        "LowVRAM\elsewhereXL_v10-Q4_0.gguf": ""
+#        "LowVRAM\\elsewhereXL_v10-Q4_0.gguf": ""
 #    },
     "embeddings_downloads": {},
     "lora_downloads": {
