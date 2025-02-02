@@ -1,6 +1,6 @@
 {
     "preset category": "LowVRAM",
-    "default_model": "sdxl4GB2GBImprovedFP8_fp8FullCheckpoint.safetensors",
+    "default_model": "LowVRAM\\sdxl4GB2GBImprovedFP8_fp8FullCheckpoint.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.75,
     "default_loras": [
@@ -44,7 +44,6 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": -1,
     "checkpoint_downloads": {
-        "sdxl4GB2GBImprovedFP8_fp8FullCheckpoint.safetensors": "https://civitai.com/api/download/models/971447?type=Model&format=SafeTensor&size=full&fp=fp8"
     },
     "embeddings_downloads": {},
     "lora_downloads": {
