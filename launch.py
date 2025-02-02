@@ -165,7 +165,7 @@ if launch_vram<6000:
     print()
     args.async_cuda_allocation = False
     args.disable_async_cuda_allocation = True
-    args.disable_comfyd = True
+    args.disable_comfyd = False # for testing LowVRAM GGUF models
 
 config.default_base_model_name, config.checkpoint_downloads = download_models(
     config.default_base_model_name, config.previous_default_models, config.checkpoint_downloads,
