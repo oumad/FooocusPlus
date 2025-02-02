@@ -14,7 +14,7 @@ Afro-Kittian
 Afro-Nevisian
 Ainu
 Albanian
-Aluet Unangan indigenous
+Aleut
 Algonquian
 Algerian
 Amerasian
@@ -24,7 +24,7 @@ Andorran
 Angolan
 Anishinaabe
 Antiguan
-Apache indigenous
+Apache
 Arab
 Argentine
 Armenian
@@ -90,7 +90,7 @@ Cham
 Chamorro
 Chechen
 Cherokee
-Cheyenne indigenous
+Cheyenne
 Chicano
 Chilean
 Chinese
@@ -101,7 +101,7 @@ Congolese
 Cook Islander
 Corsican
 Costa Rican
-Cree indigenous
+Cree
 Creole
 Croatian
 Cuban
@@ -110,7 +110,7 @@ Cypriot
 Czech
 Danish
 Dargin
-Dene indigenous
+Dene
 Djibouti
 Dominican
 Dong
@@ -151,7 +151,7 @@ Guinea-Bissauan
 Guinean
 Gujarati
 Guyanese
-Haida indigenous
+Haida
 Haitian
 Haratin
 Herzegovinian
@@ -172,7 +172,7 @@ Iranian
 Iraqi
 Irish
 Israeli
-Inuit ethnicity
+Inuit
 Italian
 Ivorian
 Jamaican
@@ -222,7 +222,7 @@ Mayan
 Melanesian
 Mesoamerican
 Mestizo
-Métis indigenous
+Métis
 Mexican
 Miao
 Micronesian
@@ -247,7 +247,7 @@ Nicaraguan
 Nigerian
 Nigerien
 Niuean
-Nootka indigenous
+Nootka
 North American
 North Korean
 Northern Irish
@@ -282,12 +282,12 @@ Ryukyuan
 Sahrawi
 Saint Lucian
 Saint Martiner
-Salish indigenous
+Salish
 Salvadoran
 Samaritan
 Sámi
-Sammarinese
 Samoan
+San Marinese
 Sao Tomean
 Saudi
 Savoyard
@@ -337,7 +337,7 @@ Togolese
 Tokelauan
 Tongan
 Trinidadian
-Tshimshian indigenous
+Tshimshian
 Tujia
 Tuluva
 Tunisian
@@ -357,7 +357,7 @@ Welsh
 Yao
 Yemenite
 Yemenite Jewish
-Yi ethnicity
+Yi
 Yoruba
 Zambesian
 Zambian
