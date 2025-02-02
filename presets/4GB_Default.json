@@ -1,7 +1,7 @@
 {
     "preset category": "LowVRAM",
     "default_model": "sdxl4GB2GBImprovedFP8_fp8FullCheckpoint.safetensors",
-    "default_refiner": "",
+    "default_refiner": "None",
     "default_refiner_switch": 0.75,
     "default_loras": [
         [
