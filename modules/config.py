@@ -989,7 +989,7 @@ def get_base_model_list(engine='Fooocus', task_method=None):
     if engine in ['Fooocus', 'Comfy']:
         base_model_list = modelsinfo.get_model_names('checkpoints', modules.flags.model_file_filter['Fooocus'], reverse=True)
     elif task_method == 'flux_base2_gguf':
-        base_model_list = [f for f in base_model_list if ("hyp8" in f or "hyp16" in f) and f.endswith("gguf")]
+        base_model_list = [f for f in base_model_list if ("hyp8" in f or "hyp16" in f or "hyperflux" in f) and f.endswith("gguf")]
     return base_model_list
 
 def update_files(engine='Fooocus', task_method=None):
@@ -1190,33 +1190,33 @@ def downloading_superprompter_model():
 def downloading_sd3_medium_model():
     load_file_from_url(
         url='https://huggingface.co/metercai/SimpleSDXL2/resolve/main/sd3m/sd3_medium_incl_clips_t5xxlfp8.safetensors',
-        model_dir=paths_checkpoints[0],
+        model_dir=paths_checkpoints[0] + '\SD3x',
         file_name='sd3_medium_incl_clips_t5xxlfp8.safetensors'
     )
-    return os.path.join(paths_checkpoints[0], 'sd3_medium_incl_clips_t5xxlfp8.safetensors')
+    return os.path.join(paths_checkpoints[0] + '\SD3x', 'sd3_medium_incl_clips_t5xxlfp8.safetensors')
 
 def downloading_sd35_large_model():
     load_file_from_url(
         url='https://civitai.com/api/download/models/983309?type=Model&format=SafeTensor&size=full&fp=fp32',
-        model_dir=paths_checkpoints[0],
+        model_dir=paths_checkpoints[0] + '\SD3x',
         file_name='stableDiffusion35_large.safetensors'
     )
-    return os.path.join(paths_checkpoints[0], 'stableDiffusion35_large.safetensors')
+    return os.path.join(paths_checkpoints[0] + '\SD3x', 'stableDiffusion35_large.safetensors')
 
 def downloading_base_sd15_model():
     load_file_from_url(
         url='https://huggingface.co/metercai/SimpleSDXL2/resolve/main/ckpt/realisticVisionV60B1_v51VAE.safetensors',
-        model_dir=paths_checkpoints[0],
+        model_dir=paths_checkpoints[0] + '\SD1.5',
         file_name='realisticVisionV60B1_v51VAE.safetensors'
     )
-    return os.path.join(paths_checkpoints[0], 'realisticVisionV60B1_v51VAE.safetensors')
+    return os.path.join(paths_checkpoints[0] + '\SD1.5', 'realisticVisionV60B1_v51VAE.safetensors')
 
 def downloading_hydit_model():
     load_file_from_url(
         url='https://huggingface.co/comfyanonymous/hunyuan_dit_comfyui/resolve/main/hunyuan_dit_1.2.safetensors',
-        model_dir=paths_checkpoints[0],
+        model_dir=paths_checkpoints[0] + '\Alternative',
         file_name='hunyuan_dit_1.2.safetensors'
     )
-    return os.path.join(paths_checkpoints[0], 'hunyuan_dit_1.2.safetensors')
+    return os.path.join(paths_checkpoints[0] + '\Alternative', 'hunyuan_dit_1.2.safetensors')
 
 update_files()
