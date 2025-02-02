@@ -1,6 +1,6 @@
 {
     "preset category": "LowVRAM",
-    "default_model": "4gbPONY4STEP2GB_fp8FullCheckpoint.safetensors",
+    "default_model": "LowVRAM\\4gbPONY4STEP2GB_fp8FullCheckpoint.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_loras": [
@@ -44,7 +44,6 @@
     "default_overwrite_step": -1,
     "default_inpaint_engine_version": "None",
     "checkpoint_downloads": {
-        "4gbPONY4STEP2GB_fp8FullCheckpoint.safetensors": "https://civitai.com/api/download/models/968654?type=Model&format=SafeTensor&size=full&fp=fp8"
     },
     "embeddings_downloads": {},
     "lora_downloads": {},
