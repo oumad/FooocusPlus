@@ -126,7 +126,7 @@ class ComfyTask:
 
 
 def get_comfy_task(task_name, task_method, default_params, input_images, options={}):
-    global defaul_method_names, default_method_list
+    global default_method_names, default_method_list
 
     if task_name == 'default':
         if task_method == default_method_names[1]:
@@ -358,10 +358,12 @@ def check_download_flux_model(base_model, clip_model=None):
                     file_name=base_model
                 )
         else:
-            load_file_from_url(
-                url=f'https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/{base_model}',
-                model_dir=config.paths_checkpoints[0],
-                file_name=base_model
+            print(f'Could not automatically download {base_model}.\
+                Please download this Flux file manually and place it in the \\Flux subfolder')
+#            load_file_from_url(
+#                url=f'https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/{base_model}',
+#                model_dir=config.paths_checkpoints[0],
+             file_name=""
             )
     if clip_model:
         if not common.MODELS_INFO.exists_model(catalog="clip", model_path=clip_model):
