@@ -770,10 +770,12 @@ def worker():
         for i in range(image_number if arrays_mult==0 else arrays_mult):
             if arrays_mult==0 or not seed_fixed or not disable_seed_increment:
                 task_seed = (async_task.seed + i) % (constants.MAX_SEED + 1)  # randint is inclusive, % is not
+                wild_seed = task_seed
             else:
                 task_seed = async_task.seed % (constants.MAX_SEED + 1)
+                wild_seed = (seed + i) % (constants.MAX_SEED + 1) # always increment seed for wildcards
 
-            task_rng = random.Random(task_seed)  # may bind to inpaint noise in the future
+            task_rng = random.Random(wild_seed)  # may bind to inpaint noise in the future
             task_prompt = wildcards.apply_arrays(prompt, i, wildcards_arrays, arrays_mult)
             task_prompt = wildcards.replace_wildcard(task_prompt, task_rng)
             task_negative_prompt = wildcards.apply_wildcards(negative_prompt, task_rng)
