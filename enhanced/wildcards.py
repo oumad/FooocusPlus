@@ -42,12 +42,9 @@ def get_wildcards_samples(path="root"):
     global wildcards_path, wildcards, wildcards_list, wildcards_translation, wildcards_template, wildcards_weight_range, wildcard_regex
 
     wildcards_list_all = sorted([f[:-4] for f in get_files_from_folder(wildcards_path, ['.txt'], None, variation=True)])
-    wildcards_list_all = [x for x in wildcards_list_all] # if '_' not in x]
-    #print(f'wildcards_list:{wildcards_list_all}')
     for wildcard in wildcards_list_all:
         words = open(os.path.join(wildcards_path, f'{wildcard}.txt'), encoding='utf-8').read().splitlines()
         words = [x.split('?')[0] for x in words if x != '' and not wildcard_regex.findall(x)]
-        #words = [x.split(';')[0] for x in words]
 
         templates = [x for x in words if '|' in x]  #  word|template|weight_range
         for line in templates:
@@ -72,14 +69,11 @@ def get_wildcards_samples(path="root"):
             set_wildcard_path_list("root", wildcard_path[0])
         elif len(wildcard_path)==2:
             set_wildcard_path_list(wildcard_path[0], wildcard_path[1])
-            #set_wildcard_path_list("root", wildcard_path[0])
         elif len(wildcard_path)==3:
             set_wildcard_path_list(f'{wildcard_path[0]}/{wildcard_path[1]}', wildcard_path[2])
             set_wildcard_path_list(wildcard_path[0], wildcard_path[1])
-            #set_wildcard_path_list("root", wildcard_path[0])
         else:
             print(f'[Wildcards] The level of wildcards is too deep: {wildcards_path}.')
-    #print(f'wildcards_list:{wildcards_list}')
     if wildcards_list_all:
         load_words_translation(True)
         print(f'[Wildcards] Refresh and Load {len(wildcards_list_all)}/{len(wildcards.keys())} wildcards: {", ".join(wildcards_list_all)}.')
@@ -244,14 +238,10 @@ def replace_wildcard(text, rng):
 def get_words(arrays, totalMult, index):
     if(len(arrays) == 1):
         word = arrays[0][index]
-        #if word[0] == '(' and word[-1] == ')':
-        #    word = word[1:-1]
         return [word]
     else:
         words = arrays[0]
         word = words[index % len(words)]
-        #if word[0] == '(' and word[-1] == ')':
-        #    word = word[1:-1]
         index -= index % len(words)
         index /= len(words)
         index = math.floor(index)
@@ -319,9 +309,6 @@ def add_wildcards_and_array_to_prompt(wildcard, prompt, state_params):
     else:
         state_params["array_wildcards_mode"] = '['
     
-#    if state_params["array_wildcards_mode"] == '[':
-#        new_tag = f'[__{wildcard}__]'
-#    else:
     new_tag = f'__{wildcard}__'
     prompt = f'{prompt.strip()} {new_tag}'
     return gr.update(value=prompt), gr.Dataset.update(label=f'{get_wildcard_translation(wildcard)}:', samples=get_words_of_wildcard_samples(wildcard)), gr.update(open=True)
