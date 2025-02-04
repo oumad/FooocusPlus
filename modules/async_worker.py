@@ -775,11 +775,15 @@ def worker():
                 wild_seed = task_seed
 
             task_rng = random.Random(wild_seed)  # may bind to inpaint noise in the future
-            task_prompt = wildcards.apply_arrays(prompt, i, wildcards_arrays, arrays_mult)
-            task_prompt = wildcards.replace_wildcard(task_prompt, task_rng)
-            task_negative_prompt = wildcards.apply_wildcards(negative_prompt, task_rng)
-            task_extra_positive_prompts = [wildcards.apply_wildcards(pmt, task_rng) for pmt in extra_positive_prompts]
-            task_extra_negative_prompts = [wildcards.apply_wildcards(pmt, task_rng) for pmt in extra_negative_prompts]
+            task_prompt = apply_wildcards(prompt, task_rng, i, async_task.read_wildcards_in_order)
+            task_prompt = apply_arrays(task_prompt, i)
+            task_negative_prompt = apply_wildcards(negative_prompt, task_rng, i, async_task.read_wildcards_in_order)
+            task_extra_positive_prompts = [apply_wildcards(pmt, task_rng, i, async_task.read_wildcards_in_order) for pmt
+                                           in
+                                           extra_positive_prompts]
+            task_extra_negative_prompts = [apply_wildcards(pmt, task_rng, i, async_task.read_wildcards_in_order) for pmt
+                                           in
+                                           extra_negative_prompts]
 
             positive_basic_workloads = []
             negative_basic_workloads = []
