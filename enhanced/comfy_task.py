@@ -363,7 +363,7 @@ def check_download_flux_model(base_model, clip_model=None):
 #            load_file_from_url(
 #                url=f'https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/{base_model}',
 #                model_dir=config.paths_checkpoints[0],
-             file_name=""
+            file_name=""
             )
     if clip_model:
         if not common.MODELS_INFO.exists_model(catalog="clip", model_path=clip_model):
