@@ -768,10 +768,10 @@ def worker():
         tasks = []
         for i in range(image_number):
             if disable_seed_increment:
-                task_seed = seed % (constants.MAX_SEED + 1)
-                wild_seed = (seed + i) % (constants.MAX_SEED + 1)  # always increment seed for wildcards
+                task_seed = async_task.seed % (constants.MAX_SEED + 1)
+                wild_seed = (async_task.seed + i) % (constants.MAX_SEED + 1)  # always increment seed for wildcards
             else:
-                task_seed = (seed + i) % (constants.MAX_SEED + 1)  # randint is inclusive, % is not
+                task_seed = (async_task.seed + i) % (constants.MAX_SEED + 1)  # randint is inclusive, % is not
                 wild_seed = task_seed
 
             task_rng = random.Random(wild_seed)  # may bind to inpaint noise in the future
