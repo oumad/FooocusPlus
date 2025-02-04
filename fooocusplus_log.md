@@ -4,6 +4,8 @@
 * system defaults to a 4GB version of SAI SDXL if VRAM<6GB
 * improved FooocusPlus version messaging: updates are specifically identified
 * special base model and LoRA subfolders (e.g. "\Flux") are automatically created
+* "Disable Seed Increment" now works (this was an inherited bug)
+* wildcards are now always random, even when the seed is frozen (another inherited bug)
 
 
 # 0.9.5
