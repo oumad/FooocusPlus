@@ -775,7 +775,7 @@ def worker():
                 task_seed = async_task.seed % (constants.MAX_SEED + 1)
                 wild_seed = (seed + i) % (constants.MAX_SEED + 1) # always increment seed for wildcards
 
-            task_rng = random.Random(wild_seed)  # may bind to inpaint noise in the future
+            task_rng = random.Random(task_seed)  # may bind to inpaint noise in the future
             task_prompt = wildcards.apply_arrays(prompt, i, wildcards_arrays, arrays_mult)
             task_prompt = wildcards.replace_wildcard(task_prompt, task_rng)
             task_negative_prompt = wildcards.apply_wildcards(negative_prompt, task_rng)
