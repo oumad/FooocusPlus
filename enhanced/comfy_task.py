@@ -358,13 +358,13 @@ def check_download_flux_model(base_model, clip_model=None):
                     file_name=base_model
                 )
         else:
-            print(f'Could not automatically download {base_model}.\
-                Please download this Flux file manually and place it in the \\Flux subfolder')
+            print(f'FooocusPlus could not automatically download {base_model}')
+            print('Please download this Flux file manually and place it in the \Flux subfolder')
 #            load_file_from_url(
 #                url=f'https://huggingface.co/metercai/SimpleSDXL2/resolve/main/flux1/{base_model}',
 #                model_dir=config.paths_checkpoints[0],
-            file_name=""
-            )
+#            file_name=""
+#            )
     if clip_model:
         if not common.MODELS_INFO.exists_model(catalog="clip", model_path=clip_model):
             load_file_from_url(
