@@ -911,7 +911,7 @@ with common.GRADIO_ROOT:
                         disable_seed_increment = gr.Checkbox(label='Disable Seed Increment',
                                                 info='Disable automatic seed increment when image number is > 1.',
                                                 value=False)
-                        read_wildcards_in_order = gr.Checkbox(label="Read Wildcards in Order", value=False, visible=False)
+                        read_wildcards_in_order = gr.Checkbox(label="Read Wildcards in Order", value=False, visible=True)
 
                         black_out_nsfw = gr.Checkbox(label='Black Out NSFW', value=modules.config.default_black_out_nsfw,
                                             interactive=not modules.config.default_black_out_nsfw,
