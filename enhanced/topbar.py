@@ -47,7 +47,7 @@ def get_welcome_image():
 #    file_welcome = os.path.join(path_welcome, 'welcome.png')
 #    file_suffix = 'welcome_w' if not is_mobile else 'welcome_m'
 #    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg', '.png'], file_suffix, None) if not p.startswith('.')]
-    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if not p != 'default_welcome.jpg')]
+    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if not p != 'default_welcome.jpg']
     if len(welcomes)>0:
         file_welcome = random.choice(welcomes)
     else
