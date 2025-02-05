@@ -51,7 +51,7 @@ def get_welcome_image():
     if len(welcomes)>0:
         file_welcome = random.choice(welcomes)
     else:
-        file_welcome = os.path.join(path_welcome, 'welcome.png'')
+        file_welcome = os.path.join(path_welcome, 'welcome.png')
     return file_welcome
 
 def get_preset_name_list():
