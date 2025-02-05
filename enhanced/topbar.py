@@ -42,13 +42,16 @@ if os.path.exists(enhanced_config):
 else:
     config_ext.update({'fooocus_line': '# 2.1.852', 'simplesdxl_line': '# 2023-12-20'})
 
-def get_welcome_image(is_mobile=False):
+def get_welcome_image():
     path_welcome = os.path.abspath(f'./enhanced/attached/')
-    file_welcome = os.path.join(path_welcome, 'welcome.png')
-    file_suffix = 'welcome_w' if not is_mobile else 'welcome_m'
-    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg', '.png'], file_suffix, None) if not p.startswith('.')]
+#    file_welcome = os.path.join(path_welcome, 'welcome.png')
+#    file_suffix = 'welcome_w' if not is_mobile else 'welcome_m'
+#    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg', '.png'], file_suffix, None) if not p.startswith('.')]
+    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if not p != 'default_welcome.jpg')]
     if len(welcomes)>0:
         file_welcome = random.choice(welcomes)
+    else
+        file_welcome = os.path.join(path_welcome, 'default_welcome.jpg')
     return file_welcome
 
 def get_preset_name_list():
@@ -267,7 +270,7 @@ def init_nav_bars(state_params, request: gr.Request):
     state_params.update({"bar_button": config.preset})
     state_params.update({"init_process": 'finished'})
     results = refresh_nav_bars(state_params)
-    results += [gr.update(value=f'enhanced/attached/{get_welcome_image(state_params["__is_mobile"])}')]
+    results += [gr.update(value=f'enhanced/attached/{get_welcome_image()}')]
     results += [gr.update(value=modules.flags.language_radio(state_params["__lang"])), gr.update(value=state_params["__theme"])]
     results += [gr.update(choices=state_params["__output_list"], value=None), gr.update(visible=len(state_params["__output_list"])>0, open=False)]
     results += [gr.update(value=False if state_params["__is_mobile"] else config.default_inpaint_advanced_masking_checkbox)]
