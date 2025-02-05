@@ -6,6 +6,8 @@
 * special base model and LoRA subfolders (e.g. "\Flux") are automatically created
 * "Disable Seed Increment" now works (this was an inherited bug)
 * wildcards are now always random, even when the seed is frozen (another inherited bug)
+* "Read Wildcards in Order" has been restored
+* whatever JPGs are stored in enhanced/attached/ will be randomly displayed as startup images
 
 
 # 0.9.5
