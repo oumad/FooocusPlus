@@ -8,6 +8,7 @@
 * wildcards are now always random, even when the seed is frozen (another inherited bug)
 * "Read Wildcards in Order" has been restored
 * whatever JPGs are stored in enhanced/attached/ will be randomly displayed as startup images
+* removed all __pycache__ and .pyc files from the FooocusPlus repository
 
 
 # 0.9.5
