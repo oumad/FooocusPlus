@@ -44,11 +44,11 @@ else:
 
 def get_welcome_image():
     path_welcome = os.path.abspath(f'./enhanced/attached/')
-    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if not p.startswith('.')]
+    welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if p != 'welcome.jpg']
     if len(welcomes)>0:
         file_welcome = random.choice(welcomes)
     else:
-        file_welcome = os.path.join(path_welcome, 'welcome.png')
+        file_welcome = os.path.join(path_welcome, 'welcome.jpg')
     return file_welcome
 
 def get_preset_name_list():
