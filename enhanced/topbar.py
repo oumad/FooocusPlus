@@ -43,13 +43,13 @@ else:
     config_ext.update({'fooocus_line': '# 2.1.852', 'simplesdxl_line': '# 2023-12-20'})
 
 def get_welcome_image():
-    path_welcome = os.path.abspath(f'./enhanced/attached/') 
+    path_welcome = os.path.abspath(f'./enhanced/attached/')
     welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if not p.startswith('.')]
     if len(welcomes)>1:
         welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if p != 'welcome.jpg']
         file_welcome = random.choice(welcomes)
     else:
-        file_welcome = welcomes[1]
+        file_welcome = welcomes[0]
 #        file_welcome = os.path.join(path_welcome, 'welcome.jpg')
     return file_welcome
 
