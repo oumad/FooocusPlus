@@ -48,8 +48,8 @@ def get_welcome_image():
     if len(welcomes)>1:
         welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if p != 'welcome.jpg']
         file_welcome = random.choice(welcomes)
-    else:
-        file_welcome = os.path.join(path_welcome, 'welcome.jpg')
+#    else:
+#        file_welcome = os.path.join(path_welcome, 'welcome.jpg')
     return file_welcome
 
 def get_preset_name_list():
