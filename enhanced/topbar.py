@@ -49,7 +49,7 @@ def get_welcome_image():
         welcomes = [p for p in util.get_files_from_folder(path_welcome, ['.jpg', '.jpeg'], None, None) if p != 'welcome.jpg']
         file_welcome = random.choice(welcomes)
     else:
-        file_welcome = welcomes
+        file_welcome = welcomes[1]
 #        file_welcome = os.path.join(path_welcome, 'welcome.jpg')
     return file_welcome
 
