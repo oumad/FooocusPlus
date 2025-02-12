@@ -55,7 +55,7 @@ Have a question or concern? Visit the Discussions page to join our friendly comm
 
 **Licensing**
 
-FooocusPlus is free to download and use, and the FooocusPlus developers will never request money or identifiable information from in order to access or run the software. We do not accept donations or sponsorships, but instead welcome positive feedback, encouragement, and GitHub stars.
+FooocusPlus is free to download and use, and the FooocusPlus developers will never request money or identifiable information from you in order to access or run the software. We do not accept donations or sponsorships, but instead welcome positive feedback, encouragement, and GitHub stars.
 
 FooocusPlus is published under the GPL-3.0 license, and your use of the software is conditional on your acceptance of both the terms of the GPL-3.0 and the additional terms contained in this section. In particular, you acknowledge that some AI image generation models included in FooocusPlus are licensed for non-commercial community use only, and you agree to purchase all necessary licenses from the relevant developers prior to commercially distributing artwork generated with these models.
 
@@ -78,3 +78,4 @@ This software was made possible by integrating open-source technologies from pro
 - SimpleSDXL by metercai
 - diffusers by the huggingface team
 - torchruntime by cmdr2 and the easydiffusion team
+- OneButtonPrompt by AIrjen
