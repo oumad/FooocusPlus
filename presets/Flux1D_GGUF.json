@@ -2,18 +2,15 @@
     "preset category": "Flux",
     "default_engine": {
 	"backend_engine": "Flux",
-	"task_method": "flux_base",
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
-	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "loras", "refiner_model"],
-	"backend_params": {
-	    "task_method": "flux_base",
-	    "clip_model": "auto",
-            "base_model_dtype": "auto"
-	    }
+	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model" ],
+            "backend_params": {
+            "task_method": "flux_base2_gguf"
+            }
     	},
-    "default_model": "Flux\\flux1-schnell-bnb-nf4.safetensors",
+    "default_model": "Flux\\flux1-dev-Q8_0.gguf",
     "default_refiner": "None",
-    "default_refiner_switch": 0.5,
+    "default_refiner_switch": 0.6,
     "default_loras": [
         [
             true,
@@ -52,11 +49,11 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 4,
     "checkpoint_downloads": {
-        "Flux\\flux1-schnell-bnb-nf4.safetensors": "https://huggingface.co/silveroxides/flux1-nf4-weights/resolve/main/flux1-schnell-bnb-nf4.safetensors?download=true"
+        "Flux\\flux1-dev-Q8_0.gguf": "https://huggingface.co/lllyasviel/FLUX.1-dev-gguf/resolve/main/flux1-dev-Q8_0.gguf?download=true"
     },
     "embeddings_downloads": {},
     "lora_downloads": {},
     "vae_downloads": {
-        "ae.safetensors": "https://huggingface.co/metercai/SimpleSDXL2/resolve/main/ae.safetensors"
+        "ae.safetensors": "https://huggingface.co/lovis93/testllm/resolve/ed9cf1af7465cebca4649157f118e331cf2a084f/ae.safetensors?download=true"
     }
 }

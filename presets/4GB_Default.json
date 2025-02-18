@@ -1,5 +1,6 @@
 {
     "preset category": "LowVRAM",
+    "Download manually from": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors",
     "default_model": "LowVRAM\\sdxl4GB2GBImprovedFP8_fp8FullCheckpoint.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.75,
@@ -44,6 +45,7 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": -1,
     "checkpoint_downloads": {
+        "elsewhereXL_v10.safetensors": "https://civitai.com/api/download/models/1110155?type=Model&format=SafeTensor&size=pruned&fp=fp16"
     },
     "embeddings_downloads": {},
     "lora_downloads": {

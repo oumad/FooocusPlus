@@ -1,6 +1,6 @@
 {
-    "preset category": "Fantasy",
-    "default_model": "ponyDiffusionV6XL.safetensors",
+    "preset category": "Pony",
+    "default_model": "Pony\\ponyDiffusionV6XL.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_vae": "ponyDiffusionV6XL_vae.safetensors",
@@ -45,7 +45,7 @@
     "default_overwrite_step": -1,
     "default_inpaint_engine_version": "None",
     "checkpoint_downloads": {
-        "ponyDiffusionV6XL.safetensors": "https://huggingface.co/mashb1t/fav_models/resolve/main/fav/ponyDiffusionV6XL.safetensors"
+        "Pony\\ponyDiffusionV6XL.safetensors": "https://huggingface.co/mashb1t/fav_models/resolve/main/fav/ponyDiffusionV6XL.safetensors"
     },
     "embeddings_downloads": {},
     "lora_downloads": {},

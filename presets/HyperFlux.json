@@ -1,9 +1,9 @@
 { 
-    "preset category": "HyperFlux",
+    "preset category": "Flux",
     "default_engine": {
 	"backend_engine": "Flux",
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
-	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model" ],
+	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model"],
             "backend_params": {
             "task_method": "flux_base2_gguf"
             }
@@ -49,7 +49,7 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 20,
     "checkpoint_downloads": {
-        "hyperfluxDiversity_q5KS.gguf": "https://civitai.com/api/download/models/1147912?type=Model&format=GGUF&size=pruned&fp=fp8"
+        "Flux\\hyperfluxDiversity_q5KS.gguf": "https://civitai.com/api/download/models/1147912?type=Model&format=GGUF&size=pruned&fp=fp8"
     },
     "embeddings_downloads": {},
     "lora_downloads": {

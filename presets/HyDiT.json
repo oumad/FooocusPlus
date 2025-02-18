@@ -8,7 +8,7 @@
 		"task_method": "hydit_base"
 		}
 	},
-    "default_model": "hunyuan_dit_1.2.safetensors",
+    "default_model": "Alternative\\hunyuan_dit_1.2.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_loras": [
@@ -49,7 +49,7 @@
     ],
     "default_aspect_ratio": "1024*1024",
     "checkpoint_downloads": {
-        "hunyuan_dit_1.2.safetensors": "https://huggingface.co/comfyanonymous/hunyuan_dit_comfyui/resolve/main/hunyuan_dit_1.2.safetensors"
+        "Alternative\\hunyuan_dit_1.2.safetensors": "https://huggingface.co/comfyanonymous/hunyuan_dit_comfyui/resolve/main/hunyuan_dit_1.2.safetensors"
     },
     "embeddings_downloads": {},
     "lora_downloads": {} 
