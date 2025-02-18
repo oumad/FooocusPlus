@@ -467,6 +467,12 @@ default_image_prompt_checkbox = get_config_item_or_set_default(
     validator=lambda x: isinstance(x, bool),
     expected_type=bool
 )
+enable_auto_describe_image = get_config_item_or_set_default(
+    key='enable_auto_describe_image',
+    default_value=False,
+    validator=lambda x: isinstance(x, bool),
+    expected_type=bool
+)
 default_enhance_checkbox = get_config_item_or_set_default(
     key='default_enhance_checkbox',
     default_value=False,
@@ -646,7 +652,7 @@ default_overwrite_switch = get_config_item_or_set_default(
 )
 default_overwrite_upscale = get_config_item_or_set_default(
     key='default_overwrite_upscale',
-    default_value=-1,
+    default_value=0.382,
     validator=lambda x: isinstance(x, numbers.Number)
 )
 
@@ -988,8 +994,8 @@ def get_base_model_list(engine='Fooocus', task_method=None):
     base_model_list = modelsinfo.get_model_names('checkpoints', file_filter)
     if engine in ['Fooocus', 'Comfy']:
         base_model_list = modelsinfo.get_model_names('checkpoints', modules.flags.model_file_filter['Fooocus'], reverse=True)
-    elif task_method == 'flux_base2_gguf':
-        base_model_list = [f for f in base_model_list if ("hyp8" in f or "hyp16" in f or "hyperflux" in f) and f.endswith("gguf")]
+    elif task_method == 'flux_base2_gguf':    # adjusted the GGUF filter to include "flux", not just "hyperflux"
+        base_model_list = [f for f in base_model_list if ("hyp8" in f or "hyp16" in f or "flux" in f) and f.endswith("gguf")]
     return base_model_list
 
 def update_files(engine='Fooocus', task_method=None):
