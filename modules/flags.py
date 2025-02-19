@@ -334,9 +334,7 @@ class Performance(Enum):
 
     @classmethod
     def list(cls) -> list:
-        item = list(map(lambda c: c.value, cls))
-        item.remove('Extreme Speed')
-        return item
+        return list(map(lambda c: (c.name, c.value), cls))
 
     @classmethod
     def values(cls) -> list:
