@@ -669,8 +669,9 @@ with common.GRADIO_ROOT:
                 
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
-                                            choices=flags.Performance.list(),
-                                            value=modules.config.default_performance)
+                                             choices=flags.Performance.values(),
+                                             value=modules.config.default_performance,
+                                             elem_classes=['performance_selection'])
                     image_number = gr.Slider(label='Image Quantity', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
                     with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
                         aspect_ratios_selection = gr.Textbox(value='', visible=False) 
