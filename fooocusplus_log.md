@@ -10,6 +10,7 @@
 * whatever JPGs are stored in enhanced/attached/ will be randomly displayed as startup images
 * removed all __pycache__ and .pyc files from the FooocusPlus repository
 * in Beta2, updated the presets and Flux file selector to better support Flux models
+* in Beta2, restored the "Extreme" performance setting & increased the limit on displayed presets to 30
 
 
 # 0.9.5
