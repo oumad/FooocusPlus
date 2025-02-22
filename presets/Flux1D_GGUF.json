@@ -47,7 +47,7 @@
         "Fooocus V2"
     ],
     "default_aspect_ratio": "1024*1024",
-    "default_overwrite_step": 4,
+    "default_overwrite_step": 20,
     "checkpoint_downloads": {
         "Flux\\flux1-dev-Q8_0.gguf": "https://huggingface.co/lllyasviel/FLUX.1-dev-gguf/resolve/main/flux1-dev-Q8_0.gguf?download=true"
     },
