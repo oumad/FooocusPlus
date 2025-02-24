@@ -1,4 +1,4 @@
-# 0.9.6 Beta2
+# 0.9.6 Beta3
 
 * introduced support for 4GB SDXL compatible models
 * system defaults to a 4GB version of SAI SDXL if VRAM<6GB
@@ -11,6 +11,7 @@
 * removed all __pycache__ and .pyc files from the FooocusPlus repository
 * in Beta2, updated the presets and Flux file selector to better support Flux models
 * in Beta2, restored the "Extreme" performance setting & increased the limit on displayed presets to 30
+* in Beta3, added support for Stable Diffusion 1.5 (SD1.5) base models
 
 
 # 0.9.5
