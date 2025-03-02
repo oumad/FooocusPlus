@@ -188,6 +188,7 @@ def get_comfy_task(task_name, task_method, default_params, input_images, options
     elif task_name == 'Flux':
         comfy_params = ComfyTaskParams(default_params)
         base_model = default_params['base_model']
+        clip_model = default_params['clip_model']        
         total_ram = ldm_patched.modules.model_management.get_sysram()
         total_vram = ldm_patched.modules.model_management.get_vram()
         if base_model == 'auto':
