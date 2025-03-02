@@ -5,7 +5,8 @@
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
 	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "refiner_model"],
 	"backend_params": {
-            "task_method": "flux_base2_gguf"
+            "task_method": "flux_base2_gguf",
+            "clip_model": "t5xxl_fp16.safetensors"
             }
     	},
     "default_model": "Flux\\flux-hyp16-Q6_K.gguf",

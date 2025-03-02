@@ -6,9 +6,9 @@
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
 	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "loras", "refiner_model"],
 	"backend_params": {
-	    "task_method": "flux_base",
-	    "clip_model": "auto",
-            "base_model_dtype": "auto"
+                "task_method": "flux_base2_gguf",
+                "clip_model": "t5xxl_fp8_e4m3fn.safetensors",
+                "base_model_dtype": "auto"
 	    }
     	},
     "default_model": "Flux\\flux1-schnell-bnb-nf4.safetensors",

@@ -5,10 +5,11 @@
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
 	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model" ],
             "backend_params": {
-            "task_method": "flux_base2_gguf"
+            "task_method": "flux_base2_gguf",
+            "clip_model": "t5xxl_fp8_e4m3fn.safetensors"
             }
     	},
-    "default_model": "Flux\\flux1-dev-Q8_0.gguf",
+    "default_model": "Flux\\flux1-dev-Q5_K_S.gguf",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_loras": [
@@ -49,7 +50,7 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 20,
     "checkpoint_downloads": {
-        "Flux\\flux1-dev-Q8_0.gguf": "https://huggingface.co/lllyasviel/FLUX.1-dev-gguf/resolve/main/flux1-dev-Q8_0.gguf?download=true"
+     "Flux\\flux1-dev-Q5_K_S.gguf": "https://huggingface.co/lllyasviel/FLUX.1-dev-gguf/resolve/main/flux1-dev-Q5_K_S.gguf?download=true"
     },
     "embeddings_downloads": {},
     "lora_downloads": {},

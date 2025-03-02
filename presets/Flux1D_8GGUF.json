@@ -3,25 +3,25 @@
     "default_engine": {
 	"backend_engine": "Flux",
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
-	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model"],
+	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model" ],
             "backend_params": {
             "task_method": "flux_base2_gguf",
-            "clip_model": "t5xxl_fp8_e4m3fn.safetensors"
+            "clip_model": "t5xxl_fp16.safetensors"
             }
     	},
-    "default_model": "Flux\\hyperfluxDiversity_q5KS.gguf",
+    "default_model": "Flux\\flux1-dev-Q8_0.gguf",
     "default_refiner": "None",
     "default_refiner_switch": 0.6,
     "default_loras": [
         [
-            false,
-            "Flux\\FluxDFaeTasticDetails.safetensors",
-            0.8
+            true,
+            "None",
+            1.0
         ],
         [
-            false,
-            "Flux\\Flux_BlackColor_SaMay.safetensors",
-            0.7
+            true,
+            "None",
+            1.0
         ],
         [
             true,
@@ -50,13 +50,10 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 20,
     "checkpoint_downloads": {
-        "Flux\\hyperfluxDiversity_q5KS.gguf": "https://civitai.com/api/download/models/1147912?type=Model&format=GGUF&size=pruned&fp=fp8"
+        "Flux\\flux1-dev-Q8_0.gguf": "https://huggingface.co/lllyasviel/FLUX.1-dev-gguf/resolve/main/flux1-dev-Q8_0.gguf?download=true"
     },
     "embeddings_downloads": {},
-    "lora_downloads": {
-        "Flux\\FluxDFaeTasticDetails.safetensors": "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor",
-        "Flux\\Flux_BlackColor_SaMay.safetensors": "https://civitai.com/api/download/models/789575?type=Model&format=SafeTensor"
-    },
+    "lora_downloads": {},
     "vae_downloads": {
         "ae.safetensors": "https://huggingface.co/lovis93/testllm/resolve/ed9cf1af7465cebca4649157f118e331cf2a084f/ae.safetensors?download=true"
     }
