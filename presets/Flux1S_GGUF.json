@@ -6,6 +6,7 @@
 	"disinteractive": ["input_image_checkbox", "enhance_checkbox", "performance_selection", "negative_prompt", "loras-3", "refiner_model" ],
             "backend_params": {
             "task_method": "flux_base2_gguf"
+            "clip_model": "t5xxl_fp8_e4m3fn.safetensors"
             }
     	},
     "default_model": "Flux\\flux1-schnell-Q8_0.gguf",
