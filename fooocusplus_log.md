@@ -1,4 +1,4 @@
-# 0.9.6 Beta4
+# 0.9.6 Beta5
 
 * introduced support for 4GB SDXL compatible models
 * system defaults to a 4GB version of SAI SDXL if VRAM<6GB
@@ -13,6 +13,9 @@
 * in Beta2, restored the "Extreme" performance setting & increased the limit on displayed presets to 30
 * in Beta3, added support for Stable Diffusion 1.5 (SD1.5) base models
 * in Beta4, Flux presets now support the clip model parameter, allowing for lower resource use presets
+* in Beta5, the Flux1D_GGUF & Flux1D_8GGUF presets now support the HyperFlux & AntiBlur LoRAs
+* in Beta5, HyperFlux16 now uses flux-hyp16-Q8_0.gguf instead of Q5, and supports FaeTastic & AntiBlur LoRAs
+* in Beta5, the two 4GB presets now correctly download the specified base models
 
 
 # 0.9.5
