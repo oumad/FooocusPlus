@@ -1,4 +1,4 @@
-# 0.9.6 Beta5
+# 0.9.6 Beta6
 
 * introduced support for 4GB SDXL compatible models
 * system defaults to a 4GB version of SAI SDXL if VRAM<6GB
@@ -16,6 +16,7 @@
 * in Beta5, the Flux1D_GGUF & Flux1D_8GGUF presets now support the HyperFlux & AntiBlur LoRAs
 * in Beta5, HyperFlux16 now uses flux-hyp16-Q8_0.gguf instead of Q5, and supports FaeTastic & AntiBlur LoRAs
 * in Beta5, the two 4GB presets now correctly download the specified base models
+* in Beta6, added clip_model error control to comfy_task and added clip_model parameter to Flux1S_GGUF
 
 
 # 0.9.5
