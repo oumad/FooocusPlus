@@ -86,7 +86,7 @@ default = {
     'loras_max_weight': 3,
     'max_lora_number': 5,
     'max_image_number': 50,
-    'image_number': 5,
+    'image_number': 4,
     'output_format': 'png',
     'save_metadata_to_images': False,
     'metadata_scheme': 'simple',
@@ -96,11 +96,10 @@ default = {
     'translation_methods': 'Third APIs',
     'backend': 'SDXL',
     'comfyd_active_checkbox': False,
-    'image_catalog_max_number': 65,
+    'image_catalog_max_number': 100,
     'clip_skip': 2,
     'vae': 'Default (model)',
-    'developer_debug_mode_checkbox': False,
-    'presetmenu': ''
+    'developer_debug_mode_checkbox': False
     }
 
 
@@ -184,5 +183,4 @@ def init_all_params_index(lora_number, disable_metadata):
         'save_metadata_to_images': 66+a,
         'metadata_scheme': 67+a,
         'ip_ctrls': 66+b,
-        'presetmenu': 68+a,
     }
