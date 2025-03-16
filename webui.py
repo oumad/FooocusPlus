@@ -152,7 +152,7 @@ def inpaint_mode_change(mode, inpaint_engine_version):
             gr.Dataset.update(visible=False, samples=modules.config.example_inpaint_prompts),
             True, inpaint_engine_version, 1.0, 0.0
         ]
-    
+
     return [
         gr.update(visible=False, value=''), gr.update(visible=True),
         gr.Dataset.update(visible=False, samples=modules.config.example_inpaint_prompts),
@@ -256,7 +256,7 @@ with common.GRADIO_ROOT:
                             translator_button = gr.Button(visible=True, value="Translator", elem_classes='type_row_third', size='sm', min_width = 75)
                             super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_third', size="sm", min_width = 75)
                         else:
-                            random_button = gr.Button(value="Random Prompt", elem_classes='type_row_half', size="sm", min_width = 75)                            
+                            random_button = gr.Button(value="Random Prompt", elem_classes='type_row_half', size="sm", min_width = 75)
                             translator_button = gr.Button(visible=False, value="Translator", elem_classes='type_row_third', size='sm', min_width = 75)
                             super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_half', size="sm", min_width = 75)
                     with gr.Column(scale=2, min_width=0):
@@ -295,7 +295,7 @@ with common.GRADIO_ROOT:
                     wildcards_array_show =lambda x: [gr.update(visible=True)] * 2 + [gr.Dataset.update(visible=True, samples=wildcards.get_wildcards_samples()), gr.Dataset.update(visible=True, samples=wildcards.get_words_of_wildcard_samples(x))]
                     wildcards_array_hidden = [gr.update(visible=False)] * 2 + [gr.Dataset.update(visible=False, samples=wildcards.get_wildcards_samples()), gr.Dataset.update(visible=False, samples=wildcards.get_words_of_wildcard_samples())]
                     wildcards_array_hold = [gr.update()] * 4
-            
+
             with gr.Row(elem_classes='advanced_check_row'):
                 input_image_checkbox = gr.Checkbox(label='Input Image', value=modules.config.default_image_prompt_checkbox, container=False, elem_classes='min_check')
                 prompt_panel_checkbox = gr.Checkbox(label='Prompt Panel', value=False, container=False, elem_classes='min_check')
@@ -306,7 +306,7 @@ with common.GRADIO_ROOT:
                 prompt_regen_button = gr.Button(value='Regenerate', size='sm', visible=True)
                 prompt_delete_button = gr.Button(value='Delete Image', size='sm', visible=True)
                 prompt_info_button.click(toolbox.toggle_prompt_info, inputs=state_topbar, outputs=[prompt_info_box, state_topbar], show_progress=False)
-            
+
             with gr.Row(visible=modules.config.default_image_prompt_checkbox) as image_input_panel:
                 with gr.Tabs(selected=modules.config.default_selected_image_input_tab_id):
                     with gr.Tab(label='Image Prompt', id='ip_tab') as ip_tab:
@@ -370,7 +370,7 @@ with common.GRADIO_ROOT:
                                                             minimum=-1, maximum=1.0, step=0.001, value=-1,
                                                             info='Set as negative number to disable. For developer debugging.')
                         gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/390" target="_blank">\U0001F4D4 Documentation</a>')
-                    
+
                     with gr.Tab(label='Inpaint or Outpaint', id='inpaint_tab') as inpaint_tab:
                         with gr.Row():
                             mixing_image_prompt_and_inpaint = gr.Checkbox(label='Mixing Image Prompt and Inpaint', value=False, container=False)
@@ -428,7 +428,7 @@ with common.GRADIO_ROOT:
                                                                   'Only used in inpaint, not used in outpaint. '
                                                                   '(Outpaint always use 1.0)')
                         gr.HTML('* Powered by Fooocus Inpaint Engine <a href="https://github.com/lllyasviel/Fooocus/discussions/414" target="_blank">\U0001F4D4 Documentation</a>')
-                        
+
                         def generate_mask(image, mask_model, cloth_category, dino_prompt_text, sam_model, box_threshold, text_threshold, sam_max_detections, dino_erode_or_dilate, dino_debug, params_extra):
                             from extras.inpaint_mask import generate_mask_from_image
 
@@ -516,7 +516,7 @@ with common.GRADIO_ROOT:
                                         enhance_inpaint_update_ctrls = []
                                         for index in range(modules.config.default_enhance_tabs):
                                             with gr.Tab(label=f'Region#{index + 1}') as enhance_tab_item:
-                                                enhance_enabled = gr.Checkbox(label='Enable', value=False if index not in [0,1] else True, 
+                                                enhance_enabled = gr.Checkbox(label='Enable', value=False if index not in [0,1] else True,
                                                         elem_classes='min_check', container=False)
 
                                                 enhance_mask_dino_prompt_text = gr.Textbox(label='Detection prompt',
@@ -660,13 +660,12 @@ with common.GRADIO_ROOT:
                 if not args_manager.args.disable_preset_selection:
                     # disable the iFrame display of help for preset selections:
                     preset_instruction = gr.HTML(visible=False, value=topbar.preset_no_instruction())
-                    
-                    preset_selection = gr.Dropdown(label='Preset',
-                        visible=(args_manager.args.presetmenu=='dropdown'),
+
+                    preset_selection = gr.Radio(label='Preset',
                         choices=modules.config.available_presets,
                         value=args_manager.args.preset if args_manager.args.preset else "initial",
-                        interactive=True) #as dropdown_menu
-                
+                        visible=False, interactive=False)
+
                 with gr.Group():
                     performance_selection = gr.Radio(label='Performance',
                                              choices=flags.Performance.values(),
@@ -674,11 +673,11 @@ with common.GRADIO_ROOT:
                                              elem_classes=['performance_selection'])
                     image_number = gr.Slider(label='Image Quantity', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
                     with gr.Accordion(label='Aspect Ratios', open=False, elem_id='aspect_ratios_accordion') as aspect_ratios_accordion:
-                        aspect_ratios_selection = gr.Textbox(value='', visible=False) 
+                        aspect_ratios_selection = gr.Textbox(value='', visible=False)
                         aspect_ratios_selections = []
                         for template in flags.aspect_ratios_templates:
                             aspect_ratios_selections.append(gr.Radio(label='aspect ratios', choices=flags.available_aspect_ratios_list[template], value=flags.default_aspect_ratios[template], visible= template=='SDXL', info='Vertical(9:16), Portrait(4:5), Photo(4:3), Landscape(3:2), Widescreen(16:9), Cinematic(21:9)', elem_classes='aspect_ratios'))
-                        
+
                         for aspect_ratios_select in aspect_ratios_selections:
                             aspect_ratios_select.change(lambda x: x, inputs=aspect_ratios_select, outputs=aspect_ratios_selection, queue=False, show_progress=False).then(lambda x: None, inputs=aspect_ratios_select, queue=False, show_progress=False, _js='(x)=>{refresh_aspect_ratios_label(x);}')
                         overwrite_width = gr.Slider(label='Forced Overwrite of Generating Width',
@@ -696,7 +695,7 @@ with common.GRADIO_ROOT:
                     output_format = gr.Radio(label='Output Format',
                                          choices=flags.OutputFormat.list(),
                                          value=modules.config.default_output_format)
-                       
+
                     negative_prompt = gr.Textbox(label='Negative Prompt', show_label=True, placeholder="Type negative prompt here.",
                                         info='Describe what you do not want to see.', lines=2,
                                         elem_id='negative_prompt',
@@ -731,7 +730,7 @@ with common.GRADIO_ROOT:
 
                 history_link = gr.HTML()
                 common.GRADIO_ROOT.load(update_history_link, outputs=history_link, queue=False, show_progress=False)
-                
+
                 with gr.Tabs():
                     with gr.Tab(label='Describe Image', id='describe_tab', visible=True) as image_describe:
                         with gr.Row():
@@ -843,15 +842,7 @@ with common.GRADIO_ROOT:
                             lora_ctrls += [lora_enabled, lora_model, lora_weight]
 
                 with gr.Row():
-                    refresh_files = gr.Button(label='Refresh', value='\U0001f504 Refresh All Files', variant='secondary', elem_classes='refresh_button')
-                #with gr.Row():
-                #    sync_model_info = gr.Checkbox(label='Sync model info', interactive=False, info='Improve usability and transferability for preset and embedinfo.', value=False, container=False)
-                #    with gr.Column(visible=False) as info_sync_texts:
-                #        models_infos = []
-                #info_sync_button = gr.Button(label='Sync', value='\U0001f504 Sync Remote Info', visible=False, variant='secondary', elem_classes='refresh_button')
-                #info_progress = gr.Markdown('Note: If MUID is not obtained after synchronizing, it means that it is a new model file. You need to add an available download URL before.', visible=False)
-                #sync_model_info.change(lambda x: (gr.update(visible=x), gr.update(visible=x),  gr.update(visible=x)), inputs=sync_model_info, outputs=[info_sync_texts, info_sync_button, info_progress], queue=False, show_progress=False)
-                #info_sync_button.click(toolbox.sync_model_info_click, inputs=models_infos, outputs=models_infos, queue=False, show_progress=False)
+                    refresh_files = gr.Button(label='Refresh', value='\U0001f504 Refresh All Files')
 
             with gr.Tab(label='Advanced', elem_id="scrollable-box"):
                 guidance_scale = gr.Slider(label='Guidance Scale (CFG)', minimum=0.01, maximum=30.0, step=0.01,
@@ -934,7 +925,7 @@ with common.GRADIO_ROOT:
                             metadata_scheme = gr.Radio(label='Metadata Scheme', choices=flags.metadata_scheme, value=modules.config.default_metadata_scheme,
                                             info='Use "simple" for compatibility with Fooocus and "a1111" for compatibility with Civitai.',
                                             visible=True)
-    
+
                             save_metadata_to_images.change(lambda x: [gr.update(visible=x)], inputs=[save_metadata_to_images], outputs=[metadata_scheme], queue=False, show_progress=False)
 
                     with gr.Tab(label='Control'):
@@ -1006,6 +997,8 @@ with common.GRADIO_ROOT:
                                         queue=False, show_progress=False)
 
                 def refresh_files_clicked(state_params):
+                    print()
+                    print('Refreshing all files...')
                     engine = state_params.get('engine', 'Fooocus')
                     task_method = state_params.get('task_method', None)
                     model_filenames, lora_filenames, vae_filenames = modules.config.update_files(engine, task_method)
@@ -1017,17 +1010,15 @@ with common.GRADIO_ROOT:
                     for i in range(modules.config.default_max_lora_number):
                         results += [gr.update(interactive=True),
                                     gr.update(choices=['None'] + lora_filenames), gr.update()]
+                    print('Refresh complete!')
+                    print()
                     return results
 
                 refresh_files_output = [base_model, refiner_model, vae_name]
                 if not args_manager.args.disable_preset_selection:
-                    try:
-                       preset_selection
-                    except:           #catch the error if a preset is not yet initialized
-                       preset_selection  = ''
-                    refresh_files_output += []
-                if preset_selection != '':
-                    refresh_files.click(refresh_files_clicked, [state_topbar], refresh_files_output + lora_ctrls,
+                    refresh_files_output += [preset_selection]
+                refresh_files.click(refresh_files_clicked, [state_topbar],
+                                    refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
 
             with gr.Tab(label='Extras', elem_id="scrollable-box"):
@@ -1050,9 +1041,9 @@ with common.GRADIO_ROOT:
                     if (args_manager.args.language=='cn'):
                         translation_methods = gr.Radio(visible=True, label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third parties.')
                     else:
-                        translation_methods = gr.Radio(visible=False, label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third parties.')                    
+                        translation_methods = gr.Radio(visible=False, label='Translation Methods', choices=modules.flags.translation_methods, value=modules.config.default_translation_methods, info='\'Model\' requires more GPU/CPU and \'APIs\' rely on third parties.')
                     mobile_url = gr.Checkbox(label=f'http://{args_manager.args.listen}:{args_manager.args.port}{args_manager.args.webroot}/', value=True, info='Mobile phone access address within the LAN. If you want WAN access, consulting QQ group: 938075852.', interactive=False, visible=False)
-                    
+
                     def sync_params_backend(key, v, params):
                         params.update({key:v})
                         return params
@@ -1085,14 +1076,14 @@ with common.GRADIO_ROOT:
                     result = [gr.update(choices=flags.Performance.list()), gr.update()]
                     result += [gr.update(interactive=True)] * 18
                 return result
-            
+
             uov_tab.select(lambda: 'uov', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             inpaint_tab.select(lambda: 'inpaint', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             ip_tab.select(lambda: 'ip', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             layer_tab.select(lambda: 'layer', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             enhance_tab.select(lambda: 'enhance', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
-            
-            input_image_checkbox.change(lambda x: [gr.update(visible=x), gr.update(choices=flags.Performance.list()), 
+
+            input_image_checkbox.change(lambda x: [gr.update(visible=x), gr.update(choices=flags.Performance.list()),
                 gr.update()] + [gr.update(interactive=True)]*18, inputs=input_image_checkbox,
                 outputs=[image_input_panel] + layout_image_tab, queue=False, show_progress=False, _js=switch_js)
             prompt_panel_checkbox.change(lambda x: gr.update(visible=x, open=x if x else True), inputs=prompt_panel_checkbox, outputs=prompt_wildcards, queue=False, show_progress=False, _js=switch_js).then(lambda x,y: wildcards_array_show(y['wildcard_in_wildcards']) if x else wildcards_array_hidden, inputs=[prompt_panel_checkbox, state_topbar], outputs=wildcards_array, queue=False, show_progress=False)
@@ -1102,7 +1093,7 @@ with common.GRADIO_ROOT:
             import enhanced.superprompter
             super_prompter.click(lambda x, y, z: enhanced.superprompter.answer(input_text=translator.convert(f'{y}{x}', z), seed=image_seed), inputs=[prompt, super_prompter_prompt, translation_methods], outputs=prompt, queue=False, show_progress=True)
             ehps = [backfill_prompt, translation_methods, comfyd_active_checkbox]
-            
+
             def update_state_topbar(name, value, state):
                 state.update({name: value})
                 return state
@@ -1176,7 +1167,7 @@ with common.GRADIO_ROOT:
                                          scheduler_name, adaptive_cfg, refiner_swap_method, negative_prompt, disable_intermediate_results
                                      ], queue=False, show_progress=False)
 
-        
+
         def reset_aspect_ratios(aspect_ratios):
             if len(aspect_ratios.split(','))>1:
                 template = aspect_ratios.split(',')[1]
@@ -1212,7 +1203,7 @@ with common.GRADIO_ROOT:
         # load configured default_inpaint_method
         # default_inpaint_ctrls = [inpaint_mode, inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field]
         common.GRADIO_ROOT.load(inpaint_mode_change, inputs=[inpaint_mode, inpaint_engine_state], outputs=[
-                inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts, 
+                inpaint_additional_prompt, outpaint_selections, example_inpaint_prompts,
                 inpaint_disable_initial_latent, inpaint_engine, inpaint_strength, inpaint_respective_field
             ], show_progress=False, queue=False)
 
@@ -1258,12 +1249,12 @@ with common.GRADIO_ROOT:
             ctrls += [save_metadata_to_images, metadata_scheme]
 
         ctrls += ip_ctrls
-        
+
         ctrls += [debugging_dino, dino_erode_or_dilate, debugging_enhance_masks_checkbox,
                   enhance_input_image, enhance_checkbox, enhance_uov_method, enhance_uov_processing_order,
                   enhance_uov_prompt_type]
         ctrls += enhance_ctrls
-        
+
         system_params = gr.JSON({}, visible=False)
         def parse_meta(raw_prompt_txt, is_generating, state_params, panel_status):
             loaded_json = None
@@ -1287,7 +1278,7 @@ with common.GRADIO_ROOT:
             return [json.dumps(loaded_json), gr.update(visible=False), gr.update(visible=True), gr.update()]
 
         prompt.input(parse_meta, inputs=[prompt, state_is_generating, state_topbar, prompt_panel_checkbox], outputs=[prompt, generate_button, load_parameter_button, prompt_panel_checkbox], queue=False, show_progress=False)
-        
+
         translator_button.click(lambda x, y: translator.convert(x, y), inputs=[prompt, translation_methods], outputs=prompt, queue=False, show_progress=True)
 
         load_parameter_button.click(modules.meta_parser.load_parameter_button_click, inputs=[prompt, state_is_generating, inpaint_mode], outputs=load_data_outputs, queue=False, show_progress=False)
@@ -1389,7 +1380,7 @@ with common.GRADIO_ROOT:
     params_note_delete_button.click(toolbox.delete_image, inputs=state_topbar, outputs=[gallery, gallery_index, params_note_delete_button, params_note_box, state_topbar], show_progress=False) \
             .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
             .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}')
-    
+
     prompt_regen_button.click(toolbox.toggle_note_box_regen, inputs=model_check + [state_topbar], outputs=[params_note_info, params_note_regen_button, params_note_box, state_topbar], show_progress=False)
     params_note_regen_button.click(toolbox.reset_image_params, inputs=[state_topbar, state_is_generating, inpaint_mode], outputs=reset_preset_layout + reset_preset_func + load_data_outputs + [params_note_regen_button, params_note_box], show_progress=False)
 
