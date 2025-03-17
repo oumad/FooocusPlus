@@ -5,7 +5,7 @@ from .civit import Civit
 import time
 import os
 from custom.OneButtonPrompt.utils import path_fixed, root_path_fixed
-
+'''
 class PathManager:
     DEFAULT_PATHS = {
         "path_checkpoints": root_path_fixed("../models/checkpoints/"),
@@ -170,3 +170,4 @@ class PathManager:
         for child in path.rglob(filename):
             if child.name == filename:
                 return child.relative_to(path)
+'''
