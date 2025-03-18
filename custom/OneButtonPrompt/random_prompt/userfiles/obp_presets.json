@@ -286,7 +286,7 @@
       "suffixprompt": "",
       "giventypeofimage": "",
       "antistring": ""
-    }
+    },
     "Relaxing Seascapes": {
       "insanitylevel": 4,
       "subject": "--- concept - all",
@@ -394,5 +394,5 @@
       "suffixprompt": "",
       "giventypeofimage": "",
       "antistring": ""
-    },
+    }
 }
