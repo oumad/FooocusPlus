@@ -103,7 +103,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
         # api support tricks for OBP presets
         OBP_preset = ""
 
-    if(OBP_preset != "" and OBP_preset != 'Custom...'):
+    if(OBP_preset != "" and OBP_preset != 'Create New Topic...'):
         selected_opb_preset = OBPresets.get_obp_preset(OBP_preset)
         insanitylevel = selected_opb_preset["insanitylevel"]
         forcesubject = selected_opb_preset["subject"]
