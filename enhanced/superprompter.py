@@ -2,6 +2,7 @@ import os
 import random
 import torch
 from common import ROOT
+from common import torch_device
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 import modules.config as config
 import shutil
