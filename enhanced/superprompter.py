@@ -27,10 +27,10 @@ def answer(input_text="", max_new_tokens=256, repetition_penalty=1.2, temperatur
             print("[SuperPrompt] Downloaded the model file for superprompter. \n")
 
         tokenizer = T5Tokenizer.from_pretrained(modelDir)
-        model = T5ForConditionalGeneration.from_pretrained(modelDir, torch_dtype=torch.float16).to(shared.torch_device)
+        model = T5ForConditionalGeneration.from_pretrained(modelDir, torch_dtype=torch.float16).to(torch_device)
 
 
-    input_ids = tokenizer(input_text, return_tensors="pt").input_ids.to(shared.torch_device)
+    input_ids = tokenizer(input_text, return_tensors="pt").input_ids.to(torch_device)
 
     outputs = model.generate(input_ids, max_new_tokens=max_new_tokens, repetition_penalty=repetition_penalty,
                             do_sample=True, temperature=temperature, top_p=top_p, top_k=top_k)
