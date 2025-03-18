@@ -1478,7 +1478,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
 
             # remove the shizzle based on chance?
             # we want it to be MORE diverce when the insanity level raises
-            # in this case, raise the chance for a humanoid, gets more wierd when going above 5
+            # in this case, raise the chance for a humanoid, gets more weird when going above 5
 
             if(random.randint(0,6) > max(2,insanitylevel -2) and "concept" in mainchooserlist):
                 mainchooserlist.remove("concept")
@@ -1499,7 +1499,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
  
             # remove the shizzle based on chance?
             # we want it to be MORE diverce when the insanity level raises
-            # in this case, raise the chance for a landscape, gets more wierd when going above 5
+            # in this case, raise the chance for a landscape, gets more weird when going above 5
             if(random.randint(0,6) > max(2,insanitylevel -2) and "concept" in mainchooserlist):
                 mainchooserlist.remove("concept")
             if(random.randint(0,6) > max(2,insanitylevel -2) and "animal" in mainchooserlist):
@@ -2934,7 +2934,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
                     if(chance_roll(insanitylevel, colorschemechance) and generatecolorscheme == True):
                         completeprompt += "-colorscheme-, "
 
-                    # vomit some cool/wierd things into the prompt
+                    # vomit some cool/weird things into the prompt
                     if(chance_roll(insanitylevel, vomit1chance) and generatevomit == True):
                         completeprompt += "-vomit-, "
                         if(chance_roll(insanitylevel, vomit2chance)):
@@ -4966,7 +4966,7 @@ def cleanup(completeprompt, advancedprompting, insanitylevel = 5):
     # sometimes if there are not enough artist, we get left we things formed as (:1.2)
     completeprompt = re.sub('\(\:\d+\.\d+\)', '', completeprompt) 
 
-    # lets also remove some wierd stuff on lower insanitylevels
+    # lets also remove some weird stuff on lower insanitylevels
     if(insanitylevel < 7):
         completeprompt = completeprompt.replace("DayGlo", " ")
         completeprompt = completeprompt.replace("fluorescent", " ")
