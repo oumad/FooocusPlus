@@ -103,7 +103,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
         # api support tricks for OBP presets
         OBP_preset = ""
 
-    if(OBP_preset != "" and OBP_preset != 'Create New Topic...'):
+    if(OBP_preset != "" and OBP_preset != 'Custom...'):
         selected_opb_preset = OBPresets.get_obp_preset(OBP_preset)
         insanitylevel = selected_opb_preset["insanitylevel"]
         forcesubject = selected_opb_preset["subject"]
@@ -341,11 +341,11 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
     hairdescriptorlist = csv_to_list("hairdescriptors",antilist)
     humandescriptorlist = csv_to_list("humandescriptors",antilist)
     locationdescriptorlist = csv_to_list("locationdescriptors",antilist)
-    basicbitchdescriptorlist = csv_to_list("basicbitchdescriptors",antilist)
+    devadescriptorlist = csv_to_list("devadescriptors",antilist)
     animaldescriptorlist = csv_to_list("animaldescriptors",antilist)
 
     # descriptorlist becomes one with everything
-    descriptortotallist = descriptorlist + outfitdescriptorlist + hairdescriptorlist + humandescriptorlist + locationdescriptorlist + basicbitchdescriptorlist + animaldescriptorlist
+    descriptortotallist = descriptorlist + outfitdescriptorlist + hairdescriptorlist + humandescriptorlist + locationdescriptorlist + devadescriptorlist + animaldescriptorlist
     # Deduplicate the list while preserving casings
     descriptorlist = []
     seen_items = set()
@@ -1478,7 +1478,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
 
             # remove the shizzle based on chance?
             # we want it to be MORE diverce when the insanity level raises
-            # in this case, raise the chance for a humanoid, gets more weird when going above 5
+            # in this case, raise the chance for a humanoid, gets more wierd when going above 5
 
             if(random.randint(0,6) > max(2,insanitylevel -2) and "concept" in mainchooserlist):
                 mainchooserlist.remove("concept")
@@ -1499,7 +1499,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
  
             # remove the shizzle based on chance?
             # we want it to be MORE diverce when the insanity level raises
-            # in this case, raise the chance for a landscape, gets more weird when going above 5
+            # in this case, raise the chance for a landscape, gets more wierd when going above 5
             if(random.randint(0,6) > max(2,insanitylevel -2) and "concept" in mainchooserlist):
                 mainchooserlist.remove("concept")
             if(random.randint(0,6) > max(2,insanitylevel -2) and "animal" in mainchooserlist):
@@ -2158,7 +2158,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
                 if(chance_roll(insanitylevel, subjectdescriptor1chance) and generatedescriptors == True):
                     if(animalashuman or subjectchooser in ["human", "job", "fictional", "non fictional", "humanoid", "manwomanrelation", "manwomanmultiple","firstname"]):
                         if(anime_mode and random.randint(0,2)<2):
-                            completeprompt += "-basicbitchdescriptor- "
+                            completeprompt += "-devadescriptor- "
                         else:
                             completeprompt += "-humandescriptor- "
                     elif(mainchooser == "landscape"):
@@ -2171,7 +2171,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
                 if(chance_roll(insanitylevel, subjectdescriptor2chance) and generatedescriptors == True):
                     if(animalashuman or subjectchooser in ["human", "job", "fictional", "non fictional", "humanoid", "manwomanrelation", "manwomanmultiple","firstname"]):
                         if(anime_mode and random.randint(0,2)<2):
-                            completeprompt += "-basicbitchdescriptor- "
+                            completeprompt += "-devadescriptor- "
                         else:
                             completeprompt += "-humandescriptor- "
                     elif(mainchooser == "landscape"):
@@ -2590,7 +2590,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
                     if(animalashuman or subjectchooser in ["human", "job", "fictional", "non fictional", "humanoid", "manwomanrelation","manwomanmultiple", "firstname"]):
                         if(less_verbose):
                             if(anime_mode and random.randint(0,2)<2):
-                                completeprompt += ", -basicbitchdescriptor- "
+                                completeprompt += ", -devadescriptor- "
                             else:
                                 completeprompt += ", -humandescriptor- "
                         elif(random.randint(0,3) > 0):
@@ -2934,7 +2934,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
                     if(chance_roll(insanitylevel, colorschemechance) and generatecolorscheme == True):
                         completeprompt += "-colorscheme-, "
 
-                    # vomit some cool/weird things into the prompt
+                    # vomit some cool/wierd things into the prompt
                     if(chance_roll(insanitylevel, vomit1chance) and generatevomit == True):
                         completeprompt += "-vomit-, "
                         if(chance_roll(insanitylevel, vomit2chance)):
@@ -3415,13 +3415,13 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
     if(insanitylevel > 7 and unique_dist(insanitylevel)):
         completeprompt = completeprompt.replace("-descriptor-", "-artmovement-",1)
 
-    # On low insanity levels (lower than 5) ,a chance refer to the basic bitch list on some occasions
+    # On low insanity levels (lower than 5) ,a chance refer to the deva list on some occasions
     if(random.randint(0,insanitylevel) == 0 and insanitylevel < 5): 
-        completeprompt = completeprompt.replace("-locationdescriptor-", "-basicbitchdescriptor-")
-        completeprompt = completeprompt.replace("-humandescriptor-", "-basicbitchdescriptor-")
-        completeprompt = completeprompt.replace("-outfitdescriptor-", "-basicbitchdescriptor-")
-        completeprompt = completeprompt.replace("-descriptor-", "-basicbitchdescriptor-")
-        completeprompt = completeprompt.replace("-animaldescriptor-", "-basicbitchdescriptor-")
+        completeprompt = completeprompt.replace("-locationdescriptor-", "-devadescriptor-")
+        completeprompt = completeprompt.replace("-humandescriptor-", "-devadescriptor-")
+        completeprompt = completeprompt.replace("-outfitdescriptor-", "-devadescriptor-")
+        completeprompt = completeprompt.replace("-descriptor-", "-devadescriptor-")
+        completeprompt = completeprompt.replace("-animaldescriptor-", "-devadescriptor-")
 
     # we now have color combinations, which are stronger than just color. So lets change them while we are at it.
     if(random.randint(0,max(0, insanitylevel - 2)) <= 0):
@@ -3562,7 +3562,7 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
     "-buildfacepart-" in completeprompt or
     "-outfitvomit-" in completeprompt or
     "-locationdescriptor-" in completeprompt or
-    "-basicbitchdescriptor-" in completeprompt or
+    "-devadescriptor-" in completeprompt or
     "-animaldescriptor-" in completeprompt or
     "-humanexpression-" in completeprompt or
     "-humanvomit-" in completeprompt or
@@ -3607,10 +3607,10 @@ def build_dynamic_prompt(insanitylevel = 5, forcesubject = "all", artists = "all
     "-pokemon-" in completeprompt or
     "-pokemontype-" in completeprompt or
     "-marinelife-"  in completeprompt):
-        allwildcardslistnohybrid = [ "-color-","-object-", "-animal-", "-fictional-","-nonfictional-","-building-","-vehicle-","-location-","-conceptprefix-","-food-","-haircolor-","-hairstyle-","-job-", "-accessory-", "-humanoid-", "-manwoman-", "-human-", "-colorscheme-", "-mood-", "-genderdescription-", "-artmovement-", "-malefemale-", "-bodytype-", "-minilocation-", "-minilocationaddition-", "-pose-", "-season-", "-minioutfit-", "-elaborateoutfit-", "-minivomit-", "-vomit-", "-rpgclass-", "-subjectfromfile-","-outfitfromfile-", "-brand-", "-space-", "-artist-", "-imagetype-", "-othertype-", "-quality-", "-lighting-", "-camera-", "-lens-","-imagetypequality-", "-poemline-", "-songline-", "-greatwork-", "-fantasyartist-", "-popularartist-", "-romanticismartist-", "-photographyartist-", "-emoji-", "-timeperiod-", "-shotsize-", "-musicgenre-", "-animaladdition-", "-addontolocationinside-", "-addontolocation-", "-objectaddition-", "-humanaddition-", "-overalladdition-", "-focus-", "-direction-", "-styletilora-", "-manwomanrelation-", "-waterlocation-", "-container-", "-firstname-", "-flora-", "-print-", "-miniactivity-", "-pattern-", "-animalsuffixaddition-", "-chair-", "-cardname-", "-covering-", "-heshe-", "-hisher-", "-himher-", "-outfitdescriptor-", "-hairdescriptor-", "-hairvomit-", "-humandescriptor-", "-manwomanmultiple-", "-facepart-", "-buildfacepart-", "-outfitvomit-", "-locationdescriptor-", "-basicbitchdescriptor-", "-animaldescriptor-", "-humanexpression-", "-humanvomit-", "-eyecolor-", "-fashiondesigner-", "-colorcombination-", "-materialcombination-", "-oppositefictional-", "-oppositenonfictional-", "-photoaddition-", "-age-", "-agecalculator-", "-gregmode-"
+        allwildcardslistnohybrid = [ "-color-","-object-", "-animal-", "-fictional-","-nonfictional-","-building-","-vehicle-","-location-","-conceptprefix-","-food-","-haircolor-","-hairstyle-","-job-", "-accessory-", "-humanoid-", "-manwoman-", "-human-", "-colorscheme-", "-mood-", "-genderdescription-", "-artmovement-", "-malefemale-", "-bodytype-", "-minilocation-", "-minilocationaddition-", "-pose-", "-season-", "-minioutfit-", "-elaborateoutfit-", "-minivomit-", "-vomit-", "-rpgclass-", "-subjectfromfile-","-outfitfromfile-", "-brand-", "-space-", "-artist-", "-imagetype-", "-othertype-", "-quality-", "-lighting-", "-camera-", "-lens-","-imagetypequality-", "-poemline-", "-songline-", "-greatwork-", "-fantasyartist-", "-popularartist-", "-romanticismartist-", "-photographyartist-", "-emoji-", "-timeperiod-", "-shotsize-", "-musicgenre-", "-animaladdition-", "-addontolocationinside-", "-addontolocation-", "-objectaddition-", "-humanaddition-", "-overalladdition-", "-focus-", "-direction-", "-styletilora-", "-manwomanrelation-", "-waterlocation-", "-container-", "-firstname-", "-flora-", "-print-", "-miniactivity-", "-pattern-", "-animalsuffixaddition-", "-chair-", "-cardname-", "-covering-", "-heshe-", "-hisher-", "-himher-", "-outfitdescriptor-", "-hairdescriptor-", "-hairvomit-", "-humandescriptor-", "-manwomanmultiple-", "-facepart-", "-buildfacepart-", "-outfitvomit-", "-locationdescriptor-", "-devadescriptor-", "-animaldescriptor-", "-humanexpression-", "-humanvomit-", "-eyecolor-", "-fashiondesigner-", "-colorcombination-", "-materialcombination-", "-oppositefictional-", "-oppositenonfictional-", "-photoaddition-", "-age-", "-agecalculator-", "-gregmode-"
                                     ,"-portraitartist-", "-characterartist-" , "-landscapeartist-", "-scifiartist-", "-graphicdesignartist-", "-digitalartist-", "-architectartist-", "-cinemaartist-", "-setting-", "-charactertype-", "-objectstohold-", "-episodetitle-", "-token-", "-allstylessuffix-", "-fluff-", "-event-", "-background-"
                                     , "-occult-", "-locationfantasy-", "-locationscifi-", "-locationvideogame-", "-locationbiome-", "-locationcity-", "-bird-", "-cat-", "-dog-", "-insect-", "-pokemon-", "-pokemontype-", "-marinelife-"]
-        allwildcardslistnohybridlists = [colorlist, objectlist, animallist, fictionallist, nonfictionallist, buildinglist, vehiclelist, locationlist,conceptprefixlist,foodlist,haircolorlist, hairstylelist,joblist, accessorielist, humanoidlist, manwomanlist, humanlist, colorschemelist, moodlist, genderdescriptionlist, artmovementlist, malefemalelist, bodytypelist, minilocationlist, minilocationadditionslist, poselist, seasonlist, minioutfitlist, elaborateoutfitlist, minivomitlist, vomitlist, rpgclasslist, customsubjectslist, customoutfitslist, brandlist, spacelist, artistlist, imagetypelist, othertypelist, qualitylist, lightinglist, cameralist, lenslist, imagetypequalitylist, poemlinelist, songlinelist, greatworklist, fantasyartistlist, popularartistlist, romanticismartistlist, photographyartistlist, emojilist, timeperiodlist, shotsizelist, musicgenrelist, animaladditionlist, addontolocationinsidelist, addontolocationlist, objectadditionslist, humanadditionlist, overalladditionlist, focuslist, directionlist, stylestiloralist, manwomanrelationlist, waterlocationlist, containerlist, firstnamelist, floralist, printlist, miniactivitylist, patternlist, animalsuffixadditionlist, chairlist, cardnamelist, coveringlist, heshelist, hisherlist, himherlist, outfitdescriptorlist, hairdescriptorlist, hairvomitlist, humandescriptorlist, manwomanmultiplelist, facepartlist, buildfacepartlist, outfitvomitlist, locationdescriptorlist, basicbitchdescriptorlist, animaldescriptorlist, humanexpressionlist, humanvomitlist, eyecolorlist, fashiondesignerlist, colorcombinationlist, materialcombinationlist, oppositefictionallist, oppositenonfictionallist, photoadditionlist, agelist, agecalculatorlist, gregmodelist
+        allwildcardslistnohybridlists = [colorlist, objectlist, animallist, fictionallist, nonfictionallist, buildinglist, vehiclelist, locationlist,conceptprefixlist,foodlist,haircolorlist, hairstylelist,joblist, accessorielist, humanoidlist, manwomanlist, humanlist, colorschemelist, moodlist, genderdescriptionlist, artmovementlist, malefemalelist, bodytypelist, minilocationlist, minilocationadditionslist, poselist, seasonlist, minioutfitlist, elaborateoutfitlist, minivomitlist, vomitlist, rpgclasslist, customsubjectslist, customoutfitslist, brandlist, spacelist, artistlist, imagetypelist, othertypelist, qualitylist, lightinglist, cameralist, lenslist, imagetypequalitylist, poemlinelist, songlinelist, greatworklist, fantasyartistlist, popularartistlist, romanticismartistlist, photographyartistlist, emojilist, timeperiodlist, shotsizelist, musicgenrelist, animaladditionlist, addontolocationinsidelist, addontolocationlist, objectadditionslist, humanadditionlist, overalladditionlist, focuslist, directionlist, stylestiloralist, manwomanrelationlist, waterlocationlist, containerlist, firstnamelist, floralist, printlist, miniactivitylist, patternlist, animalsuffixadditionlist, chairlist, cardnamelist, coveringlist, heshelist, hisherlist, himherlist, outfitdescriptorlist, hairdescriptorlist, hairvomitlist, humandescriptorlist, manwomanmultiplelist, facepartlist, buildfacepartlist, outfitvomitlist, locationdescriptorlist, devadescriptorlist, animaldescriptorlist, humanexpressionlist, humanvomitlist, eyecolorlist, fashiondesignerlist, colorcombinationlist, materialcombinationlist, oppositefictionallist, oppositenonfictionallist, photoadditionlist, agelist, agecalculatorlist, gregmodelist
                                          , portraitartistlist, characterartistlist, landscapeartistlist, scifiartistlist, graphicdesignartistlist, digitalartistlist, architectartistlist, cinemaartistlist, settinglist, charactertypelist, objectstoholdlist, episodetitlelist, tokenlist, allstylessuffixlist, flufferlist, eventlist, backgroundlist
                                          , occultlist, locationfantasylist, locationscifilist, locationvideogamelist, locationbiomelist, locationcitylist, birdlist, catlist, doglist, insectlist, pokemonlist, pokemontypelist, marinelifelist]
         
@@ -3832,7 +3832,7 @@ def createpromptvariant(prompt = "", insanitylevel = 5, antivalues = "" , gender
     hairdescriptorlist = csv_to_list("hairdescriptors",antilist)
     humandescriptorlist = csv_to_list("humandescriptors",antilist)
     locationdescriptorlist = csv_to_list("locationdescriptors",antilist)
-    basicbitchdescriptorlist = csv_to_list("basicbitchdescriptors",antilist)
+    devadescriptorlist = csv_to_list("devadescriptors",antilist)
     animaldescriptorlist = csv_to_list("animaldescriptors",antilist)
 
     humanlist = fictionallist + nonfictionallist + humanoidlist + malefemalelist + manwomanlist + manwomanrelationlist + manwomanmultiplelist
@@ -3934,7 +3934,7 @@ def createpromptvariant(prompt = "", insanitylevel = 5, antivalues = "" , gender
     originalprompt = prompt
     originaloriginalprompt = prompt
     
-    basicenhance = ", OR(-vomit-;-imagetype-;-basicbitchdescriptor-;-mood-;-lighting-;-descriptor-), "
+    basicenhance = ", OR(-vomit-;-imagetype-;-devadescriptor-;-mood-;-lighting-;-descriptor-), "
     
     ### Get all combinations of 1 to 4 consecutive words
 
@@ -4142,8 +4142,8 @@ def createpromptvariant(prompt = "", insanitylevel = 5, antivalues = "" , gender
                     prompt = prompt.replace(combination," -humandescriptor- ")
                 if lowercase_combination in [x.lower() for x in locationdescriptorlist] and chance_roll(insanitylevel, "rare"):
                     prompt = prompt.replace(combination," -locationdescriptor- ")
-                if lowercase_combination in [x.lower() for x in basicbitchdescriptorlist] and chance_roll(insanitylevel, "rare"):
-                    prompt = prompt.replace(combination," -basicbitchdescriptor- ")
+                if lowercase_combination in [x.lower() for x in devadescriptorlist] and chance_roll(insanitylevel, "rare"):
+                    prompt = prompt.replace(combination," -devadescriptor- ")
                 if lowercase_combination in [x.lower() for x in animaldescriptorlist] and chance_roll(insanitylevel, "rare"):
                     prompt = prompt.replace(combination," -animaldescriptor- ")
 
@@ -4403,7 +4403,7 @@ def createpromptvariant(prompt = "", insanitylevel = 5, antivalues = "" , gender
         "-humandescriptor-" in completeprompt or
         "-facepart-" in completeprompt or
         "-locationdescriptor-" in completeprompt or
-        "-basicbitchdescriptor-" in completeprompt or
+        "-devadescriptor-" in completeprompt or
         "-animaldescriptor-" in completeprompt or
         "-humanexpression-" in completeprompt or
         "-humanvomit-" in completeprompt or
@@ -4446,10 +4446,10 @@ def createpromptvariant(prompt = "", insanitylevel = 5, antivalues = "" , gender
         "-pokemontype-" in completeprompt or
         "-marinelife-" in completeprompt
         ):
-            allwildcardslistnohybrid = [ "-color-","-object-", "-animal-", "-fictional-","-nonfictional-","-building-","-vehicle-","-location-","-conceptprefix-","-food-","-haircolor-","-hairstyle-","-job-", "-accessory-", "-humanoid-", "-manwoman-", "-human-", "-colorscheme-", "-mood-", "-genderdescription-", "-artmovement-", "-malefemale-", "-bodytype-", "-minilocation-", "-minilocationaddition-", "-pose-", "-season-", "-minioutfit-", "-elaborateoutfit-", "-minivomit-", "-vomit-", "-rpgclass-", "-subjectfromfile-", "-outfitfromfile-", "-brand-", "-space-", "-artist-", "-imagetype-", "-othertype-", "-quality-", "-lighting-", "-camera-", "-lens-","-imagetypequality-", "-poemline-", "-songline-", "-greatwork-", "-fantasyartist-", "-popularartist-", "-romanticismartist-", "-photographyartist-", "-emoji-", "-timeperiod-", "-shotsize-", "-musicgenre-", "-animaladdition-", "-objectaddition-", "-humanaddition-", "-overalladdition-", "-focus-", "-direction-", "-styletilora-", "-manwomanrelation-", "-waterlocation-", "-container-", "-firstname-", "-flora-", "-print-", "-miniactivity-", "-pattern-", "-chair-", "-cardname-", "-covering-", "-outfitdescriptor-", "-hairdescriptor-", "-hairvomit-", "-humandescriptor-", "-manwomanmultiple-", "-facepart-", "-locationdescriptor-", "-basicbitchdescriptor-", "-animaldescriptor-", "-humanexpression-", "-humanvomit-", "-eyecolor-", "-fashiondesigner-", "-colorcombination-", "-materialcombination-", "-photoaddition-", "-age-", "-agecalculator-", "-gregmode-"
+            allwildcardslistnohybrid = [ "-color-","-object-", "-animal-", "-fictional-","-nonfictional-","-building-","-vehicle-","-location-","-conceptprefix-","-food-","-haircolor-","-hairstyle-","-job-", "-accessory-", "-humanoid-", "-manwoman-", "-human-", "-colorscheme-", "-mood-", "-genderdescription-", "-artmovement-", "-malefemale-", "-bodytype-", "-minilocation-", "-minilocationaddition-", "-pose-", "-season-", "-minioutfit-", "-elaborateoutfit-", "-minivomit-", "-vomit-", "-rpgclass-", "-subjectfromfile-", "-outfitfromfile-", "-brand-", "-space-", "-artist-", "-imagetype-", "-othertype-", "-quality-", "-lighting-", "-camera-", "-lens-","-imagetypequality-", "-poemline-", "-songline-", "-greatwork-", "-fantasyartist-", "-popularartist-", "-romanticismartist-", "-photographyartist-", "-emoji-", "-timeperiod-", "-shotsize-", "-musicgenre-", "-animaladdition-", "-objectaddition-", "-humanaddition-", "-overalladdition-", "-focus-", "-direction-", "-styletilora-", "-manwomanrelation-", "-waterlocation-", "-container-", "-firstname-", "-flora-", "-print-", "-miniactivity-", "-pattern-", "-chair-", "-cardname-", "-covering-", "-outfitdescriptor-", "-hairdescriptor-", "-hairvomit-", "-humandescriptor-", "-manwomanmultiple-", "-facepart-", "-locationdescriptor-", "-devadescriptor-", "-animaldescriptor-", "-humanexpression-", "-humanvomit-", "-eyecolor-", "-fashiondesigner-", "-colorcombination-", "-materialcombination-", "-photoaddition-", "-age-", "-agecalculator-", "-gregmode-"
                                         ,"-portraitartist-", "-characterartist-" , "-landscapeartist-", "-scifiartist-", "-graphicdesignartist-", "-digitalartist-", "-architectartist-", "-cinemaartist-", "-setting-", "-charactertype-", "-objectstohold-", "-episodetitle-", "-allstylessuffix-", "-fluff-", "-event-", "-background-"
                                         , "-occult-", "-locationfantasy-", "-locationscifi-", "-locationvideogame-", "-locationbiome-", "-locationcity-", "-bird-", "-cat-", "-dog-", "-insect-", "-pokemon-", "-pokemontype-", "-marinelife-"]
-            allwildcardslistnohybridlists = [colorlist, objectlist, animallist, fictionallist, nonfictionallist, buildinglist, vehiclelist, locationlist,conceptprefixlist,foodlist,haircolorlist, hairstylelist,joblist, accessorielist, humanoidlist, manwomanlist, humanlist, colorschemelist, moodlist, genderdescriptionlist, artmovementlist, malefemalelist, bodytypelist, minilocationlist, minilocationadditionslist, poselist, seasonlist, minioutfitlist, elaborateoutfitlist, minivomitlist, vomitlist, rpgclasslist, customsubjectslist, customoutfitslist, brandlist, spacelist, artistlist, imagetypelist, othertypelist, qualitylist, lightinglist, cameralist, lenslist, imagetypequalitylist, poemlinelist, songlinelist, greatworklist, fantasyartistlist, popularartistlist, romanticismartistlist, photographyartistlist, emojilist, timeperiodlist, shotsizelist, musicgenrelist, animaladditionlist, objectadditionslist, humanadditionlist, overalladditionlist, focuslist, directionlist, stylestiloralist, manwomanrelationlist, waterlocationlist, containerlist, firstnamelist, floralist, printlist, miniactivitylist, patternlist, chairlist, cardnamelist, coveringlist, outfitdescriptorlist, hairdescriptorlist, hairvomitlist, humandescriptorlist, manwomanmultiplelist, facepartlist, locationdescriptorlist, basicbitchdescriptorlist, animaldescriptorlist, humanexpressionlist, humanvomitlist, eyecolorlist, fashiondesignerlist, colorcombinationlist, materialcombinationlist, photoadditionlist, agelist, agecalculatorlist, gregmodelist
+            allwildcardslistnohybridlists = [colorlist, objectlist, animallist, fictionallist, nonfictionallist, buildinglist, vehiclelist, locationlist,conceptprefixlist,foodlist,haircolorlist, hairstylelist,joblist, accessorielist, humanoidlist, manwomanlist, humanlist, colorschemelist, moodlist, genderdescriptionlist, artmovementlist, malefemalelist, bodytypelist, minilocationlist, minilocationadditionslist, poselist, seasonlist, minioutfitlist, elaborateoutfitlist, minivomitlist, vomitlist, rpgclasslist, customsubjectslist, customoutfitslist, brandlist, spacelist, artistlist, imagetypelist, othertypelist, qualitylist, lightinglist, cameralist, lenslist, imagetypequalitylist, poemlinelist, songlinelist, greatworklist, fantasyartistlist, popularartistlist, romanticismartistlist, photographyartistlist, emojilist, timeperiodlist, shotsizelist, musicgenrelist, animaladditionlist, objectadditionslist, humanadditionlist, overalladditionlist, focuslist, directionlist, stylestiloralist, manwomanrelationlist, waterlocationlist, containerlist, firstnamelist, floralist, printlist, miniactivitylist, patternlist, chairlist, cardnamelist, coveringlist, outfitdescriptorlist, hairdescriptorlist, hairvomitlist, humandescriptorlist, manwomanmultiplelist, facepartlist, locationdescriptorlist, devadescriptorlist, animaldescriptorlist, humanexpressionlist, humanvomitlist, eyecolorlist, fashiondesignerlist, colorcombinationlist, materialcombinationlist, photoadditionlist, agelist, agecalculatorlist, gregmodelist
                                              , portraitartistlist, characterartistlist, landscapeartistlist, scifiartistlist, graphicdesignartistlist, digitalartistlist, architectartistlist, cinemaartistlist, settinglist, charactertypelist, objectstoholdlist, episodetitlelist, allstylessuffixlist, flufferlist, eventlist, backgroundlist
                                              , occultlist, locationfantasylist, locationscifilist, locationvideogamelist, locationbiomelist, locationcitylist, birdlist, catlist, doglist, insectlist, pokemonlist, pokemontypelist, marinelifelist]
             
@@ -4966,7 +4966,7 @@ def cleanup(completeprompt, advancedprompting, insanitylevel = 5):
     # sometimes if there are not enough artist, we get left we things formed as (:1.2)
     completeprompt = re.sub('\(\:\d+\.\d+\)', '', completeprompt) 
 
-    # lets also remove some weird stuff on lower insanitylevels
+    # lets also remove some wierd stuff on lower insanitylevels
     if(insanitylevel < 7):
         completeprompt = completeprompt.replace("DayGlo", " ")
         completeprompt = completeprompt.replace("fluorescent", " ")
