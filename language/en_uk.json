@@ -421,7 +421,7 @@
     "http://192.168.9.248:8889/sdxl/": "http://192.168.9.248:8889/sdxl/",
 
   "Enable Comfyd Always Active": "Enable Comfyd Always Active",
-  "Enabling will improve execution speed but occupy some memory.": "L'activation améliorera la vitesse d'exécution mais occupera de la mémoire.",
+  "Enabling will improve execution speed but occupy some memory.": "Enabling will improve execution speed but occupy some memory.",
 
   "SuperPrompter": "SuperPrompter",
   "SuperPrompt": "SuperPrompt",
