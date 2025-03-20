@@ -3,7 +3,8 @@ import random
 import torch
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 import modules.config as top_config
-from launch import ROOT
+from common import ROOT
+from common import torch_device
 import shutil
 from enhanced.superprompter import *
 
