@@ -10,7 +10,7 @@ import importlib.metadata
 import packaging.version
 import pygit2
 from pathlib import Path
-from build_launcher import python_embeded_path
+from build_launcher import python_embedded_path
 
 pygit2.option(pygit2.GIT_OPT_SET_OWNER_VALIDATION, 0)
 
@@ -25,7 +25,7 @@ python = sys.executable
 default_command_live = (os.environ.get('LAUNCH_LIVE_OUTPUT') == "1")
 index_url = os.environ.get('INDEX_URL', "https://pypi.tuna.tsinghua.edu.cn/simple")
 
-target_path_install = f' -t {os.path.join(python_embeded_path, "Lib/site-packages")}' if sys.platform.startswith("win") else ''
+target_path_install = f' -t {os.path.join(python_embedded_path, "Lib/site-packages")}' if sys.platform.startswith("win") else ''
 
 modules_path = os.path.dirname(os.path.realpath(__file__))
 script_path = os.path.dirname(modules_path)
