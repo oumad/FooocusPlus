@@ -1,13 +1,13 @@
 import os
 
 win32_root = os.path.dirname(os.path.dirname(__file__))
-python_embedded_path = os.path.join(win32_root, 'python_embedded')
+python_embeded_path = os.path.join(win32_root, 'python_embeded')
 
-is_win32_standalone_build = os.path.exists(python_embedded_path) and os.path.isdir(python_embedded_path)
+is_win32_standalone_build = os.path.exists(python_embeded_path) and os.path.isdir(python_embeded_path)
 
 win32_cmd = '''
 @echo off
-.\python_embedded\python.exe -s FooocusPlus\{cmds} %*
+.\python_embeded\python.exe -s FooocusPlus\{cmds} %*
 echo All done.
 pause
 '''
