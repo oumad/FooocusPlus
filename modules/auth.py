@@ -1,6 +1,8 @@
 import json
 import hashlib
 import modules.constants as constants
+import threading
+from typing import Optional
 
 from os.path import exists
 
@@ -41,3 +43,11 @@ def check_auth(user, password):
         return False
     else:   
         return hashlib.sha256(bytes(password, encoding='utf-8')).hexdigest() == auth_dict[user]
+
+user_storage = threading.local()
+
+def get_current_user() -> Optional[str]:
+    return getattr(user_storage, 'username', None)
+
+def set_current_user(username: str):
+    user_storage.username = username

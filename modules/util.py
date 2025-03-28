@@ -543,3 +543,23 @@ def get_image_size_info(image: np.ndarray, aspect_ratios: list) -> str:
         return size_info
     except Exception as e:
         return f'Error reading image: {e}'
+
+from modules.auth import get_current_user
+
+def get_output_folder():
+    import os
+    base = "Outputs"
+    user = get_current_user() or "default"
+    user_path = os.path.join(base, user)
+    
+    if not os.path.exists(user_path):
+        os.makedirs(user_path, exist_ok=True)
+    
+    return user_path
+
+def get_current_user():
+    try:
+        from gradio.context import Context
+        return Context.username or 'default'
+    except:
+        return 'default'

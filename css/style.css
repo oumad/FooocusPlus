@@ -9,7 +9,7 @@
 
 .loader {
   border: 8px solid #f3f3f3; /* Light grey */
-  border-top: 8px solid #3498db; /* Blue */
+  border-top: 8px solidrgb(13, 150, 242); /* Blue */
   border-radius: 50%;
   width: 30px;
   height: 30px;

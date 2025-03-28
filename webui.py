@@ -39,6 +39,26 @@ import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
 from enhanced.simpleai import comfyd
 
+import json
+from gradio.routes import Request
+from typing import Optional
+import threading
+from fastapi import Request as FastAPIRequest
+
+# Stockage thread-safe des informations utilisateur
+user_storage = threading.local()
+
+def get_current_user() -> Optional[str]:
+    return getattr(user_storage, 'username', None)
+
+def auth_users(username: str, password: str) -> bool:
+    with open('users.json') as f:
+        users = json.load(f)
+    if users.get(username) == password:
+        user_storage.username = username
+        return True
+    return False
+
 print()
 print('Initializing user interface...')
 
@@ -739,7 +759,7 @@ with common.GRADIO_ROOT:
                             with gr.Column():
                                 describe_methods = gr.CheckboxGroup(
                                     label='Content Type',
-                                    choices=flags.describe_types,
+                                    # choices=flags.describe_types,
                                     value=modules.config.default_describe_content_type)
                                 describe_apply_styles = gr.Checkbox(label='Apply Styles', value=modules.config.default_describe_apply_prompts_checkbox)
                                 describe_btn = gr.Button(value='Describe this Image into Prompt')
@@ -1414,17 +1434,6 @@ with common.GRADIO_ROOT:
               .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
               .then(fn=lambda: None, _js='refresh_grid_delayed')
 
-def dump_default_english_config():
-    from modules.localization import dump_english_config
-    dump_english_config(grh.all_components)
-
-
-#dump_default_english_config()
-import logging
-import httpx
-httpx_logger = logging.getLogger("httpx")
-httpx_logger.setLevel(logging.WARNING)
-
 import logging
 import httpx
 httpx_logger = logging.getLogger("httpx")
@@ -1435,16 +1444,37 @@ hydit_logger.setLevel(logging.WARNING)
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
 common.GRADIO_ROOT.launch(
-    inbrowser=args_manager.args.in_browser,
     server_name=args_manager.args.listen,
     server_port=args_manager.args.port,
     root_path=args_manager.args.webroot,
     allowed_paths=[modules.config.path_outputs],
-    blocked_paths=[constants.AUTH_FILENAME]
+    blocked_paths=[constants.AUTH_FILENAME],
+    auth=auth_users,
+    auth_message="Veuillez vous connecter avec vos identifiants"
 )
+
+from fastapi import FastAPI
+from gradio import Blocks
+
+# Créez l'instance FastAPI
+fastapi_app = FastAPI()
+
+# Modifiez la création de l'app Gradio
+with Blocks(title="Fooocus") as app:
+    app.fastapi_app = fastapi_app  # Liez les deux instances
+
+# Tout en bas du fichier webui.py, APRÈS la création de l'app Gradio
+@fastapi_app.get("/user/me")
+async def get_current_user_endpoint():
+    return {"username": get_current_user()}
+
+@fastapi_app.middleware("http")
+async def user_context_middleware(request: FastAPIRequest, call_next):
+    response = await call_next(request)
+    user_storage.username = None
+    return response
 
