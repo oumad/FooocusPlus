@@ -13,6 +13,7 @@ from common import ROOT
 from modules.model_loader import load_file_from_url
 from modules.extra_utils import makedirs_with_log, get_files_from_folder, try_eval_env_var
 from modules.flags import OutputFormat, Performance, MetadataScheme
+from modules.auth import get_current_user
 
 
 def get_config_path(key, default_value):
