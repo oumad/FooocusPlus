@@ -1,5 +1,5 @@
 { 
-    "preset category": "Flux",
+    "preset_category": "Flux",
     "default_engine": {
 	"backend_engine": "Flux",
 	"disvisible": ["backend_selection", "performance_selection", "negative_prompt"],
@@ -50,7 +50,7 @@
     "default_aspect_ratio": "1024*1024",
     "default_overwrite_step": 25,
     "checkpoint_downloads": {
-        "Flux\\flux-hyp16-Q8_0.gguf": "https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/flux-hyp16-Q8_0.gguf"
+        "Flux\\flux-hyp16-Q8_0.gguf": "https://huggingface.co/DavidDragonsage/FooocusPlus/resolve/main/support/flux-hyp16-Q8_0.gguf"
     },
     "embeddings_downloads": {},
     "lora_downloads": {
