@@ -23,6 +23,38 @@ def get_config_path(key, default_value):
     else:
         return os.path.abspath(default_value)
 
+##################################################
+# for diffrent users
+def get_path_output(username=None) -> str:
+    """
+    Determine the output path, optionally with a username-specific subdirectory.
+    """
+    global config_dict
+    base_path_output = '../Outputs'
+
+    # If a username is provided, construct a user-specific path
+    if username:
+        path_output = os.path.join(base_path_output, username)
+        path_output_abs = os.path.abspath(path_output)
+        # Ensure the directory exists
+        os.makedirs(path_output_abs, exist_ok=True)
+        # Update config_dict directly
+        config_dict['path_outputs'] = path_output_abs
+    else:
+        # Use command-line argument if provided, otherwise fall back to default
+        if args_manager.args.output_path:
+            path_output = args_manager.args.output_path
+        else:
+            path_output = base_path_output
+        # Use get_dir_or_set_default only for the default case
+        path_output_abs = get_dir_or_set_default('path_outputs', f'../{path_output}', make_directory=True)
+
+    print(f'Generated images will be stored in {path_output_abs}')
+    print()
+    print('Loading support files...')
+    return path_output_abs
+###################################################
+
 wildcards_max_bfs_depth = 64
 config_path = get_config_path('config_path', "config.txt") if args_manager.args.config is None else os.path.abspath(os.path.join(args_manager.args.config, "config.txt"))
 print(config_path)
@@ -63,6 +95,7 @@ def try_load_deprecated_user_path_config():
         return
 
     try:
+        print('1.Loading deprecated user_path_config.txt...')
         deprecated_config_dict = json.load(open('user_path_config.txt', "r", encoding="utf-8"))
 
         def replace_config(old_key, new_key):
@@ -142,23 +175,6 @@ and (os.path.exists('./presets/4GB_Default.json')):
     print('Loading the "4GB_Default" preset, the default for low VRAM systems')
 config_dict.update(try_get_preset_content(preset))
 theme = args_manager.args.theme
-
-def get_path_output() -> str:
-    """
-    Checking output path argument and overriding default path.
-    """
-    global config_dict
-    path_output = 'outputs'
-    if args_manager.args.output_path:
-        path_output = args_manager.args.output_path
-        path_output_abs = os.path.abspath(path_output)
-        config_dict['path_outputs'] = path_output_abs
-    path_output = get_dir_or_set_default('path_outputs', f'../{path_output}')
-    print(f'Generated images will be stored in {path_output}')
-    print()
-    print('Loading support files...')
-    return path_output
-
 def get_path_models_root() -> str:
     global config_dict
     models_root = 'models'

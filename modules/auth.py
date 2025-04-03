@@ -28,7 +28,7 @@ def load_auth_data(filename=None):
                 print('load_auth_data, e: ' + str(e))
     return auth_dict
 
-
+print(" The auth file name is " + constants.AUTH_FILENAME)
 auth_dict = load_auth_data(constants.AUTH_FILENAME)
 
 auth_enabled = auth_dict != None
