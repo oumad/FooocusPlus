@@ -26,6 +26,7 @@ from modules.sdxl_styles import legal_style_names, fooocus_expansion
 from modules.private_logger import get_current_html_path
 from modules.ui_gradio_extensions import reload_javascript
 from modules.auth import auth_enabled, check_auth
+import modules.config as config
 from modules.util import is_json
 
 import enhanced.gallery as gallery_util
@@ -38,6 +39,7 @@ import enhanced.wildcards as wildcards
 import enhanced.simpleai as simpleai
 import enhanced.comfy_task as comfy_task
 from enhanced.simpleai import comfyd
+
 
 print()
 print('Initializing user interface...')
@@ -1439,12 +1441,39 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
-common.GRADIO_ROOT.launch(
-    inbrowser=args_manager.args.in_browser,
-    server_name=args_manager.args.listen,
-    server_port=args_manager.args.port,
-    root_path=args_manager.args.webroot,
-    allowed_paths=[modules.config.path_outputs],
-    blocked_paths=[constants.AUTH_FILENAME]
-)
+def launch_with_user_auth():
+    if auth_enabled:
+        print("Authentication is enabled. Users must log in to access the UI.")
+        
+        # Define a custom auth function to set the output path
+        def auth_wrapper(username, password):
+            if check_auth(username, password):
+                # Set user-specific output path
+                user_output_path = config.get_path_output(username)
+                config.path_outputs = user_output_path  # Update the global path_outputs
+                return True
+            return False
+
+        common.GRADIO_ROOT.launch(
+            inbrowser=args_manager.args.in_browser,
+            server_name=args_manager.args.listen,
+            server_port=args_manager.args.port,
+            root_path=args_manager.args.webroot,
+            allowed_paths=[config.path_outputs],  # Restrict to user's folder only
+            blocked_paths=[constants.AUTH_FILENAME],
+            auth=auth_wrapper  # Use the wrapper function
+        )
+    else:
+        print("Authentication is disabled. Starting the UI without login.")
+        # Ensure path_outputs is set to the default when no auth
+        config.path_outputs = config.get_path_output()
+        common.GRADIO_ROOT.launch(
+            inbrowser=args_manager.args.in_browser,
+            server_name=args_manager.args.listen,
+            server_port=args_manager.args.port,
+            root_path=args_manager.args.webroot,
+            allowed_paths=[config.path_outputs],  # Default outputs directory
+            blocked_paths=[constants.AUTH_FILENAME]
+        )
+launch_with_user_auth()
 

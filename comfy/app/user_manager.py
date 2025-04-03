@@ -16,7 +16,7 @@ default_user = "default"
 class UserManager():
     def __init__(self):
         user_directory = folder_paths.get_user_directory()
-
+        print(f"User directory: {user_directory}")
         self.settings = AppSettings(self)
         if not os.path.exists(user_directory):
             os.mkdir(user_directory)
