@@ -1459,7 +1459,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
-<<<<<<< Updated upstream
+
 common.GRADIO_ROOT.launch(
     inbrowser=args_manager.args.in_browser,
     server_name=args_manager.args.listen,
@@ -1468,7 +1468,7 @@ common.GRADIO_ROOT.launch(
     allowed_paths=[modules.config.path_outputs],
     blocked_paths=[constants.AUTH_FILENAME]
 )
-=======
+
 def launch_with_user_auth():
     if auth_enabled:
         print("Authentication is enabled. Users must log in to access the UI.")
