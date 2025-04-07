@@ -1,7 +1,7 @@
 import os
 import ldm_patched.modules.args_parser as args_parser
 
-args_parser.parser.add_argument("--preset", type=str, default='default', help="Apply specified UI preset.")
+args_parser.parser.add_argument("--preset", type=str, default='Juggernaut', help="Apply specified UI preset.")
 args_parser.parser.add_argument("--disable-preset-selection", action='store_true',
                                 help="Disables preset selection in Gradio.")
 

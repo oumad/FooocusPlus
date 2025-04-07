@@ -220,6 +220,7 @@ def get_dir_or_set_default(key, default_value, as_array=False, make_directory=Fa
 path_models_root = get_path_models_root()
 paths_checkpoints = get_dir_or_set_default('path_checkpoints', [f'{path_models_root}/checkpoints/', '../models/checkpoints/'], True)
 paths_loras = get_dir_or_set_default('path_loras', [f'{path_models_root}/loras/', '../models/loras/'], True)
+print('1.Loading models from:', paths_checkpoints, paths_loras)
 path_embeddings = get_dir_or_set_default('path_embeddings', f'{path_models_root}/embeddings/')
 path_vae_approx = get_dir_or_set_default('path_vae_approx', f'{path_models_root}/vae_approx/')
 path_vae = get_dir_or_set_default('path_vae', f'{path_models_root}/vae/')
@@ -241,6 +242,27 @@ paths_diffusers = get_dir_or_set_default('path_diffusers', [f'{path_models_root}
 
 from enhanced.simpleai import init_modelsinfo
 modelsinfo = init_modelsinfo(path_models_root, dict(
+    checkpoints=paths_checkpoints,
+    loras=paths_loras,
+    embeddings=[path_embeddings],
+    diffusers=paths_diffusers,
+    DIFFUSERS=paths_diffusers,
+    controlnet=paths_controlnet,
+    inpaint=paths_inpaint,
+    llms=paths_llms,
+    unet=[path_unet],
+    vae=[path_vae]
+    ))
+
+def update_modelsinfo(username):
+    global modelsinfo
+    ###############################
+    # TODO
+    # this is a hack
+    # I am using the first item of path loras to add the username to it, if may break in future
+    #paths_loras[0] = os.path.join(paths_loras[0], username)
+    print("1.Current Path Loras are:", paths_loras)
+    modelsinfo = init_modelsinfo(path_models_root, dict(
     checkpoints=paths_checkpoints,
     loras=paths_loras,
     embeddings=[path_embeddings],
@@ -998,14 +1020,16 @@ def get_base_model_list(engine='Fooocus', task_method=None):
         base_model_list = [f for f in base_model_list if ("hyp8" in f or "hyp16" in f or "flux" in f) and f.endswith("gguf")]
     return base_model_list
 
-def update_files(engine='Fooocus', task_method=None):
+def update_files(engine='Fooocus', task_method=None,username=None):
     global modelsinfo, model_filenames, lora_filenames, vae_filenames, wildcard_filenames, available_presets
-    modelsinfo.refresh_from_path()
+    modelsinfo.refresh_from_path(username=username)
     model_filenames = get_base_model_list(engine, task_method)
     lora_filenames = modelsinfo.get_model_names('loras')
     vae_filenames = modelsinfo.get_model_names('vae')
     wildcard_filenames = get_files_from_folder(path_wildcards, ['.txt'])
     available_presets = get_presets()
+    print("1. from config.py lora_filenames:", lora_filenames)
+    print("1. from config.py model_filenames:", model_filenames)
     return model_filenames, lora_filenames, vae_filenames
 
 
@@ -1225,4 +1249,4 @@ def downloading_hydit_model():
     )
     return os.path.join(paths_checkpoints[0] + '\Alternative', 'hunyuan_dit_1.2.safetensors')
 
-update_files()
+#update_files()

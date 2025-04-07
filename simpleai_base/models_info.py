@@ -446,7 +446,7 @@ class ModelsInfo:
                 self.m_muid = {}
                 self.m_file = {}
 
-    def refresh_from_path(self, scan_hash=False):
+    def refresh_from_path(self, scan_hash=False, username=None):
         new_info_key = []
         new_model_key = []
         del_model_key = []
@@ -458,7 +458,7 @@ class ModelsInfo:
         #print(f'refresh m_info_key:{self.m_info.keys()}')
         for path in self.path_map.keys():
             if self.path_map[path]:
-                path_filenames = self.get_path_filenames(path)
+                path_filenames = self.get_path_filenames(path,username=username)
                 #print(f'path_filenames_{path}:{path_filenames}')
                 for (p, k) in path_filenames:
                     model_key = f"{path}/{k.replace(os.sep, '/')}"
@@ -492,14 +492,14 @@ class ModelsInfo:
             self.remove_file(f)
         self.save_model_info()
 
-    def get_path_filenames(self, path):
+    def get_path_filenames(self, path, username=None):
         if path.isupper():
             path_filenames = []
             for f_path in self.path_map[path]:
                 path_filenames += [(f_path, entry) for entry in os.listdir(f_path) if
                                    os.path.isdir(os.path.join(f_path, entry))]
         else:
-            path_filenames = get_model_filenames(self.path_map[path])
+            path_filenames = get_model_filenames(self.path_map[path],username = username)
         return path_filenames
 
     def add_or_refresh_model(self, model_key, file_path_list, url=None):
@@ -699,6 +699,7 @@ class ModelsInfo:
                 else:
                     result.append(m_path_or_file)
                     result_reverse.pop()
+        print("1. from models_info.py, result:", result)
         if reverse:
             return sorted(result_reverse, key=str.casefold)
         return sorted(result, key=str.casefold)
@@ -784,43 +785,102 @@ class ModelsInfo:
             return os.path.join(self.path_map[catalog][0], name.replace('/', os.sep))
         return ''
 
-def get_model_filenames(folder_paths, extensions=None, name_filter=None, variation=False):
+def get_model_filenames(folder_paths, extensions=None, name_filter=None, variation=False, username=None):
     if extensions is None:
         extensions = ['.pth', '.ckpt', '.bin', '.safetensors', '.fooocus.patch', '.gguf']
     files = []
     for folder in folder_paths:
-        files += get_files_from_folder(folder, extensions, name_filter, variation)
+        files += get_files_from_folder(folder, extensions, name_filter, variation,username=username)
     return files
 
 
 folder_variation = {}
 
 
-def get_files_from_folder(folder_path, extensions=None, name_filter=None, variation=False):
+def get_files_from_folder(folder_path, extensions=None, name_filter=None, variation=False, username=None):
     global folder_variation
 
     if not os.path.isdir(folder_path):
         raise ValueError("Folder path is not a valid directory.")
 
     filenames = []
-    for root, dirs, files in os.walk(folder_path, topdown=False):
-        relative_path = os.path.relpath(root, folder_path)
-        if relative_path == ".":
-            relative_path = ""
-        for filename in sorted(files, key=lambda s: s.casefold()):
-            _, file_extension = os.path.splitext(filename)
-            if (extensions is None or file_extension.lower() in extensions) and (
-                    name_filter is None or name_filter in _):
-                path = os.path.join(relative_path, filename)
-                if variation:
-                    mtime = int(os.path.getmtime(os.path.join(root, filename)))
-                    if folder_path not in folder_variation or path not in folder_variation[folder_path] or mtime > \
-                            folder_variation[folder_path][path]:
-                        if folder_path not in folder_variation:
-                            folder_variation.update({folder_path: {path: mtime}})
-                        else:
-                            folder_variation[folder_path].update({path: mtime})
-                        filenames.append((folder_path, path))
-                else:
+    # Use os.listdir to get only top-level files and directories
+    for filename in sorted(os.listdir(folder_path), key=lambda s: s.casefold()):
+        file_path = os.path.join(folder_path, filename)
+        # Skip if it's a directory
+        if os.path.isdir(file_path):
+            continue
+        _, file_extension = os.path.splitext(filename)
+        if (extensions is None or file_extension.lower() in extensions) and (
+                name_filter is None or name_filter in filename):
+            path = filename  # Relative path is just the filename since we're not traversing subfolders
+            if variation:
+                mtime = int(os.path.getmtime(file_path))
+                if folder_path not in folder_variation or path not in folder_variation[folder_path] or mtime > \
+                        folder_variation[folder_path][path]:
+                    if folder_path not in folder_variation:
+                        folder_variation.update({folder_path: {path: mtime}})
+                    else:
+                        folder_variation[folder_path].update({path: mtime})
                     filenames.append((folder_path, path))
+            else:
+                filenames.append((folder_path, path))
+
+    # If username is provided, search the subfolder named after the username
+    if username:
+        print("1. from file models_info.py, provided username is:", username)
+        user_subfolder = os.path.join(folder_path, username)
+        if os.path.isdir(user_subfolder):
+            for filename in sorted(os.listdir(user_subfolder), key=lambda s: s.casefold()):
+                file_path = os.path.join(user_subfolder, filename)
+                # Skip if it's a directory (no deeper recursion)
+                if os.path.isdir(file_path):
+                    continue
+                _, file_extension = os.path.splitext(filename)
+                if (extensions is None or file_extension.lower() in extensions) and (
+                        name_filter is None or name_filter in filename):
+                    # Prepend username as the relative path
+                    path = os.path.join(username, filename)
+                    if variation:
+                        mtime = int(os.path.getmtime(file_path))
+                        if folder_path not in folder_variation or path not in folder_variation[folder_path] or mtime > \
+                                folder_variation[folder_path][path]:
+                            if folder_path not in folder_variation:
+                                folder_variation.update({folder_path: {path: mtime}})
+                            else:
+                                folder_variation[folder_path].update({path: mtime})
+                            filenames.append((folder_path, path))
+                    else:
+                        filenames.append((folder_path, path))
+
     return filenames
+
+
+# def get_files_from_folder(folder_path, extensions=None, name_filter=None, variation=False,username=None):
+#     global folder_variation
+
+#     if not os.path.isdir(folder_path):
+#         raise ValueError("Folder path is not a valid directory.")
+
+#     filenames = []
+#     for root, dirs, files in os.walk(folder_path, topdown=False):
+#         relative_path = os.path.relpath(root, folder_path)
+#         if relative_path == ".":
+#             relative_path = ""
+#         for filename in sorted(files, key=lambda s: s.casefold()):
+#             _, file_extension = os.path.splitext(filename)
+#             if (extensions is None or file_extension.lower() in extensions) and (
+#                     name_filter is None or name_filter in _):
+#                 path = os.path.join(relative_path, filename)
+#                 if variation:
+#                     mtime = int(os.path.getmtime(os.path.join(root, filename)))
+#                     if folder_path not in folder_variation or path not in folder_variation[folder_path] or mtime > \
+#                             folder_variation[folder_path][path]:
+#                         if folder_path not in folder_variation:
+#                             folder_variation.update({folder_path: {path: mtime}})
+#                         else:
+#                             folder_variation[folder_path].update({path: mtime})
+#                         filenames.append((folder_path, path))
+#                 else:
+#                     filenames.append((folder_path, path))
+#     return filenames

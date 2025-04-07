@@ -41,6 +41,8 @@ from enhanced.simpleai import comfyd
 
 print()
 print('Initializing user interface...')
+USERNAME = None
+rf_btn = None
 
 def get_task(*args):
     args = list(args)
@@ -191,6 +193,9 @@ common.GRADIO_ROOT = gr.Blocks(
     title=title,
     css=topbar.css + toolbox.css).queue()
 
+
+
+
 with common.GRADIO_ROOT:
     state_topbar = gr.State({})
     params_backend = gr.State({'translation_methods': modules.config.default_translation_methods})
@@ -204,7 +209,7 @@ with common.GRADIO_ROOT:
                         bar_title = gr.Markdown('<b>Presets:</b>', visible=True, elem_id='bar_title', elem_classes='bar_title')
                         bar_buttons = []
                         for i in range(topbar.topbar_limit):
-                            bar_buttons.append(gr.Button(value='Default' if i==0 else '', size='sm', visible=True, min_width=90, elem_id=f'bar{i}', elem_classes='bar_button'))
+                            bar_buttons.append(gr.Button(value='', size='sm', visible=True, min_width=90, elem_id=f'bar{i}', elem_classes='bar_button'))
                         #bar_dropdown = gr.Dropdown(show_label=False, choices=['self','preset1','preset2','preset3'], value='self')
 
                 with gr.Row():
@@ -256,9 +261,9 @@ with common.GRADIO_ROOT:
                             translator_button = gr.Button(visible=True, value="Translator", elem_classes='type_row_third', size='sm', min_width = 75)
                             super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_third', size="sm", min_width = 75)
                         else:
-                            random_button = gr.Button(value="Random Prompt", elem_classes='type_row_half', size="sm", min_width = 75)
-                            translator_button = gr.Button(visible=False, value="Translator", elem_classes='type_row_third', size='sm', min_width = 75)
-                            super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_half', size="sm", min_width = 75)
+                            random_button = gr.Button(value="Random Prompt", elem_classes='type_row_half', size="sm", min_width = 75,visible=False)
+                            translator_button = gr.Button( value="Translator", elem_classes='type_row_third', size='sm', min_width = 75,visible=False)
+                            super_prompter = gr.Button(value="SuperPrompt", elem_classes='type_row_half', size="sm", min_width = 75,visible=False)
                     with gr.Column(scale=2, min_width=0):
                         generate_button = gr.Button(label="Generate", value="Generate", elem_classes='type_row', elem_id='generate_button', visible=True, min_width = 75)
                         reset_button = gr.Button(label="Reconnect", value="Reconnect", elem_classes='type_row', elem_id='reset_button', visible=False)
@@ -736,22 +741,23 @@ with common.GRADIO_ROOT:
                         with gr.Row():
                             with gr.Column():
                                 describe_input_image = grh.Image(label='Image to be described', source='upload', type='numpy', show_label=True)
-                            with gr.Column():
-                                describe_methods = gr.CheckboxGroup(
-                                    label='Content Type',
-                                    choices=flags.describe_types,
-                                    value=modules.config.default_describe_content_type)
-                                describe_apply_styles = gr.Checkbox(label='Apply Styles', value=modules.config.default_describe_apply_prompts_checkbox)
-                                describe_btn = gr.Button(value='Describe this Image into Prompt')
-                                describe_image_size = gr.Textbox(label='Original Size / Recommended Size', elem_id='describe_image_size', visible=False)
-                                gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/1363" target="_blank">\U0001F4D4 Documentation</a>')
+                            #this will hide the whole block
+                            # with gr.Column():
+                            #     describe_methods = gr.CheckboxGroup(
+                            #         label='Content Type',
+                            #         choices=flags.describe_types,
+                            #         value=modules.config.default_describe_content_type)
+                            #     describe_apply_styles = gr.Checkbox(label='Apply Styles', value=modules.config.default_describe_apply_prompts_checkbox)
+                            #     describe_btn = gr.Button(value='Describe this Image into Prompt')
+                            #     describe_image_size = gr.Textbox(label='Original Size / Recommended Size', elem_id='describe_image_size', visible=False)
+                            #     gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/1363" target="_blank">\U0001F4D4 Documentation</a>')
 
-                                def trigger_show_image_properties(image):
-                                    image_size = modules.util.get_image_size_info(image, modules.flags.available_aspect_ratios[0])
-                                    return gr.update(value=image_size, visible=True)
+                            #     def trigger_show_image_properties(image):
+                            #         image_size = modules.util.get_image_size_info(image, modules.flags.available_aspect_ratios[0])
+                            #         return gr.update(value=image_size, visible=True)
 
-                                describe_input_image.upload(trigger_show_image_properties, inputs=describe_input_image,
-                                                            outputs=describe_image_size, show_progress=False, queue=False)
+                            #     describe_input_image.upload(trigger_show_image_properties, inputs=describe_input_image,
+                            #                                 outputs=describe_image_size, show_progress=False, queue=False)
 
                     with gr.Tab(label='Metadata', id='metadata_tab', visible=True) as metadata_tab:
                         with gr.Column():
@@ -775,10 +781,16 @@ with common.GRADIO_ROOT:
                         metadata_input_image.upload(trigger_metadata_preview, inputs=metadata_input_image,
                                         outputs=[metadata_json, metadata_import_button], queue=False, show_progress=True)
 
+            #for selection
+            # with gr.Tab(label='Styles', elem_classes=['style_selections_tab']):
+            #     style_sorter.try_load_sorted_styles(
+            #         style_names=legal_style_names,
+            #         default_selected=modules.config.default_styles)
+            #setting default selected to None
             with gr.Tab(label='Styles', elem_classes=['style_selections_tab']):
                 style_sorter.try_load_sorted_styles(
                     style_names=legal_style_names,
-                    default_selected=modules.config.default_styles)
+                    default_selected=[])
 
                 style_search_bar = gr.Textbox(show_label=False, container=False,
                                         placeholder="\U0001F50E Type here to search styles...",
@@ -786,7 +798,8 @@ with common.GRADIO_ROOT:
                                         label='Search Styles')
                 style_selections = gr.CheckboxGroup(show_label=False, container=False,
                                         choices=copy.deepcopy(style_sorter.all_styles),
-                                        value=copy.deepcopy(modules.config.default_styles),
+                                        #value=copy.deepcopy(modules.config.default_styles),
+                                        value=[],
                                         label='Selected Styles',
                                         elem_classes=['style_selections'])
                 gradio_receiver_style_selections = gr.Textbox(elem_id='gradio_receiver_style_selections', visible=False)
@@ -997,11 +1010,16 @@ with common.GRADIO_ROOT:
                                         queue=False, show_progress=False)
 
                 def refresh_files_clicked(state_params):
+                    global USERNAME
                     print()
                     print('Refreshing all files...')
                     engine = state_params.get('engine', 'Fooocus')
                     task_method = state_params.get('task_method', None)
-                    model_filenames, lora_filenames, vae_filenames = modules.config.update_files(engine, task_method)
+                    if USERNAME:
+                        model_filenames, lora_filenames, vae_filenames = modules.config.update_files(engine, task_method, username=USERNAME)
+                    else:
+                        model_filenames, lora_filenames, vae_filenames = modules.config.update_files(engine, task_method)
+                    print("1. lora_filenames in refresh:", lora_filenames)
                     results = [gr.update(choices=model_filenames)]
                     results += [gr.update(choices=['None'] + model_filenames)]
                     results += [gr.update(choices=[flags.default_vae] + vae_filenames)]
@@ -1017,6 +1035,7 @@ with common.GRADIO_ROOT:
                 refresh_files_output = [base_model, refiner_model, vae_name]
                 if not args_manager.args.disable_preset_selection:
                     refresh_files_output += [preset_selection]
+                
                 refresh_files.click(refresh_files_clicked, [state_topbar],
                                     refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
@@ -1347,11 +1366,11 @@ with common.GRADIO_ROOT:
                 describe_prompt = ', '.join(describe_prompts)
 
             return describe_prompt, styles
-
-        describe_btn.click(trigger_describe, inputs=[describe_methods, describe_input_image, describe_apply_styles],
-                           outputs=[prompt, style_selections], show_progress=True, queue=True) \
-            .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-            .then(lambda: None, _js='()=>{refresh_style_localization();}')
+        #to hide content type
+        # describe_btn.click(trigger_describe, inputs=[describe_methods, describe_input_image, describe_apply_styles],
+        #                    outputs=[prompt, style_selections], show_progress=True, queue=True) \
+        #     .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+        #     .then(lambda: None, _js='()=>{refresh_style_localization();}')
 
         if args_manager.args.enable_auto_describe_image:
             def trigger_auto_describe(mode, img, prompt, apply_styles):
@@ -1360,21 +1379,22 @@ with common.GRADIO_ROOT:
                     return trigger_describe(mode, img, apply_styles)
                 return gr.update(), gr.update()
 
-            uov_input_image.upload(trigger_auto_describe, inputs=[describe_methods, uov_input_image, prompt, describe_apply_styles],
-                                   outputs=[prompt, style_selections], show_progress=True, queue=True) \
-                .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                .then(lambda: None, _js='()=>{refresh_style_localization();}')
+            #
+            # uov_input_image.upload(trigger_auto_describe, inputs=[describe_methods, uov_input_image, prompt, describe_apply_styles],
+            #                        outputs=[prompt, style_selections], show_progress=True, queue=True) \
+            #     .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+            #     .then(lambda: None, _js='()=>{refresh_style_localization();}')
 
-            describe_input_image.upload(trigger_auto_describe, inputs=[describe_methods, describe_input_image, prompt, describe_apply_styles],
-                                   outputs=[prompt, style_selections], show_progress=True, queue=True) \
-                .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                .then(lambda: None, _js='()=>{refresh_style_localization();}')
+            # describe_input_image.upload(trigger_auto_describe, inputs=[describe_methods, describe_input_image, prompt, describe_apply_styles],
+            #                        outputs=[prompt, style_selections], show_progress=True, queue=True) \
+            #     .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+            #     .then(lambda: None, _js='()=>{refresh_style_localization();}')
 
-            enhance_input_image.upload(lambda: gr.update(value=True), outputs=enhance_checkbox, queue=False, show_progress=False) \
-                .then(trigger_auto_describe, inputs=[describe_methods, enhance_input_image, prompt, describe_apply_styles],
-                      outputs=[prompt, style_selections], show_progress=True, queue=True) \
-                .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
-                .then(lambda: None, _js='()=>{refresh_style_localization();}')
+            # enhance_input_image.upload(lambda: gr.update(value=True), outputs=enhance_checkbox, queue=False, show_progress=False) \
+            #     .then(trigger_auto_describe, inputs=[describe_methods, enhance_input_image, prompt, describe_apply_styles],
+            #           outputs=[prompt, style_selections], show_progress=True, queue=True) \
+            #     .then(fn=style_sorter.sort_styles, inputs=style_selections, outputs=style_selections, queue=False, show_progress=False) \
+            #     .then(lambda: None, _js='()=>{refresh_style_localization();}')
 
     prompt_delete_button.click(toolbox.toggle_note_box_delete, inputs=state_topbar, outputs=[params_note_info, params_note_delete_button, params_note_box, state_topbar], show_progress=False)
     params_note_delete_button.click(toolbox.delete_image, inputs=state_topbar, outputs=[gallery, gallery_index, params_note_delete_button, params_note_box, state_topbar], show_progress=False) \
@@ -1439,6 +1459,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 if not args_manager.args.disable_comfyd:
     comfyd.active(True)
 
+<<<<<<< Updated upstream
 common.GRADIO_ROOT.launch(
     inbrowser=args_manager.args.in_browser,
     server_name=args_manager.args.listen,
@@ -1447,4 +1468,47 @@ common.GRADIO_ROOT.launch(
     allowed_paths=[modules.config.path_outputs],
     blocked_paths=[constants.AUTH_FILENAME]
 )
+=======
+def launch_with_user_auth():
+    if auth_enabled:
+        print("Authentication is enabled. Users must log in to access the UI.")
+        
+        # Define a custom auth function to set the output path
+        def auth_wrapper(username, password):
+            global USERNAME
+            if check_auth(username, password):
+                # Set user-specific output path
+                user_output_path = config.get_path_output(username)
+                modules.config.update_modelsinfo(username)                
+                print("1. User specific modelinfo added")
+                USERNAME = username
+                modules.config.update_files(username=username)
+                print("1. from webui.py modules.config.lora_filenames:", modules.config.lora_filenames)
+                config.path_outputs = user_output_path  # Update the global path_outputs
+                return True
+            return False
+
+        common.GRADIO_ROOT.launch(
+            inbrowser=args_manager.args.in_browser,
+            server_name=args_manager.args.listen,
+            server_port=args_manager.args.port,
+            root_path=args_manager.args.webroot,
+            allowed_paths=[config.path_outputs],  # Restrict to user's folder only
+            blocked_paths=[constants.AUTH_FILENAME],
+            auth=auth_wrapper  # Use the wrapper function
+        )
+    else:
+        print("Authentication is disabled. Starting the UI without login.")
+        # Ensure path_outputs is set to the default when no auth
+        config.path_outputs = config.get_path_output()
+        common.GRADIO_ROOT.launch(
+            inbrowser=args_manager.args.in_browser,
+            server_name=args_manager.args.listen,
+            server_port=args_manager.args.port,
+            root_path=args_manager.args.webroot,
+            allowed_paths=[config.path_outputs],  # Default outputs directory
+            blocked_paths=[constants.AUTH_FILENAME]
+        )
+launch_with_user_auth()
+
 

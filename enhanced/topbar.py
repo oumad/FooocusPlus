@@ -52,10 +52,10 @@ def get_welcome_image():
         file_welcome = welcomes[0]
 #        file_welcome = os.path.join(path_welcome, 'welcome.jpg')
     return file_welcome
-
+#added change
 def get_preset_name_list():
     path_preset = os.path.abspath(f'./presets/')
-    presets = [p for p in util.get_files_from_folder(path_preset, ['.json'], None) if not p.startswith('.')]
+    presets = [p for p in util.get_files_from_folder(path_preset, ['.json'], None) if not p.startswith('.') and (re.search(r'\bTile\b', p) or "Juggernaut" in p)]
     file_times = [(f, os.path.getmtime(os.path.join(path_preset, f))) for f in presets]
     sorted_file_times = sorted(file_times, key=lambda x: x[1], reverse=True)
     sorted_files = [f[0] for f in sorted_file_times]
