@@ -6,7 +6,6 @@ import platform
 import json
 import time
 import common
-import shared
 import modules.config
 import fooocus_version
 import comfy.comfy_version
