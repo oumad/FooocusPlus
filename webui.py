@@ -6,6 +6,7 @@ import platform
 import json
 import time
 import common
+import shared
 import modules.config
 import fooocus_version
 import comfy.comfy_version
@@ -18,6 +19,7 @@ import modules.style_sorter as style_sorter
 import modules.meta_parser
 import args_manager
 import copy
+import launch
 import ldm_patched
 from extras.inpaint_mask import SAMOptions
 
@@ -49,12 +51,17 @@ def get_task(*args):
     args.pop(0)
     return worker.AsyncTask(args=args)
 
-def generate_clicked(task: worker.AsyncTask):
+def generate_clicked(task: worker.AsyncTask, username): #added a new argument username
     import ldm_patched.modules.model_management as model_management
 
     with model_management.interrupt_processing_mutex:
         model_management.interrupt_processing = False
-    # outputs=[progress_html, progress_window, progress_gallery, gallery]
+    ##### get the base output directory from config.py file under modules
+    # then add the username after the output director to create a userspecific directory
+    # update the path outputs variable to the userspecific directory for that session
+    print(f"Generating for user: {username}")  # Example usage of username
+    abs_path = config.get_path_output()
+    config.path_outputs = os.path.join(abs_path, username)
 
     if len(task.args) == 0:
         return
@@ -198,6 +205,22 @@ with common.GRADIO_ROOT:
     params_backend = gr.State({'translation_methods': modules.config.default_translation_methods})
     currentTask = gr.State(worker.AsyncTask(args=[]))
     inpaint_engine_state = gr.State('empty')
+    username_state = gr.State(None)
+    # display welcome message and return the username
+    def create_greeting(request: gr.Request):
+        print(f"User {request.username} logged in.")
+        return gr.Markdown.update(value=f"Thanks for logging in, {request.username}"), request.username
+
+    user_ip = gr.Markdown(value="Not logged in")
+
+    common.GRADIO_ROOT.load(
+        create_greeting,
+        inputs=None,
+        outputs=[user_ip, username_state]  # Update outputs to include username_state
+    )
+    ###### end of the block ######
+
+    #common.GRADIO_ROOT.load(create_greeting, inputs=None, outputs=user_ip)
     with gr.Row():
         with gr.Column(scale=2):
             with gr.Group():
@@ -1300,16 +1323,53 @@ with common.GRADIO_ROOT:
         model_check = [prompt, negative_prompt, base_model, refiner_model] + lora_ctrls
         nav_bars = [bar_title] + bar_buttons
         protections = [random_button, translator_button, super_prompter, background_theme, image_tools_checkbox]
-        generate_button.click(topbar.process_before_generation, inputs=[state_topbar, params_backend] + ehps, outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend], show_progress=False) \
-            .then(fn=refresh_seed, inputs=[seed_random, image_seed], outputs=image_seed) \
-            .then(fn=get_task, inputs=ctrls, outputs=currentTask) \
-            .then(fn=enhanced_parameters.set_all_enhanced_parameters, inputs=ehps) \
-            .then(fn=generate_clicked, inputs=currentTask, outputs=[progress_html, progress_window, progress_gallery, gallery]) \
-            .then(topbar.process_after_generation, inputs=state_topbar, outputs=[generate_button, stop_button, skip_button, state_is_generating, gallery_index, index_radio] + protections, show_progress=False) \
-            .then(fn=update_history_link, outputs=history_link) \
-            .then(lambda x: x['__finished_nums_pages'], inputs=state_topbar, outputs=gallery_index_stat, queue=False, show_progress=False) \
-            .then(lambda x: None, inputs=gallery_index_stat, queue=False, show_progress=False, _js='(x)=>{refresh_finished_images_catalog_label(x);}') \
-            .then(fn=lambda: None, _js='playNotification').then(fn=lambda: None, _js='refresh_grid_delayed')
+        generate_button.click(
+            topbar.process_before_generation,
+            inputs=[state_topbar, params_backend] + ehps,
+            outputs=[stop_button, skip_button, generate_button, gallery, state_is_generating, index_radio, image_toolbox, prompt_info_box] + protections + [params_backend],
+            show_progress=False
+        ).then(
+            fn=refresh_seed,
+            inputs=[seed_random, image_seed],
+            outputs=image_seed
+        ).then(
+            fn=get_task,
+            inputs=ctrls,
+            outputs=currentTask
+        ).then(
+            fn=enhanced_parameters.set_all_enhanced_parameters,
+            inputs=ehps
+        ).then(
+            fn=generate_clicked,
+            inputs=[currentTask, username_state],  # Add username_state as an input
+            outputs=[progress_html, progress_window, progress_gallery, gallery]
+        ).then(
+            topbar.process_after_generation,
+            inputs=state_topbar,
+            outputs=[generate_button, stop_button, skip_button, state_is_generating, gallery_index, index_radio] + protections,
+            show_progress=False
+        ).then(
+            fn=update_history_link,
+            outputs=history_link
+        ).then(
+            lambda x: x['__finished_nums_pages'],
+            inputs=state_topbar,
+            outputs=gallery_index_stat,
+            queue=False,
+            show_progress=False
+        ).then(
+            lambda x: None,
+            inputs=gallery_index_stat,
+            queue=False,
+            show_progress=False,
+            _js='(x)=>{refresh_finished_images_catalog_label(x);}'
+        ).then(
+            fn=lambda: None,
+            _js='playNotification'
+        ).then(
+            fn=lambda: None,
+            _js='refresh_grid_delayed'
+        )
 
         reset_button.click(lambda: [worker.AsyncTask(args=[]), False, gr.update(visible=True, interactive=True)] +
                                    [gr.update(visible=False)] * 6 +
@@ -1449,8 +1509,8 @@ def launch_with_user_auth():
         def auth_wrapper(username, password):
             if check_auth(username, password):
                 # Set user-specific output path
-                user_output_path = config.get_path_output(username)
-                config.path_outputs = user_output_path  # Update the global path_outputs
+                #user_output_path = config.get_path_output(username)
+                #config.path_outputs = user_output_path  # Update the global path_outputs
                 return True
             return False
 
@@ -1466,7 +1526,7 @@ def launch_with_user_auth():
     else:
         print("Authentication is disabled. Starting the UI without login.")
         # Ensure path_outputs is set to the default when no auth
-        config.path_outputs = config.get_path_output()
+        #config.path_outputs = config.get_path_output()
         common.GRADIO_ROOT.launch(
             inbrowser=args_manager.args.in_browser,
             server_name=args_manager.args.listen,

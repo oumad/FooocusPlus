@@ -9,10 +9,11 @@ import modules.flags
 import modules.sdxl_styles
 import enhanced.all_parameters as ads
 
-from common import ROOT
+from common import ROOT,GRADIO_ROOT
 from modules.model_loader import load_file_from_url
 from modules.extra_utils import makedirs_with_log, get_files_from_folder, try_eval_env_var
 from modules.flags import OutputFormat, Performance, MetadataScheme
+
 
 
 def get_config_path(key, default_value):
@@ -25,33 +26,15 @@ def get_config_path(key, default_value):
 
 ##################################################
 # for diffrent users
-def get_path_output(username=None) -> str:
-    """
-    Determine the output path, optionally with a username-specific subdirectory.
-    """
-    global config_dict
+def get_path_output() -> str:
     base_path_output = '../Outputs'
-
-    # If a username is provided, construct a user-specific path
-    if username:
-        path_output = os.path.join(base_path_output, username)
-        path_output_abs = os.path.abspath(path_output)
-        # Ensure the directory exists
-        os.makedirs(path_output_abs, exist_ok=True)
-        # Update config_dict directly
-        config_dict['path_outputs'] = path_output_abs
+    
+    if args_manager.args.output_path:
+        path_output = args_manager.args.output_path
     else:
-        # Use command-line argument if provided, otherwise fall back to default
-        if args_manager.args.output_path:
-            path_output = args_manager.args.output_path
-        else:
-            path_output = base_path_output
-        # Use get_dir_or_set_default only for the default case
-        path_output_abs = get_dir_or_set_default('path_outputs', f'../{path_output}', make_directory=True)
-
-    print(f'Generated images will be stored in {path_output_abs}')
-    print()
-    print('Loading support files...')
+        path_output = base_path_output
+    path_output_abs = os.path.abspath(path_output)
+    os.makedirs(path_output_abs, exist_ok=True)
     return path_output_abs
 ###################################################
 
