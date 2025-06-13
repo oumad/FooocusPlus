@@ -6,6 +6,7 @@ import platform
 import json
 import time
 import common
+from ldm_patched.modules.utils import move_lora
 import modules.config
 import fooocus_version
 import comfy.comfy_version
@@ -854,6 +855,60 @@ with common.GRADIO_ROOT:
                             lora_ctrls += [lora_enabled, lora_model, lora_weight]
                     common.GRADIO_ROOT.load(update_files_with_user, outputs=lora_ctrls, queue=False, show_progress=False)
                 
+                def refresh_files_clicked(state_params, request: gr.Request):
+                    print()
+                    print('Refreshing all files...')
+                    engine = state_params.get('engine', 'Fooocus')
+                    task_method = state_params.get('task_method', None)
+                    username = request.username if hasattr(request, 'username') else None
+                    model_filenames, lora_filenames, vae_filenames = modules.config.update_files(engine, task_method, user=username)
+                    results = [gr.update(choices=model_filenames)]
+                    results += [gr.update(choices=['None'] + model_filenames)]
+                    results += [gr.update(choices=[flags.default_vae] + vae_filenames)]
+                    if not args_manager.args.disable_preset_selection:
+                        results += [gr.update(choices=modules.config.available_presets)]
+                    for i in range(modules.config.default_max_lora_number):
+                        results += [gr.update(interactive=True),
+                                    gr.update(choices=['None'] + lora_filenames), gr.update()]
+                    print('Refresh complete!')
+                    print()
+                    return results
+                            
+                # Add new upload section here
+                with gr.Row():
+                    lora_file = gr.File(label="Upload LoRA File", file_types=[".safetensors", ".ckpt"], visible=True)
+                    
+                    def handle_lora_upload(file, request: gr.Request):
+                        if file is None:
+                            return
+                        success = move_lora(file.name, request.username if hasattr(request, 'username') else "default")
+                        if success:
+                            print(f"Successfully moved LoRA file: {file.name}")
+                        else:
+                            print(f"Failed to move LoRA file: {file.name}")
+                    
+                    def refresh_after_lora_upload(state_params, request: gr.Request):
+                        print()
+                        print('Refreshing all files...')
+                        engine = state_params.get('engine', 'Fooocus')
+                        task_method = state_params.get('task_method', None)
+                        username = request.username if hasattr(request, 'username') else None
+                        model_filenames, lora_filenames, _ = modules.config.update_files(engine, task_method, user=username)
+                        results = [gr.update(choices=model_filenames)]
+                        results += [gr.update(choices=['None'] + model_filenames)]
+                        for i in range(modules.config.default_max_lora_number):
+                            results += [gr.update(interactive=True),
+                                        gr.update(choices=['None'] + lora_filenames), gr.update()]
+                        print('Refresh complete!')
+                        print()
+                        return results
+
+                    lora_file.upload(fn=handle_lora_upload, inputs=[lora_file]).then(
+                        fn=refresh_after_lora_upload, 
+                        inputs=[state_topbar],
+                        outputs=[base_model, refiner_model] + lora_ctrls
+                    )
+
                 with gr.Row():
                     refresh_files = gr.Button(label='Refresh', value='\U0001f504 Refresh All Files')
 
@@ -1008,25 +1063,6 @@ with common.GRADIO_ROOT:
 
                 dev_mode.change(dev_mode_checked, inputs=[dev_mode], outputs=[dev_tools],
                                         queue=False, show_progress=False)
-
-                def refresh_files_clicked(state_params, request: gr.Request):
-                    print()
-                    print('Refreshing all files...')
-                    engine = state_params.get('engine', 'Fooocus')
-                    task_method = state_params.get('task_method', None)
-                    username = request.username if hasattr(request, 'username') else None
-                    model_filenames, lora_filenames, vae_filenames = modules.config.update_files(engine, task_method, user=username)
-                    results = [gr.update(choices=model_filenames)]
-                    results += [gr.update(choices=['None'] + model_filenames)]
-                    results += [gr.update(choices=[flags.default_vae] + vae_filenames)]
-                    if not args_manager.args.disable_preset_selection:
-                        results += [gr.update(choices=modules.config.available_presets)]
-                    for i in range(modules.config.default_max_lora_number):
-                        results += [gr.update(interactive=True),
-                                    gr.update(choices=['None'] + lora_filenames), gr.update()]
-                    print('Refresh complete!')
-                    print()
-                    return results
 
                 refresh_files_output = [base_model, refiner_model, vae_name]
                 if not args_manager.args.disable_preset_selection:
