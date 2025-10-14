@@ -691,6 +691,8 @@ class ModelsInfo:
                     if auth_enabled and user is not None:
                         if model_type != "common" and model_type != user or model_type == "performance":
                             continue
+                    elif auth_enabled and user is None:
+                        continue
                     elif not auth_enabled and model_type != "common":
                         continue
                 result_reverse.append(m_path_or_file)
