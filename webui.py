@@ -8,7 +8,7 @@ import time
 import common
 import modules.config
 import fooocus_version
-import comfy.comfy_version
+import comfy.comfyui_version
 import modules.html
 import modules.async_worker as worker
 import modules.constants as constants
@@ -1035,7 +1035,7 @@ with common.GRADIO_ROOT:
                                     refresh_files_output + lora_ctrls,
                                     queue=False, show_progress=False)
 
-            with gr.Tab(label='Extras', elem_id="scrollable-box"):
+            with gr.Tab(label='Extras', elem_id="scrollable-box", render=False):
                 with gr.Row(visible=False):
                     binding_id_button = gr.Button(value='Binding Identity', visible=False)
                 with gr.Row():
@@ -1074,7 +1074,7 @@ with common.GRADIO_ROOT:
                     gr.Markdown(value=f'<h3>System Information</h3>\
                     System RAM: {int(ldm_patched.modules.model_management.get_sysram())} MB,\
                     Video RAM: {int(ldm_patched.modules.model_management.get_vram())} MB<br>\
-                    Python {platform.python_version()}, Comfy {comfy.comfy_version.version}<br>\
+                    Python {platform.python_version()}, Comfy {comfy.comfyui_version.__version__}<br>\
                     FooocusPlus {version.get_fooocusplus_ver()}<br><br>')
 
             iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
