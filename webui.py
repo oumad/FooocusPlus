@@ -467,23 +467,23 @@ with common.GRADIO_ROOT:
                                                                    example_inpaint_mask_dino_prompt_text],
                                                           queue=False, show_progress=False)
 
-                    with gr.TabItem(label='Layer_iclight', id='layer_tab') as layer_tab:
-                        with gr.Row():
-                            layer_method = gr.Radio(choices=comfy_task.default_method_names, value=comfy_task.default_method_names[0], container=False)
-                        with gr.Row():
-                            with gr.Column():
-                                layer_input_image = grh.Image(label='Drag given image to here', source='upload', type='numpy', visible=True)
-                            with gr.Column():
-                                with gr.Group():
-                                    iclight_enable = gr.Checkbox(label='Enable IC-Light', value=True)
-                                    iclight_source_radio = gr.Radio(show_label=False, choices=comfy_task.iclight_source_names, value=comfy_task.iclight_source_names[0], elem_classes='iclight_source', elem_id='iclight_source')
-                                gr.HTML('* The module derived from <a href="https://github.com/lllyasviel/IC-Light" target="_blank">IC-Light</a> <a href="https://github.com/layerdiffusion/LayerDiffuse" target="_blank">LayerDiffuse</a>')
-                        with gr.Row():
-                            example_quick_subjects = gr.Dataset(samples=comfy_task.quick_subjects, label='Subject Quick List', samples_per_page=1000, components=[prompt])
-                        with gr.Row():
-                            example_quick_prompts = gr.Dataset(samples=comfy_task.quick_prompts, label='Lighting Quick List', samples_per_page=1000, components=[prompt])
-                    example_quick_prompts.click(lambda x, y: ', '.join(y.split(', ')[:2] + [x[0]]), inputs=[example_quick_prompts, prompt], outputs=prompt, show_progress=False, queue=False)
-                    example_quick_subjects.click(lambda x: x[0], inputs=example_quick_subjects, outputs=prompt, show_progress=False, queue=False)
+                    # with gr.TabItem(label='Layer_iclight', id='layer_tab') as layer_tab:
+                    #     with gr.Row():
+                    #         layer_method = gr.Radio(choices=comfy_task.default_method_names, value=comfy_task.default_method_names[0], container=False)
+                    #     with gr.Row():
+                    #         with gr.Column():
+                    #             layer_input_image = grh.Image(label='Drag given image to here', source='upload', type='numpy', visible=True)
+                    #         with gr.Column():
+                    #             with gr.Group():
+                    #                 iclight_enable = gr.Checkbox(label='Enable IC-Light', value=True)
+                    #                 iclight_source_radio = gr.Radio(show_label=False, choices=comfy_task.iclight_source_names, value=comfy_task.iclight_source_names[0], elem_classes='iclight_source', elem_id='iclight_source')
+                    #             gr.HTML('* The module derived from <a href="https://github.com/lllyasviel/IC-Light" target="_blank">IC-Light</a> <a href="https://github.com/layerdiffusion/LayerDiffuse" target="_blank">LayerDiffuse</a>')
+                    #     with gr.Row():
+                    #         example_quick_subjects = gr.Dataset(samples=comfy_task.quick_subjects, label='Subject Quick List', samples_per_page=1000, components=[prompt])
+                    #     with gr.Row():
+                    #         example_quick_prompts = gr.Dataset(samples=comfy_task.quick_prompts, label='Lighting Quick List', samples_per_page=1000, components=[prompt])
+                    # example_quick_prompts.click(lambda x, y: ', '.join(y.split(', ')[:2] + [x[0]]), inputs=[example_quick_prompts, prompt], outputs=prompt, show_progress=False, queue=False)
+                    # example_quick_subjects.click(lambda x: x[0], inputs=example_quick_subjects, outputs=prompt, show_progress=False, queue=False)
 
                     with gr.TabItem(label='Enhance+', id='enhance_tab') as enhance_tab:
                         with gr.Row():
@@ -1077,7 +1077,7 @@ with common.GRADIO_ROOT:
                     Python {platform.python_version()}, Comfy {comfy.comfyui_version.__version__}<br>\
                     FooocusPlus {version.get_fooocusplus_ver()}<br><br>')
 
-            iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
+            # iclight_enable.change(lambda x: [gr.update(interactive=x, value='' if not x else comfy_task.iclight_source_names[0]), gr.update(value=flags.add_ratio('1024*1024') if not x else modules.config.default_aspect_ratio)], inputs=iclight_enable, outputs=[iclight_source_radio, aspect_ratios_selections[0]], queue=False, show_progress=False)
             layout_image_tab = [performance_selection, style_selections, freeu_enabled, refiner_model, refiner_switch] + lora_ctrls
             def toggle_image_tab(tab, styles):
                 result = []
@@ -1093,7 +1093,7 @@ with common.GRADIO_ROOT:
             uov_tab.select(lambda: 'uov', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             inpaint_tab.select(lambda: 'inpaint', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             ip_tab.select(lambda: 'ip', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
-            layer_tab.select(lambda: 'layer', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
+            # layer_tab.select(lambda: 'layer', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
             enhance_tab.select(lambda: 'enhance', outputs=current_tab, queue=False, _js=down_js, show_progress=False).then(toggle_image_tab,inputs=[current_tab, style_selections], outputs=layout_image_tab, show_progress=False, queue=False)
 
             input_image_checkbox.change(lambda x: [gr.update(visible=x), gr.update(choices=flags.Performance.list()),
@@ -1243,7 +1243,7 @@ with common.GRADIO_ROOT:
         ctrls += [input_image_checkbox, current_tab]
         ctrls += [uov_method, uov_input_image]
         ctrls += [outpaint_selections, inpaint_input_image, inpaint_additional_prompt, inpaint_mask_image]
-        ctrls += [layer_method, layer_input_image, iclight_enable, iclight_source_radio]
+        # ctrls += [layer_method, layer_input_image, iclight_enable, iclight_source_radio]
         ctrls += [disable_preview, disable_intermediate_results, disable_seed_increment, black_out_nsfw]
         ctrls += [adm_scaler_positive, adm_scaler_negative, adm_scaler_end, adaptive_cfg, clip_skip]
         ctrls += [sampler_name, scheduler_name, vae_name]
