@@ -6,6 +6,8 @@ import safetensors.torch
 import numpy as np
 from PIL import Image
 
+import modules
+
 def load_torch_file(ckpt, safe_load=False, device=None):
     if device is None:
         device = torch.device("cpu")
@@ -459,3 +461,34 @@ class ProgressBar:
 
     def update(self, value):
         self.update_absolute(self.current + value)
+
+def move_lora(filepath: str, username: str) -> bool:
+    """Takes a valid filepath as an input (supposed to be a LoRA file) and a username 
+    and moves the file to the user's LoRA directory.
+    
+    Returns True if the copy succeeded, False otherwise.
+    """
+    import shutil
+    import os
+    from pathlib import Path
+
+    filepath = Path(filepath)
+    print(f"FILEPATH: {filepath} and USERNAME: {username} and PATHS_LORAS: {modules.config.paths_loras}")
+    destination_dir = Path(modules.config.paths_loras[0]) / username
+
+    print(f"User {username} requested to move {filepath}")
+
+    if filepath.is_file():
+        try:
+            if not destination_dir.exists():
+                # Prevent parent creation to be safe with folder creation
+                destination_dir.mkdir(parents=False, exist_ok=True)  
+
+            shutil.copy(filepath, destination_dir.as_posix())
+            os.remove(filepath)  # Deleting temp file
+            return True
+
+        except Exception as e:
+            print("Error while copying uploaded LoRA:", e)
+
+    return False
